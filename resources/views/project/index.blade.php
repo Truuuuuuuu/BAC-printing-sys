@@ -108,6 +108,7 @@
                 </table>
 
                 <x-edit-project />
+                <x-delete-project />
             </div>
         </div>
     </div>

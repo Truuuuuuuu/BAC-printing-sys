@@ -56,6 +56,15 @@ class ProjectController extends Controller
             'edit-status.in' => 'Please select a valid status.',
         ]);
 
+        if (
+            $project->project_title === $request->input('edit-project_title') &&
+            $project->amount == $request->input('edit-amount') &&
+            $project->bidding_date->format('Y-m-d') === $request->input('edit-bidding_date') &&
+            $project->status === $request->input('edit-status')
+        ) {
+            return redirect()->back();
+        }
+
         $project->update([
             'project_title' => $request->input('edit-project_title'),
             'amount'        => $request->input('edit-amount'),
@@ -63,6 +72,12 @@ class ProjectController extends Controller
             'status'        => $request->input('edit-status'),
         ]);
 
-        return redirect()->back()->with('success', 'Project updated.');
+        return redirect()->back()->with('success', 'Project updated successfully.');
+    }
+
+    public function destroy(Project $project)
+    {
+        $project->delete();
+        return redirect()->route('project.index')->with('success', 'Project deleted successfully.');
     }
 }

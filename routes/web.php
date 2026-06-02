@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])
     Route::get('/index', [ProjectController::class,'index'])->name('index');
     Route::post('/store', [ProjectController::class,'store'])->name('store');
     Route::put('/{project}/edit', [ProjectController::class,'update'])->name('update');
+    Route::delete('/{project}/delete', [ProjectController::class,'destroy'])->name('destroy');
 });
 
 
