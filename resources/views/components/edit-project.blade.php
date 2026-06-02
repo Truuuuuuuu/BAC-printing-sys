@@ -1,4 +1,4 @@
-<div x-show="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div x-show="showEditModal" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
         <h2 class="text-3xl font-semibold text-primary">Edit Project</h2>
         <p class="text-md text-primary">Review and update project information.</p>

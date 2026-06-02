@@ -1,4 +1,4 @@
-<div x-show="showDeleteModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div x-show="showDeleteModal" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
         <h2 class="text-3xl font-semibold text-primary">Delete Project</h2>
         <p class="text-md text-primary">Are you sure you want to delete this project?</p>

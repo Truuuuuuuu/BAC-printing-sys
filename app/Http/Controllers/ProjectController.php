@@ -8,9 +8,19 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
     
-    public function index()
+
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        $projects = Project::query();
+
+        if ($request->filled('search')) {
+            $projects->where('project_title', 'like', '%' . $request->search . '%');
+        }
+
+        $projects = $projects->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('project.index', compact('projects'));
     }
 
@@ -80,4 +90,6 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('project.index')->with('success', 'Project deleted successfully.');
     }
+
+    
 }

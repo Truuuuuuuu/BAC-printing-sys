@@ -22,4 +22,13 @@ class Project extends Model
         return $this->status === 'awarded';
     }
 
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            $query->where('project_title', 'like', '%' . $search . '%');
+        }
+
+        return $query;
+    }
+
 }

@@ -14,7 +14,7 @@
     showDeleteModal: false,
     }">
         <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8 flex gap-5">
-            <div class=" max-w-md shrink-0 space-y-5">
+            <div class="max-w-md shrink-0 self-start sticky top-6 space-y-5">
                 <div class="flex gap-2 items-center">
                     <div class="border rounded-2xl bg-foreground flex items-center justify-center p-5">
                         <x-lucide-folder-open-dot class="w-8 h-8 text-primary" />
@@ -62,8 +62,36 @@
             </div>
 
             <div class="w-full border bg-foreground rounded-2xl p-5">
-                <div class="flex justify-end">
-                    <input type="text" placeholder="Search projects..." class="border p-2 rounded-xl w-2/3">
+                <div class="flex justify-end ">
+                    <form method="GET" class="w-full">
+                        {{-- Search Form --}}
+                        <div class="flex justify-end">
+                            <div class="relative w-2/3" x-data="{ search: '{{ request('search') }}' }">
+
+                                <form method="GET">
+                                    <input type="text" name="search" x-model="search" placeholder="Search projects..."
+                                        class="w-full border p-2 pr-20 rounded-xl">
+
+                                    {{-- Clear Input Search --}}
+                                    <button x-show="search.length > 0" x-cloak type="button" @click="
+                                            search = '';
+                                            window.location = '{{ route('project.index') }}';
+                                        "
+                                        class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                        <x-lucide-x class="w-4 h-4" />
+                                    </button>
+
+
+                                    {{-- Submit Search --}}
+                                    <button type="submit"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
+                                        <x-lucide-search class="w-5 h-5" />
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <table class="w-full mt-10">
                     <thead>
@@ -77,7 +105,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($projects as $project)
+                        @forelse($projects as $project)
                             <tr class="border-t">
                                 <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
                                 <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
@@ -103,13 +131,23 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="5" class="p-5 text-center text-gray-500">
+                                    No projects found.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
                 <x-edit-project />
                 <x-delete-project />
+                <div class="mt-4">
+                    {{ $projects->links() }}
+                </div>
             </div>
+
         </div>
     </div>
 </x-app-layout>
