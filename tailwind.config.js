@@ -11,6 +11,14 @@ export default {
 
     theme: {
         extend: {
+            colors:{
+                'primary': '#003049',
+                'foreground': '#F8F9FA',
+                'bg-green': '#008000',
+                'green-text': '#004B23',
+                'bg-red': '#D62828',
+                'red-text': '#C70E0E',
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
