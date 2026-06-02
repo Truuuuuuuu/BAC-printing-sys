@@ -13,8 +13,9 @@ Route::middleware(['auth', 'verified'])
     ->name('project.')
     ->group(function () {
     
-    Route::get('/project/index', [ProjectController::class,'index'])->name('index');
-    Route::post('/project/store', [ProjectController::class,'store'])->name('store');
+    Route::get('/index', [ProjectController::class,'index'])->name('index');
+    Route::post('/store', [ProjectController::class,'store'])->name('store');
+    Route::put('/{project}/edit', [ProjectController::class,'update'])->name('update');
 });
 
 
