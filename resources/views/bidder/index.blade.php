@@ -3,7 +3,15 @@
 
     <div class="py-12" x-data="{
         deleteId: null,
+        editId: {{ old('edit-id', 'null') }},
+        editBid: {
+            company_name: '{{ old('edit-company_name') }}',
+            proprietor: '{{ old('edit-proprietor') }}',
+            bid_amount: '{{ old('edit-bid_amount') }}',
+            address: '{{ old('edit-address') }}',
+        },
         showDeleteBidModal: false,
+        showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-address', 'edit-bid_amount']) ? 'true' : 'false' }},
         showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'address', 'bid_amount']) ? 'true' : 'false' }},
         selectedProjectTitle: '{{ old('project_title') }}',
         selectedProjectId: '{{ old('project_id') }}',
@@ -28,7 +36,7 @@
 
                         <form method="GET">
                             <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                class="w-full border p-2 pr-20 rounded-xl">
+                                class="w-full border px-3 py-2 pr-20 rounded-3xl">
 
                             {{-- Clear Input Search --}}
                             <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -56,7 +64,7 @@
 
                     @empty
 
-                        <p class="text-gray-500 text-center">No projects found.</p>
+                        <p class="text-gray-500 text-center ">No projects found.</p>
 
                     @endforelse
                 </div>
@@ -72,7 +80,7 @@
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                        class="w-full border p-2 pr-20 rounded-xl">
+                                        class="w-full border px-3 py-2 pr-20 rounded-3xl">
 
                                     {{-- Clear Input Search --}}
                                     <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -123,6 +131,10 @@
                                 <td class="p-2 capitalize">{{ $bid->address}}</td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="flex gap-3 h-full items-center  justify-center ">
+                                        <button class="flex items-center hover:scale-110 transition"
+                                            @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
+                                            <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
+                                        </button>
 
                                         <button class="flex items-center hover:scale-110 transition"
                                             @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
@@ -133,7 +145,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="p-5 text-center text-gray-500">
+                                <td colspan="8" class="p-5 text-center text-gray-500">
                                     No projects found.
                                 </td>
                             </tr>
@@ -147,5 +159,6 @@
 
         <x-create-bid />
         <x-delete-bid />
+        <x-edit-bid />
     </div>
 </x-app-layout>

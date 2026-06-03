@@ -7,7 +7,7 @@
             <form :action="`/bidder/${deleteId}/delete`" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-bg-red font-semibold text-white rounded-xl">Delete Bid</button>
+                <button type="submit" class="px-4 py-2 bg-bg-red font-semibold text-white rounded-xl hover:bg-primary">Delete Bid</button>
             </form>
         </div>
     </div>

@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])
     
     Route::get('/index', [BidderController::class,'index'])->name('index');
     Route::post('/store', [BidderController::class, 'store'])->name('store');
+    Route::put('/{bid}/edit', [BidderController::class,'update'])->name('update');
     Route::delete('/{bid}/delete', [BidderController::class,'destroy'])->name('destroy');
 });
 

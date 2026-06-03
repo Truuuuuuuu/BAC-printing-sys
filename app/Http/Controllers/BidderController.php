@@ -31,11 +31,11 @@ class BidderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'company_name' => 'required|string|max:255',
-            'proprietor' => 'required|string|max:255',
-            'bid_amount' => 'required|numeric|min:1',
-            'address' => 'required|string|max:255',
+            'project_id' => ['required','exists:projects,id'],
+            'company_name' => ['required','string','max:255'],
+            'proprietor' => ['required','string','max:255'],
+            'bid_amount' => ['required','numeric','min:1'],
+            'address' => ['required','string','max:255'],
         ],
         [
             'project_id.required'   => 'Please select a project.',
@@ -67,6 +67,52 @@ class BidderController extends Controller
         ]);
 
         return redirect()->route('bidder.index')->with('success','Bid created successfully.');
+    }
+
+
+    public function update(Request $request, Bid $bid)
+    {
+        $request->validate([
+            'edit-company_name' => ['required','string','max:255'],
+            'edit-proprietor' => ['required','string','max:255'],
+            'edit-bid_amount' => ['required','numeric','min:1'],
+            'edit-address' => ['required','string','max:255'],
+        ],
+        [
+            'edit-company_name.required' => 'Company name is required.',
+            'edit-company_name.string'   => 'Company name must be valid text.',
+            'edit-company_name.max'      => 'Company name may not exceed 255 characters.',
+
+            'edit-proprietor.required'   => 'Proprietor name is required.',
+            'edit-proprietor.string'     => 'Proprietor name must be valid text.',
+            'edit-proprietor.max'        => 'Proprietor name may not exceed 255 characters.',
+
+            'edit-bid_amount.required'   => 'Bid amount is required.',
+            'edit-bid_amount.numeric'    => 'Bid amount must be a valid number.',
+            'edit-bid_amount.min'        => 'Bid amount must be at least 1.',
+
+            'edit-address.required'      => 'Address is required.',
+            'edit-address.string'        => 'Address must be valid text.',
+            'edit-address.max'           => 'Address may not exceed 255 characters.',
+
+        ]);
+
+        if (
+            $bid->company_name === $request->input('edit-company_name') &&
+            $bid->proprietor === $request->input('edit-proprietor') &&
+            $bid->bid_amount == $request->input('edit-bid_amount') && $bid->address === $request->input('edit-address')
+        ) {
+            return redirect()->back();
+        }
+
+        $bid->update([
+            'company_name' => $request->input('edit-company_name'),
+            'proprietor' => $request->input('edit-proprietor'),
+            'bid_amount'        => $request->input('edit-bid_amount'),
+            'address' => $request->input('edit-address'),
+        ]);
+
+        return redirect()->back()->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Bid $bid)

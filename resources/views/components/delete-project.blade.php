@@ -7,7 +7,7 @@
             <form :action="`/project/${deleteId}/delete`" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-bg-red font-semibold text-white rounded-xl">Delete Project</button>
+                <button type="submit" class="px-4 py-2 bg-bg-red font-semibold text-white hover:bg-primary rounded-xl">Delete Project</button>
             </form>
         </div>
     </div>

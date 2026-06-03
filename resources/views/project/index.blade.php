@@ -65,8 +65,9 @@
 
 
                     <button type="submit"
-                        class="w-full bg-bg-green font-semibold text-foreground py-2 rounded-xl mt-5 hover:bg-primary/90 transition">Create
+                        class="relative w-full bg-bg-green font-semibold text-foreground py-2 hover:shadow-sm hover:scale-105 rounded-3xl mt-5 hover:bg-primary/90 transition">Create
                         Project
+                        <x-lucide-circle-plus class="w-8 h-8 absolute right-1 top-1/2 -translate-y-1/2" />
                     </button>
                 </form>
             </div>
@@ -80,7 +81,7 @@
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                        class="w-full border p-2 pr-20 rounded-xl">
+                                        class="w-full border px-3 py-2 pr-20 rounded-3xl">
 
                                     {{-- Clear Input Search --}}
                                     <button x-show="search.length > 0" x-cloak type="button" @click="
