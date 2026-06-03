@@ -22,7 +22,7 @@ class BidderController extends Controller
         $bids = Bid::query();
         $bids->search($request->search);
         $bids = $bids->latest()
-        ->paginate(3)
+        ->paginate(10)
         ->withQueryString();
 
         return view('bidder.index', compact('projects', 'bids'));

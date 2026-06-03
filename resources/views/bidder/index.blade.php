@@ -18,7 +18,7 @@
         selectedProjectAmount: '{{ old('project_amount')}}',
     }">
         <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8 flex gap-5">
-            <div class="w-[390px]  shrink-0 self-start sticky top-6 space-y-5">
+            <div class="w-[390px]  shrink-0 self-start   space-y-5">
                 <div class="flex gap-2 items-center">
                     <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
                         <x-lucide-folder-open class="w-8 h-8 text-primary" />
@@ -68,7 +68,7 @@
 
                     @endforelse
                 </div>
-
+                {{ $projects->links() }}
             </div>
 
             <div class="w-full border bg-foreground rounded-2xl p-5">
@@ -79,7 +79,7 @@
                             <div class="relative w-2/3" x-data="{ search: '{{ request('search') }}' }">
 
                                 <form method="GET">
-                                    <input type="text" name="search" x-model="search" placeholder="Search projects..."
+                                    <input type="text" name="search" x-model="search" placeholder="Search bid records..."
                                         class="w-full border px-3 py-2 pr-20 rounded-3xl">
 
                                     {{-- Clear Input Search --}}
