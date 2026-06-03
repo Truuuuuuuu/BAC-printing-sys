@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BidderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,9 +21,16 @@ Route::middleware(['auth', 'verified'])
 });
 
 
-Route::get('/bidder', function () {
-    return view('bidder.index');
-})->middleware(['auth', 'verified'])->name('bidder');
+Route::middleware(['auth', 'verified'])
+    ->prefix('bidder')
+    ->name('bidder.')
+    ->group(function () {
+    
+    Route::get('/index', [BidderController::class,'index'])->name('index');
+    Route::post('/store', [BidderController::class, 'store'])->name('store');
+    Route::delete('/{bid}/delete', [BidderController::class,'destroy'])->name('destroy');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

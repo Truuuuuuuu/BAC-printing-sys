@@ -13,9 +13,7 @@ class ProjectController extends Controller
     {
         $projects = Project::query();
 
-        if ($request->filled('search')) {
-            $projects->where('project_title', 'like', '%' . $request->search . '%');
-        }
+        $projects->search($request->search);
 
         $projects = $projects->latest()
             ->paginate(10)

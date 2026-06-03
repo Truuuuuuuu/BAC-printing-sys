@@ -47,7 +47,7 @@
             <div class="flex justify-end gap-3 ">
                 <button type="button" @click="showEditModal = false" class="px-4 py-1 hover:border rounded-xl">Cancel</button>
                 <button type="submit"
-                    class="bg-bg-green font-semibold text-foreground hover:bg-primary/90 transition px-5 py-2 rounded-3xl">Save
+                    class="bg-bg-green font-semibold text-foreground hover:bg-primary/90 transition px-5 py-2 rounded-xl">Save
                     Changes</button>
             </div>
         </form>

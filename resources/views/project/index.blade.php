@@ -16,7 +16,7 @@
         <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8 flex gap-5">
             <div class="max-w-md shrink-0 self-start sticky top-6 space-y-5">
                 <div class="flex gap-2 items-center">
-                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-5">
+                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
                         <x-lucide-folder-open-dot class="w-8 h-8 text-primary" />
                     </div>
                     <div class="flex flex-col">
@@ -26,38 +26,48 @@
                     </div>
                 </div>
 
-                <form action="{{ route('project.store') }}" method="POST" class="text-primary">
+                <form action="{{ route('project.store') }}" method="POST" class="text-primary space-y-3">
                     @csrf
-                    <label for="project_title">Project title</label>
-                    <input id="project_title" type="text" name="project_title" value="{{ old('project_title') }}"
-                        placeholder="e.g., Covered Court" class="w-full p-2 border rounded-xl">
-                    @error('project_title')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
+                    <div>
+                        <label for="project_title">Project title</label>
+                        <input id="project_title" type="text" name="project_title" value="{{ old('project_title') }}"
+                            placeholder="e.g., Covered Court" class="w-full p-2 border rounded-xl">
+                        @error('project_title')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <label for="amount">Amount</label>
-                    <input id="amount" type="number" name="amount" value="{{ old('amount') }}"
-                        placeholder="e.g., 100000" class="w-full p-2 border rounded-xl ">
-                    @error('amount')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
+                    <div>
+                        <label for="amount">Amount</label>
+                        <input id="amount" type="number" name="amount" value="{{ old('amount') }}"
+                            placeholder="e.g., 100000" class="w-full p-2 border rounded-xl ">
+                        @error('amount')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <label for="bidding_date">Bidding date</label>
-                    <input id="bidding_date" type="date" name="bidding_date" value="{{ old('bidding_date') }}"
-                        class="w-full p-2 border rounded-xl ">
-                    @error('bidding_date')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
+                    <div>
+                        <label for="bidding_date">Bidding date</label>
+                        <input id="bidding_date" type="date" name="bidding_date" value="{{ old('bidding_date') }}"
+                            class="w-full p-2 border rounded-xl ">
+                        @error('bidding_date')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <label for="status">Status</label>
-                    <select id="status" name="status" class="w-full p-2 border rounded-xl ">
-                        <option value="awarded">Awarded</option>
-                        <option value="failed">Failed</option>
-                    </select>
+                    <div>
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="w-full p-2 border rounded-xl ">
+                            <option value="awarded">Awarded</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+
 
                     <button type="submit"
                         class="w-full bg-bg-green font-semibold text-foreground py-2 rounded-xl mt-5 hover:bg-primary/90 transition">Create
-                        Project</button>
+                        Project
+                    </button>
                 </form>
             </div>
 
@@ -118,16 +128,16 @@
                                 </td>
                                 <td class="p-2 whitespace-nowrap">
                                     <div class="flex gap-3 h-full">
-                                        <a class="flex items-center hover:scale-110 transition"
+                                        <button class="flex items-center hover:scale-110 transition"
                                             @click="editId = {{ $project->id }}; editProject = {{ json_encode($project) }};  editProject.bidding_date = '{{ $project->bidding_date->format('Y-m-d') }}'; showEditModal = true">
                                             <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
-                                        </a>
+                                        </button>
 
 
-                                        <a class="flex items-center hover:scale-110 transition"
+                                        <button class="flex items-center hover:scale-110 transition"
                                             @click="deleteId = {{ $project->id }}; showDeleteModal = true">
                                             <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
