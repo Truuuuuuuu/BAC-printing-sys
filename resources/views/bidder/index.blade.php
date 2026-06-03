@@ -107,7 +107,7 @@
                     <thead>
                         <tr>
                             <th class="text-left p-2 max-w-xs">Project Title</th>
-                            <th class="text-left p-2 ">Approved Budget</th>
+                            <th class="text-left p-2 ">Budget</th>
                             <th class="text-left p-2 whitespace-nowrap">Bidding Date</th>
                             <th class="text-left p-2 ">Bidder</th>
                             <th class="text-left p-2 whitespace-nowrap">Proprietor</th>
