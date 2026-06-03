@@ -76,7 +76,19 @@
                 <div class="flex justify-end ">
                     <form method="GET" class="w-full">
                         {{-- Search Form --}}
-                        <div class="flex justify-end">
+                        <div class="flex justify-between">
+                            <div>
+                                {{-- Projects View & Print button --}}
+                                <a
+                                href="{{ route('pdf.projects') }}"
+                                target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm"
+                                >
+                                    <x-lucide-printer class="w-5 h-5 text-foreground"/> 
+                                    <span>View & Print</span>
+                                </a>
+                            </div>
                             <div class="relative w-2/3" x-data="{ search: '{{ request('search') }}' }">
 
                                 <form method="GET">
