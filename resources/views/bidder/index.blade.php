@@ -36,7 +36,7 @@
 
                         <form method="GET">
                             <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                class="w-full border px-3 py-2 pr-20 rounded-3xl">
+                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
 
                             {{-- Clear Input Search --}}
                             <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -80,7 +80,7 @@
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search bid records..."
-                                        class="w-full border px-3 py-2 pr-20 rounded-3xl">
+                                        class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
 
                                     {{-- Clear Input Search --}}
                                     <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -161,4 +161,18 @@
         <x-delete-bid />
         <x-edit-bid />
     </div>
+
+    {{-- auto scroll up button --}}
+    <div x-data="{ visible: false }" x-init="window.addEventListener('scroll', () => {
+        visible = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100
+        })">
+        <button x-show="visible" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4" @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="fixed bottom-8 right-8 z-50 bg-gray-800 hover:bg-gray-600 text-white w-11 h-11 rounded-full shadow-lg text-xl cursor-pointer">
+            ↑
+        </button>
+    </div>
+
 </x-app-layout>

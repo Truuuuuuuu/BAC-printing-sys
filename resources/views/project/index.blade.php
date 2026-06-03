@@ -31,7 +31,7 @@
                     <div>
                         <label for="project_title">Project title</label>
                         <input id="project_title" type="text" name="project_title" value="{{ old('project_title') }}"
-                            placeholder="e.g., Covered Court" class="w-full p-2 border rounded-xl">
+                            placeholder="e.g., Covered Court" class="w-full p-2 border border-gray-300 rounded-xl">
                         @error('project_title')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -40,7 +40,7 @@
                     <div>
                         <label for="amount">Amount</label>
                         <input id="amount" type="number" name="amount" value="{{ old('amount') }}"
-                            placeholder="e.g., 100000" class="w-full p-2 border rounded-xl ">
+                            placeholder="e.g., 100000" class="w-full p-2 border border-gray-300 rounded-xl ">
                         @error('amount')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -49,7 +49,7 @@
                     <div>
                         <label for="bidding_date">Bidding date</label>
                         <input id="bidding_date" type="date" name="bidding_date" value="{{ old('bidding_date') }}"
-                            class="w-full p-2 border rounded-xl ">
+                            class="w-full p-2 border rounded-xl border-gray-300">
                         @error('bidding_date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -57,7 +57,7 @@
 
                     <div>
                         <label for="status">Status</label>
-                        <select id="status" name="status" class="w-full p-2 border rounded-xl ">
+                        <select id="status" name="status" class="w-full p-2 border rounded-xl border border-gray-300 ">
                             <option value="awarded">Awarded</option>
                             <option value="failed">Failed</option>
                         </select>
@@ -81,7 +81,7 @@
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                        class="w-full border px-3 py-2 pr-20 rounded-3xl">
+                                        class="w-full border px-3 py-2 pr-20 rounded-3xl border border-gray-300">
 
                                     {{-- Clear Input Search --}}
                                     <button x-show="search.length > 0" x-cloak type="button" @click="
