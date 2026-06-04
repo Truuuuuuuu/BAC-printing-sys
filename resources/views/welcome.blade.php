@@ -51,8 +51,8 @@
                 </nav>
             @endif
         </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex flex-col max-w-[335px] w-full  lg:max-w-4xl ">
+        <div class="flex items-start justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
+            <main class="flex flex-col max-w-[335px] w-full  lg:max-w-4xl">
                <div class="flex flex-col items-center justify-center w-full">
                     <h1 class="text-[150px] font-bold text-primary">BAC</h1>
                     <p class="text-xl font-medium text-primary/70 -mt-10">Bids and Awards Committee</p>
