@@ -13,15 +13,15 @@
     showEditModal: {{ $errors->hasAny(['edit-project_title', 'edit-amount', 'edit-bidding_date', 'edit-status']) ? 'true' : 'false' }},
     showDeleteModal: false,
     }">
-        <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex gap-5">
-            <div class="max-w-md shrink-0 self-start sticky top-6 space-y-5">
+        <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
+            <div class="w-full lg:max-w-sm self-start px-3 lg:px-0 top-6 space-y-5">
                 <div class="flex gap-2 items-center">
                     <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
                         <x-lucide-folder-open-dot class="w-8 h-8 text-primary" />
                     </div>
                     <div class="flex flex-col">
-                        <h2 class="text-3xl text-primary font-semibold">Create New Project</h2>
-                        <p class="text-xs text-primary/80">Enter the information below to create a new project record.
+                        <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Create New Project</h2>
+                        <p class="text-[11px] text-primary/80">Enter the information below to create a new project record.
                         </p>
                     </div>
                 </div>
@@ -76,20 +76,16 @@
                 <div class="flex justify-end ">
                     <form method="GET" class="w-full">
                         {{-- Search Form --}}
-                        <div class="flex justify-between">
+                        <div class="flex justify-between flex-col md:flex-row gap-3 lg:gap-0 items-center">
                             <div>
                                 {{-- Projects View & Print button --}}
-                                <a
-                                href="{{ route('pdf.projects') }}"
-                                target="_blank"
-                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm"
-                                >
-                                    <x-lucide-printer class="w-5 h-5 text-foreground"/> 
-                                    <span>View & Print</span>
+                                <a href="{{ route('pdf.projects') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                    <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                    <span>View & Print All</span>
                                 </a>
                             </div>
-                            <div class="relative w-2/3" x-data="{ search: '{{ request('search') }}' }">
+                            <div class="relative w-full md:max-w-md lg:max-w-xs xl:max-w-xl" x-data="{ search: '{{ request('search') }}' }">
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search projects..."
@@ -116,53 +112,55 @@
                         </div>
                     </form>
                 </div>
-                <table class="w-full mt-10">
-                    <thead>
-                        <tr>
-                            <th class="text-left p-2 max-w-xs">Project Title</th>
-                            <th class="text-left p-2 ">Amount</th>
-                            <th class="text-left p-2 whitespace-nowrap">Bidding Date</th>
-                            <th class="text-left p-2 whitespace-nowrap">Status</th>
-                            <th class="text-left p-2 whitespace-nowrap">Actions</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($projects as $project)
-                            <tr class="border-t">
-                                <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
-                                <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
-                                <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
-                                <td class="p-2 whitespace-nowrap capitalize">
-                                    <div
-                                        class="rounded-xl {{ $project->status === 'awarded' ? 'bg-bg-green/30 text-green-text/70' : 'bg-bg-red/30 text-red-text/70' }} font-semibold flex justify-center items-center px-1">
-                                        {{ $project->status }}
-                                    </div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="flex gap-3 h-full">
-                                        <button class="flex items-center hover:scale-110 transition"
-                                            @click="editId = {{ $project->id }}; editProject = {{ json_encode($project) }};  editProject.bidding_date = '{{ $project->bidding_date->format('Y-m-d') }}'; showEditModal = true">
-                                            <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
-                                        </button>
-
-
-                                        <button class="flex items-center hover:scale-110 transition"
-                                            @click="deleteId = {{ $project->id }}; showDeleteModal = true">
-                                            <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
+                <div class="overflow-x-auto w-full mt-10">
+                    <table class="w-full">
+                        <thead>
                             <tr>
-                                <td colspan="5" class="p-5 text-center text-gray-500">
-                                    No projects found.
-                                </td>
+                                <th class="text-left p-2 max-w-xs">Project Title</th>
+                                <th class="text-left p-2 ">Amount</th>
+                                <th class="text-left p-2 whitespace-nowrap">Bidding Date</th>
+                                <th class="text-left p-2 whitespace-nowrap">Status</th>
+                                <th class="text-left p-2 whitespace-nowrap">Actions</th>
+
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($projects as $project)
+                                <tr class="border-t">
+                                    <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
+                                    <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
+                                    <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
+                                    <td class="p-2 whitespace-nowrap capitalize">
+                                        <div
+                                            class="rounded-xl {{ $project->status === 'awarded' ? 'bg-bg-green/30 text-green-text/70' : 'bg-bg-red/30 text-red-text/70' }} font-semibold text-xs flex justify-center items-center ">
+                                            {{ $project->status }}
+                                        </div>
+                                    </td>
+                                    <td class="p-2 whitespace-nowrap">
+                                        <div class="flex gap-3 h-full">
+                                            <button class="flex items-center hover:scale-110 transition"
+                                                @click="editId = {{ $project->id }}; editProject = {{ json_encode($project) }};  editProject.bidding_date = '{{ $project->bidding_date->format('Y-m-d') }}'; showEditModal = true">
+                                                <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
+                                            </button>
+
+
+                                            <button class="flex items-center hover:scale-110 transition"
+                                                @click="deleteId = {{ $project->id }}; showDeleteModal = true">
+                                                <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="p-5 text-center text-gray-500">
+                                        No projects found.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
                 <x-edit-project />
                 <x-delete-project />

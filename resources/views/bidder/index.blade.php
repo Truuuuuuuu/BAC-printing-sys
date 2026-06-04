@@ -24,7 +24,7 @@
                         <x-lucide-folder-open class="w-8 h-8 text-primary" />
                     </div>
                     <div class="flex flex-col">
-                        <h2 class="text-3xl text-primary font-semibold">Projects</h2>
+                        <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Projects</h2>
                         <p class="text-xs text-primary/80">Browse and select available projects to create a bid.
                         </p>
                     </div>
