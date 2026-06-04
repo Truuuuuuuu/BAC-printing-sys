@@ -12,7 +12,7 @@ class PdfController extends Controller
     {
         $projects = Project::all();
 
-        return Pdf::view('pdf.projects', compact('projects'))
+        return Pdf::view('pdf.projects-list', compact('projects'))
             ->inline();
     }
 
@@ -20,7 +20,16 @@ class PdfController extends Controller
     {
         $bids = Bid::all();
 
-        return Pdf::view('pdf.bids', compact('bids'))
+        return Pdf::view('pdf.bids-list', compact('bids'))
+            ->inline();
+    }
+
+    public function bid(Bid $bid)
+    {
+        return pdf::view('pdf.bid-record', compact('bid'))
+            ->paperSize(216, 330, 'mm')
+            ->footerView('pdf.partials.footer')
+            ->margins(0, 0, 20, 0) 
             ->inline();
     }
 }

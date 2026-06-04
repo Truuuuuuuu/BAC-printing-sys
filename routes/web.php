@@ -42,5 +42,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/pdf/projects', [PdfController::class, 'projects'])->name('pdf.projects');
 Route::get('/pdf/bids', [PdfController::class, 'bids'])->name('pdf.bids');
+Route::get('/pdf/[{bid}/print', [PdfController::class,'bid'])->name('pdf.bid');
 
 require __DIR__.'/auth.php';

@@ -142,6 +142,13 @@
                                     <td class="p-2 capitalize">{{ $bid->address}}</td>
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex gap-3 h-full items-center  justify-center ">
+
+                                             <button 
+                                             @click="window.open('{{ route('pdf.bid', $bid) }}', '_blank')"
+                                             class="flex items-center hover:scale-110 transition">
+                                                <x-lucide-printer class="w-5 h-5 text-black cursor-pointer" />
+                                            </button>
+
                                             <button class="flex items-center hover:scale-110 transition"
                                                 @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
                                                 <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
