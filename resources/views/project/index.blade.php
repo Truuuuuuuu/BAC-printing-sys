@@ -13,7 +13,7 @@
     showEditModal: {{ $errors->hasAny(['edit-project_title', 'edit-amount', 'edit-bidding_date', 'edit-status']) ? 'true' : 'false' }},
     showDeleteModal: false,
     }">
-        <div class="max-w-[1440px] mx-auto sm:px-6 lg:px-8 flex gap-5">
+        <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex gap-5">
             <div class="max-w-md shrink-0 self-start sticky top-6 space-y-5">
                 <div class="flex gap-2 items-center">
                     <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
