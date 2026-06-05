@@ -126,7 +126,7 @@
                         </thead>
                         <tbody>
                             @forelse($projects as $project)
-                                <tr class="border-t">
+                                <tr class="border-t hover:cursor-pointer hover:bg-gray-200" onclick="window.location='{{ route('project.show', $project) }}'">
                                     <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
                                     <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
@@ -136,7 +136,7 @@
                                             {{ $project->status }}
                                         </div>
                                     </td>
-                                    <td class="p-2 whitespace-nowrap">
+                                    <td class="p-2 whitespace-nowrap" onclick="event.stopPropagation()">
                                         <div class="flex gap-3 h-full">
                                             <button class="flex items-center hover:scale-110 transition"
                                                 @click="editId = {{ $project->id }}; editProject = {{ json_encode($project) }};  editProject.bidding_date = '{{ $project->bidding_date->format('Y-m-d') }}'; showEditModal = true">

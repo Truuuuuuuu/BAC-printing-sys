@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Bid;
 class ProjectController extends Controller
 {
     
@@ -90,4 +91,9 @@ class ProjectController extends Controller
     }
 
     
+    public function show(Project $project)
+    {
+        $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(15);
+        return view('project.show', compact('project', 'bids'));
+    }
 }

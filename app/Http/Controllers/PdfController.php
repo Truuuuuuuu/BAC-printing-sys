@@ -24,9 +24,9 @@ class PdfController extends Controller
             ->inline();
     }
 
-    public function bid(Bid $bid)
+    public function resolution(Bid $bid)
     {
-        return pdf::view('pdf.bid-record', compact('bid'))
+        return pdf::view('pdf.resolution', compact('bid'))
             ->paperSize(216, 330, 'mm')
             ->footerView('pdf.partials.footer')
             ->margins(0, 0, 20, 0) 

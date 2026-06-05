@@ -121,10 +121,10 @@
 
         <p class="indent-12">
             WHEREAS, the <strong>Local Government Unit of Casiguran</strong> posted and advertised the Invitation to Bid
-            for <strong>{{ strtoupper($bid->project->project_title) }}</strong> at the PhilGEPS's (Philippine Government
+            for <strong>{{ strtoupper('Project Title') }}</strong> at the PhilGEPS's (Philippine Government
             Electronic Procurement System) website on <strong>DATE</strong> and posted in a conspicuous place from
             <strong>DATE – DATE</strong>. The Approved Budget for the Contract is Php
-            <strong>{{ number_format($bid->project->amount, 2) }}</strong>.
+            <strong>{{ ('Amount') }}</strong>.
         </p>
 
         <p class="indent-12">
@@ -196,7 +196,7 @@
         <ol class="alpha-list">
             <li>
                 To declare <strong>{{ $bid->company_name }}</strong> as the Bidder with the Lowest Calculated
-                Responsive Bid for the <strong>{{ strtoupper($bid->project->project_title) }}</strong>,
+                Responsive Bid for the <strong>{{ strtoupper('Project Title') }}</strong>,
             </li>
             <li>
                 To recommend for approval by the <strong>Municipal Mayor – Maria Minez R. Hamor</strong> of the <strong>Local Government

@@ -36,4 +36,11 @@ class Project extends Model
         return $this->hasMany(Bid::class);
     }
 
+    public function winningBid(): ?Bid
+    {
+        return $this->bids()
+            ->orderBy('bid_amount')
+            ->first();
+    }
+
 }

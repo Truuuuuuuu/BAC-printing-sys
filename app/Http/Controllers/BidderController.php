@@ -66,7 +66,7 @@ class BidderController extends Controller
             'address' => $request->address,
         ]);
 
-        return redirect()->route('bidder.index')->with('success','Bid created successfully.');
+        return back()->with('success','Bid created successfully.');
     }
 
 
@@ -118,6 +118,6 @@ class BidderController extends Controller
     public function destroy(Bid $bid)
     {
         $bid->delete();
-        return redirect()->route('bidder.index')->with('success', 'Bid deleted successfully.');
+        return back()->with('success', 'Bid deleted successfully.');
     }
 }

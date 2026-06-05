@@ -19,6 +19,8 @@ Route::middleware(['auth', 'verified'])
     Route::post('/store', [ProjectController::class,'store'])->name('store');
     Route::put('/{project}/edit', [ProjectController::class,'update'])->name('update');
     Route::delete('/{project}/delete', [ProjectController::class,'destroy'])->name('destroy');
+
+    Route::get('/{project}/detail', [ProjectController::class,'show'])->name('show');
 });
 
 
@@ -31,6 +33,7 @@ Route::middleware(['auth', 'verified'])
     Route::post('/store', [BidderController::class, 'store'])->name('store');
     Route::put('/{bid}/edit', [BidderController::class,'update'])->name('update');
     Route::delete('/{bid}/delete', [BidderController::class,'destroy'])->name('destroy');
+
 });
 
 
@@ -40,8 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/pdf/projects', [PdfController::class, 'projects'])->name('pdf.projects');
-Route::get('/pdf/bids', [PdfController::class, 'bids'])->name('pdf.bids');
-Route::get('/pdf/[{bid}/print', [PdfController::class,'bid'])->name('pdf.bid');
+Route::middleware('auth')
+    ->prefix('pdf')
+    ->name('pdf.')
+    ->group(function(){
+   
+    Route::get('/projects', [PdfController::class, 'projects'])->name('projects');
+    Route::get('/bids', [PdfController::class, 'bids'])->name('bids');
+    Route::get('/bac-resolution-declarating-lcrb', [PdfController::class,'resolution'])->name('brdl');
+});
+
+
 
 require __DIR__.'/auth.php';
