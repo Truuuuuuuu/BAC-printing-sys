@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class DocEditorController extends Controller
 {
-    public function show()
-    {
-        return view('components.doc-editor');
+    public function show(Project $project)
+    {   
+        $defaults = [
+            'project_title_upper'   => $project->project_title,
+            'approved_budget' => number_format($project->amount,2),
+        ];
+        return view('docs.resolution', compact('defaults'));
     }
 
     public function export(Request $request)

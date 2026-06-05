@@ -1,6 +1,5 @@
 <x-app-layout>
 
-
     <div class="py-12" x-data="{
         deleteId: null,
         editId: {{ old('edit-id', 'null') }},
@@ -50,7 +49,7 @@
             <div class="flex flex-wrap justify-start gap-3">
                 <div>
                     {{-- Print Resolution Declaring LCRB--}}
-                    <a href="{{ route('pdf.brdl') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    <a href="{{ route('doc-editor.show', $project) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>BAC Resolution Declarating LCRB</span>

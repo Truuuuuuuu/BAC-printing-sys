@@ -1,4 +1,5 @@
-<x-app-layout>
+
+@props(['defaults'])
 
     <div
     x-data="docEditor()"
@@ -6,10 +7,10 @@
     class="min-h-screen bg-gray-50 p-6"
     
 >
-    <div class="max-w-6xl mx-auto flex gap-6">
+    <div class="max-w-7xl mx-auto flex gap-6">
 
         {{-- Left: argument inputs --}}
-        <div class="w-72 shrink-0">
+        <div class="w-1/4  shrink-0">
             <div class="bg-white rounded-xl border border-gray-200 p-4 sticky top-6">
                 <div class="mb-4">
                     <h2 class="font-semibold text-gray-800 text-sm">Fill placeholders</h2>
@@ -71,7 +72,7 @@
                         <span class="text-xs text-gray-400" x-text="previewing ? 'Updating preview...' : 'Live preview'"></span>
                     </span>
                 </div>
-                <div class="relative" style="height: 80vh;">
+                <div class="relative" style="height: 100vh;">
                     <iframe
                         x-ref="previewFrame"
                         class="w-full h-full border-none"
@@ -96,11 +97,13 @@
     const EXPORT_URL = '{{ route("doc-editor.export") }}';
     const PREVIEW_URL = '{{ route("doc-editor.preview") }}';
     const CSRF_TOKEN = '{{ csrf_token() }}';
+    const DEFAULT_ARGS = @json($defaults);
 </script>
 
 @verbatim
 <script>
 function docEditor() {
+     console.count('docEditor created');
     return {
         fileName: 'BAC Resolution Declaring LCRB.docx',
         rawHtml: '',
@@ -115,6 +118,8 @@ function docEditor() {
 
         async init() {
             try {
+                console.log('init called');
+
                 const resp = await fetch(DOC_URL);
                 if (!resp.ok) throw new Error('Could not load document.');
                 const arrayBuffer = await resp.arrayBuffer();
@@ -125,7 +130,17 @@ function docEditor() {
                 const keys = [...new Set(matches.map(m => m[1]))];
                 this.placeholders = keys;
                 this.args = Object.fromEntries(keys.map(k => [k, '']));
+
+
+                this.args = {
+                    ...this.args,
+                    ...DEFAULT_ARGS
+                };
+
                 this.placeholderKeys = keys;
+
+
+                console.log(DEFAULT_ARGS);
             } catch (err) {
                 this.loadError = err.message;
             } finally {
@@ -185,7 +200,7 @@ function docEditor() {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'document_filled.docx';
+                a.download = 'BAC Resolution Declaring LCRB.docx';
                 a.click();
                 URL.revokeObjectURL(url);
             } catch (err) {
@@ -217,7 +232,11 @@ function docEditor() {
             number_of_responsive_bidders: 'e.g. six (6)',
             project_title: 'e.g. Construction of Barangay Hall',
             bidders: 'e.g. GSH CONSTRUCTION, ESK CORP, ...',
-            approved_budget: '400,000.00',
+            approved_budget: 'e.g. 400,000.00',
+            resolution_number: '0000-00-000',
+            winning_bidder: 'e.g. ABC CONSTRUCTION', 
+            philGEPS_posting_date: 'MM/DD/YY',
+            conspicuous_place_posting_date: 'MM/DD/YY-MM/DD/YY',
         },
   
     }
@@ -225,4 +244,3 @@ function docEditor() {
 </script>
 @endverbatim
 
-</x-app-layout>

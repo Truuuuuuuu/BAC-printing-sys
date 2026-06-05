@@ -58,7 +58,7 @@ Route::middleware('auth')
 
 
 
-Route::get('/doc-editor', [DocEditorController::class, 'show'])->name('doc-editor.show');
+Route::get('/{project}/doc-editor', [DocEditorController::class, 'show'])->name('doc-editor.show');
 Route::post('/doc-editor/export', [DocEditorController::class, 'export'])->name('doc-editor.export');
 Route::post('/doc-preview', [DocEditorController::class, 'preview'])->name('doc-editor.preview');
 Route::get('/doc-template', function () {
