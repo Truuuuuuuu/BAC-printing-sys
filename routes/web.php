@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BidderController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\DocEditorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -54,5 +55,16 @@ Route::middleware('auth')
 });
 
 
+
+
+
+Route::get('/doc-editor', [DocEditorController::class, 'show'])->name('doc-editor.show');
+Route::post('/doc-editor/export', [DocEditorController::class, 'export'])->name('doc-editor.export');
+Route::post('/doc-preview', [DocEditorController::class, 'preview'])->name('doc-editor.preview');
+Route::get('/doc-template', function () {
+    return response()->file(public_path('docs/BAC Resolution Declaring LCRB.docx'), [
+        'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ]);
+})->name('doc-template');
 
 require __DIR__.'/auth.php';
