@@ -84,7 +84,9 @@
                     <span x-text="exporting ? 'Exporting...' : 'Export .docx'"></span>
                 </button>
 
-                <p x-show="exportError" x-text="exportError" class="mt-2 text-xs text-red-500"></p>
+                <p x-show="exportError" 
+                    x-text="exportError" 
+                    class="mt-2 text-xs text-red-500 whitespace-pre-line"></p>
             </div>
         </div>
 
@@ -94,15 +96,15 @@
 
                 {{-- Header --}}
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100">
-                    <div class="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                     <span class="text-sm text-gray-500 font-medium" x-text="fileName"></span>
                     <span class="ml-auto flex items-center gap-2">
                         <svg x-show="previewing" class="w-3.5 h-3.5 animate-spin text-blue-500" fill="none"
                             viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="green" stroke-width="4" />
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                         </svg>
-                        <span class="text-xs text-gray-400"
+                        <span class="text-xs text-green-500"
                             x-text="previewing ? 'Updating preview...' : 'Live preview'"></span>
                     </span>
                 </div>
@@ -267,6 +269,12 @@
                             },
                             body: JSON.stringify({ args: this.args, table_rows: this.tableRows }),
                         });
+
+                        if (resp.status === 422) {
+                            const data = await resp.json();
+                            this.exportError = data.errors.join('\n');
+                            return;
+                        }
 
                         if (!resp.ok) throw new Error('Export failed');
 

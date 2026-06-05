@@ -20,6 +20,61 @@ class DocEditorController extends Controller
     {
         $args      = $request->input('args', []);
         $tableRows = $request->input('table_rows', []);
+
+        // Required static fields
+        $requiredArgs = [
+            'resolution_number'               => 'Resolution Number',
+            'total_interested_bidders_lower'  => 'Total Interested Bidders',
+            'number_of_responsive_bidders'    => 'Number of Responsive Bidders',
+            'project_title_upper'             => 'Project Title',
+            'approved_budget'                 => 'Approved Budget',
+            'winning_bidder_upper'            => 'Winning Bidder',
+            'philGEPS_posting_date'           => 'PhilGEPS Posting Date',
+            'conspicuous_place_posting_date'  => 'Conspicuous Place Posting Date',
+        ];
+
+        $errors = [];
+
+        // Check static fields
+        foreach ($requiredArgs as $key => $label) {
+            if (empty(trim($args[$key] ?? ''))) {
+                $errors[] = "{$label} is required.";
+            }
+        }
+
+        // Check table rows — at least one row, no empty fields
+        $requiredTableFields = [
+            'a' => [
+                'row_a_bidder_upper' => 'Table 1 Bidder Name',
+                'row_a_amount'       => 'Table 1 Bid Amount',
+            ],
+            'b' => [
+                'row_b_bidder_upper' => 'Table 2 Bidder Name',
+                'row_b_amount'       => 'Table 2 Bid Amount',
+            ],
+        ];
+
+        foreach ($requiredTableFields as $group => $fields) {
+            $rows = $tableRows[$group] ?? [];
+            if (empty($rows)) {
+                $errors[] = "Table " . strtoupper($group) . " must have at least one row.";
+                continue;
+            }
+            foreach ($rows as $i => $row) {
+                $rowNum = $i + 1;
+                foreach ($fields as $key => $label) {
+                    if (empty(trim($row[$key] ?? ''))) {
+                        $errors[] = "{$label} (Row {$rowNum}) is required.";
+                    }
+                }
+            }
+        }
+
+        if (!empty($errors)) {
+            return response()->json(['errors' => $errors], 422);
+        }
+
+
         $template  = public_path('docs/BAC Resolution Declaring LCRB.docx');
         $outPath   = storage_path('app/tmp/' . uniqid('out_') . '.docx');
 
