@@ -146,7 +146,7 @@
                         <div class="table-responsive w-full">
                             <table class="w-full border-collapse text-sm">
                                 <thead>
-                                    <tr class="bg-primary text-white">
+                                    <tr class="bg-primary/70 text-white">
                                         <th class="border border-black px-2 py-1 text-center font-bold">#</th>
                                         <th class="border border-black px-2 py-1 text-center font-bold">Bidder</th>
                                         <th class="border border-black px-2 py-1 text-center font-bold">Proprietor</th>

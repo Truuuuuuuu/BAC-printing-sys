@@ -31,36 +31,44 @@
                 <hr class="my-4 border-gray-100">
 
                 {{-- Dynamic table rows --}}
-                <div class="mt-4" x-show="tableFields.length > 0">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xs font-semibold text-gray-600 uppercase tracking-wide">Table No.1</h3>
-                        <button type="button" @click="addTableRow()"
-                            class="text-xs text-blue-600 hover:text-blue-800 font-medium">+ Add Row</button>
-                    </div>
+                <div class="mt-4" x-show="Object.keys(tablesConfig).length > 0">
 
-                    <div class="space-y-3 max-h-72 overflow-y-auto pr-1">
-                        <template x-for="(row, rowIndex) in tableRows" :key="rowIndex">
-                            <div class="border border-gray-100 rounded-lg p-2 bg-gray-50 relative">
-                                <button type="button" @click="removeTableRow(rowIndex)" x-show="tableRows.length > 1"
-                                    class="absolute top-1.5 right-1.5 text-gray-300 hover:text-red-400 text-xs leading-none">✕</button>
+                    <template x-for="[group, config] in Object.entries(tablesConfig)" :key="group">
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xs font-semibold text-gray-600 uppercase tracking-wide"
+                                    x-text="config.label"></h3>
+                                <button type="button" @click="addTableRow(group)"
+                                    class="text-xs text-blue-600 hover:text-blue-800 font-medium">+ Add Row</button>
+                            </div>
 
-                                <p class="text-xs text-gray-400 font-medium mb-2">Row <span
-                                        x-text="rowIndex + 1"></span></p>
+                            <div class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                                <template x-for="(row, rowIndex) in tableRows[group]" :key="rowIndex">
+                                    <div class="border border-gray-100 rounded-lg p-2 bg-gray-50 relative">
+                                        <button type="button" @click="removeTableRow(group, rowIndex)"
+                                            x-show="tableRows[group].length > 1"
+                                            class="absolute top-1.5 right-1.5 text-gray-300 hover:text-red-400 text-xs">✕</button>
 
-                                <template x-for="field in tableFields" :key="field">
-                                    <div class="mb-1.5">
-                                        <label class="block text-xs text-gray-400 mb-0.5"
-                                            x-text="getRowFieldConfig(field).label"></label>
-                                        <input type="text"
-                                            class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
-                                            :placeholder="getRowFieldConfig(field).placeholder"
-                                            x-model="row[field]"
-                                            @input="schedulePreview()" />
+                                        <p class="text-xs text-gray-400 font-medium mb-2">
+                                            Row <span x-text="rowIndex + 1"></span>
+                                        </p>
+
+                                        <template x-for="[field, cfg] in Object.entries(config.fields)" :key="field">
+                                            <div class="mb-1.5">
+                                                <label class="block text-xs text-gray-400 mb-0.5"
+                                                    x-text="cfg.label"></label>
+                                                <input type="text"
+                                                    class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                    :placeholder="cfg.placeholder" x-model="row[field]"
+                                                    @input="schedulePreview()" />
+                                            </div>
+                                        </template>
                                     </div>
                                 </template>
                             </div>
-                        </template>
-                    </div>
+                        </div>
+                    </template>
+
                 </div>
 
                 <button @click="exportDoc()" :disabled="exporting || loading || previewing"
@@ -82,7 +90,9 @@
 
         {{-- Right: PDF preview --}}
         <div class="flex-1 min-w-0">
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm sticky top-6">
+
+                {{-- Header --}}
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100">
                     <div class="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
                     <span class="text-sm text-gray-500 font-medium" x-text="fileName"></span>
@@ -96,13 +106,15 @@
                             x-text="previewing ? 'Updating preview...' : 'Live preview'"></span>
                     </span>
                 </div>
-                <div class="relative" style="height: 150vh;">
+
+                {{-- Preview frame --}}
+                <div class="relative overflow-hidden rounded-b-xl" style="height: calc(100vh - 3rem);">
                     <iframe x-ref="previewFrame" class="w-full h-full border-none" style="display:block"></iframe>
-                    <div x-show="previewing"
-                        class="absolute inset-0 bg-white bg-opacity-60 flex items-center justify-center">
+                    <div x-show="previewing" class="absolute inset-0 bg-white/60 flex items-center justify-center">
                         <span class="text-sm text-gray-400">Rendering...</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -134,8 +146,7 @@
                 previewing: false,
                 debounceTimer: null,
 
-                tableFields: [],
-                tableRows: [],
+
 
                 placeholderHints: {
                     total_interested_bidders: 'e.g. forty-eight (48)',
@@ -150,57 +161,69 @@
 
                 },
 
-                rowFieldConfig: {
-                    row_bidder_upper: {
-                        label: 'Name of Bidder',
-                        placeholder: 'e.g. ABC CONSTRUCTION.',
+                tablesConfig: {
+                    a: {
+                        label: 'Table 1 — Bid Amount (As Read)',
+                        fields: {
+                            row_a_bidder_upper: { label: 'Name of Bidder', placeholder: 'e.g. ABC CONSTRUCTION' },
+                            row_a_amount: { label: 'Bid Amount (As Read)', placeholder: 'e.g. 100,000.00' },
+                            row_a_variance: { label: '% Variance from ABC', placeholder: 'e.g. 2.5%' },
+                        }
                     },
-                    row_amount_read: {
-                        label: 'Bid Amount (As Read)',
-                        placeholder: 'e.g. 100,000.00',
-                    },
-                    row_variance: {
-                        label: '% Variance from ABC',
-                        placeholder: 'e.g. 2.5%',
+                    b: {
+                        label: 'Table 2 — Bid Amount (As Calculated)',
+                        fields: {
+                            row_b_bidder_upper: { label: 'Name of Bidder', placeholder: 'e.g. ABC CONSTRUCTION' },
+                            row_b_amount: { label: 'Bid Amount (As Calculated)', placeholder: 'e.g. 100,000.00' },
+                            row_b_variance: { label: '% Variance from ABC', placeholder: 'e.g. 2.5%' },
+                        }
                     },
                 },
 
-                async init() {
-                    try {
-                        const resp = await fetch(DOC_URL);
-                        if (!resp.ok) throw new Error('Could not load document.');
-                        const arrayBuffer = await resp.arrayBuffer();
-                        const result = await mammoth.convertToHtml({ arrayBuffer });
-                        this.rawHtml = result.value;
+                tableRows: {},
 
-                        const matches = [...this.rawHtml.matchAll(/\{\{(\w+)\}\}/g)];
-                        const keys = [...new Set(matches.map(m => m[1]))];
+               async init() {
+                try {
+                    const resp = await fetch(DOC_URL);
+                    if (!resp.ok) throw new Error('Could not load document.');
+                    const arrayBuffer = await resp.arrayBuffer();
+                    const result = await mammoth.convertToHtml({ arrayBuffer });
+                    this.rawHtml = result.value;
 
-                        const rowFields = keys.filter(k => k.startsWith('row_'));
-                        const staticFields = keys.filter(k => !k.startsWith('row_'));
+                    const keys = [...new Set(
+                        [...this.rawHtml.matchAll(/\{\{(\w+)\}\}/g)].map(m => m[1])
+                    )];
 
-                        this.placeholders = staticFields;
-                        this.tableFields = rowFields;
+                    const staticFields = keys.filter(k => !k.startsWith('row_'));
+                    this.placeholders = staticFields;
 
-                        // Merge DEFAULT_ARGS last so it never gets overwritten
-                        this.args = {
-                            ...Object.fromEntries(staticFields.map(k => [k, ''])),
-                            ...DEFAULT_ARGS,
-                        };
+                    // 1. Build empty args
+                    this.args = Object.fromEntries(staticFields.map(k => [k, '']));
 
-                        this.tableRows = rowFields.length > 0
-                            ? [Object.fromEntries(rowFields.map(f => [f, '']))]
-                            : [];
-
-                    } catch (err) {
-                        this.loadError = err.message;
-                    } finally {
-                        this.loading = false;
-                        this.refreshPreview();
+                    // 2. Build empty table rows
+                    this.tableRows = {};
+                    for (const [group, config] of Object.entries(this.tablesConfig)) {
+                        this.tableRows[group] = [
+                            Object.fromEntries(Object.keys(config.fields).map(f => [f, '']))
+                        ];
                     }
-                },
+
+                    // 3. Restore saved user input
+                    this.loadFromStorage();
+
+                    // 4. DEFAULT_ARGS always wins (project model values never overridden)
+                    this.args = { ...this.args, ...DEFAULT_ARGS };
+
+                } catch (err) {
+                    this.loadError = err.message;
+                } finally {
+                    this.loading = false;
+                    this.refreshPreview();
+                }
+            },
 
                 schedulePreview() {
+                    this.saveToStorage(); 
                     clearTimeout(this.debounceTimer);
                     this.debounceTimer = setTimeout(() => this.refreshPreview(), 600);
                 },
@@ -280,14 +303,16 @@
 
 
 
-                addTableRow() {
-                    const empty = Object.fromEntries(this.tableFields.map(f => [f, '']));
-                    this.tableRows.push(empty);
+                addTableRow(group) {
+                    const empty = Object.fromEntries(
+                        Object.keys(this.tablesConfig[group].fields).map(f => [f, ''])
+                    );
+                    this.tableRows[group].push(empty);
                     this.schedulePreview();
                 },
 
-                removeTableRow(index) {
-                    this.tableRows.splice(index, 1);
+                removeTableRow(group, index) {
+                    this.tableRows[group].splice(index, 1);
                     this.schedulePreview();
                 },
 
@@ -296,6 +321,22 @@
                         label: this.formatLabel(field),
                         placeholder: 'Enter ' + this.formatLabel(field),
                     };
+                },
+
+                saveToStorage() {
+                    localStorage.setItem('doc_args', JSON.stringify(this.args));
+                    localStorage.setItem('doc_table_rows', JSON.stringify(this.tableRows));
+                },
+
+                loadFromStorage() {
+                    try {
+                        const savedArgs = localStorage.getItem('doc_args');
+                        const savedRows = localStorage.getItem('doc_table_rows');
+                        if (savedArgs) this.args = { ...this.args, ...JSON.parse(savedArgs) };
+                        if (savedRows) this.tableRows = { ...this.tableRows, ...JSON.parse(savedRows) };
+                    } catch (e) {
+                        console.warn('Could not restore from storage', e);
+                    }
                 },
             }
         }

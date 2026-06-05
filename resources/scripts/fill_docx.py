@@ -7,12 +7,12 @@ from docx.oxml.ns import qn
 
 doc = Document(sys.argv[1])
 args = json.loads(sys.argv[2])
-table_rows = json.loads(sys.argv[3]) if len(sys.argv) > 4 else []
+table_rows = json.loads(sys.argv[3]) if len(sys.argv) > 4 else {}
 
 if not isinstance(args, dict):
     args = {}
-if not isinstance(table_rows, list):
-    table_rows = []
+if not isinstance(table_rows, dict):
+    table_rows = {}
 
 def format_value(key, val):
     if val is None:
@@ -27,52 +27,45 @@ def format_value(key, val):
     return val
 
 def merge_and_replace_paragraph(para, extra=None):
-    """Only merges runs if a split placeholder is detected."""
     if not para.runs:
         return
     context = {**args, **(extra or {})}
     full_text = ''.join(run.text for run in para.runs)
 
-    # Check if any placeholder exists in the merged text
     has_placeholder = any(('{{' + key + '}}') in full_text for key in context)
     if not has_placeholder:
-        return  # Nothing to replace, don't touch formatting
+        return
 
-    # Check if all placeholders are already whole in individual runs
-    all_intact = True
-    for key in context:
-        placeholder = '{{' + key + '}}'
-        if placeholder in full_text:
-            # Check if it exists intact in any single run
-            if not any(placeholder in run.text for run in para.runs):
-                all_intact = False
-                break
+    all_intact = all(
+        any(('{{' + key + '}}') in run.text for run in para.runs)
+        for key in context
+        if ('{{' + key + '}}') in full_text
+    )
 
     if all_intact:
-        # Safe to replace run by run — preserves formatting per run
         for run in para.runs:
             for key, val in context.items():
                 placeholder = '{{' + key + '}}'
                 if placeholder in run.text:
                     run.text = run.text.replace(placeholder, format_value(key, val))
     else:
-        # Placeholder is split — must merge, but copy first run's XML properties
-        full_text_replaced = full_text
         for key, val in context.items():
             placeholder = '{{' + key + '}}'
-            if placeholder in full_text_replaced:
-                full_text_replaced = full_text_replaced.replace(placeholder, format_value(key, val))
-        para.runs[0].text = full_text_replaced
+            if placeholder in full_text:
+                full_text = full_text.replace(placeholder, format_value(key, val))
+        para.runs[0].text = full_text
         for run in para.runs[1:]:
             run.text = ''
 
-def is_template_row(row):
+def get_row_group(row):
+    """Detect which row_X_ group prefix this template row uses e.g. 'a', 'b'"""
     for cell in row.cells:
         for para in cell.paragraphs:
             full_text = ''.join(run.text for run in para.runs)
-            if '{{row_' in full_text:
-                return True
-    return False
+            match = re.search(r'\{\{row_([a-z])_', full_text)
+            if match:
+                return match.group(1)
+    return None
 
 # Static body paragraphs
 for para in doc.paragraphs:
@@ -81,41 +74,44 @@ for para in doc.paragraphs:
 # Tables
 for table in doc.tables:
     template_row_idx = None
+    group = None
+
     for i, row in enumerate(table.rows):
-        if is_template_row(row):
+        g = get_row_group(row)
+        if g:
             template_row_idx = i
+            group = g
             break
 
     if template_row_idx is None:
+        # No dynamic rows — static replacement only
         for row in table.rows:
             for cell in row.cells:
                 for para in cell.paragraphs:
                     merge_and_replace_paragraph(para)
         continue
 
+    rows_data = table_rows.get(group, [{}])
     template_tr = table.rows[template_row_idx]._tr
     new_trs = []
 
-    for row_data in table_rows:
+    for row_data in rows_data:
         new_tr = copy.deepcopy(template_tr)
         for cell_elem in new_tr.findall('.//' + qn('w:tc')):
             for para_elem in cell_elem.findall('.//' + qn('w:p')):
                 runs = para_elem.findall('.//' + qn('w:r'))
                 if not runs:
                     continue
-                # Merge all run texts
                 full_text = ''.join(
                     (r.find(qn('w:t')).text or '')
                     if r.find(qn('w:t')) is not None else ''
                     for r in runs
                 )
-                # Replace placeholders
                 context = {**args, **row_data}
                 for key, val in context.items():
                     placeholder = '{{' + key + '}}'
                     if placeholder in full_text:
                         full_text = full_text.replace(placeholder, format_value(key, val))
-                # Write back to first run, clear rest
                 first_t = runs[0].find(qn('w:t'))
                 if first_t is not None:
                     first_t.text = full_text
