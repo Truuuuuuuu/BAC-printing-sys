@@ -152,25 +152,25 @@
                         <div class="table-responsive w-full">
                             <table class="w-full border-collapse text-sm">
                                 <thead>
-                                    <tr class="bg-primary/70 text-white">
-                                        <th class="border border-black px-2 py-1 text-center font-bold">#</th>
-                                        <th class="border border-black px-2 py-1 text-center font-bold">Bidder</th>
-                                        <th class="border border-black px-2 py-1 text-center font-bold">Proprietor</th>
-                                        <th class="border border-black px-2 py-1 text-center font-bold">Contract Amount</th>
-                                        <th class="border border-black px-2 py-1 text-center font-bold">Address</th>
-                                        <th class="border border-black px-2 py-1 text-center font-bold">Actions</th>
+                                    <tr class="text-primary">
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">#</th>
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Bidder</th>
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Proprietor</th>
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Contract Amount</th>
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Address</th>
+                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($bids as $index => $bid)
                                         <tr class=" {{ $project->awardedBid?->id == $bid->id ? 'text-green-text font-bold bg-bg-green/20 hover:bg-bg-green/50' : 'odd:bg-white  even:bg-gray-200 hover:bg-gray-100 ' }}  transition">
-                                            <td class="border border-black px-2 py-1 text-center">{{ $index + 1 }}</td>
-                                            <td class="border border-black px-2 py-1">{{ $bid->company_name }}</td>
-                                            <td class="border border-black px-2 py-1">{{ $bid->proprietor }}</td>
-                                            <td class="border border-black px-2 py-1">
+                                            <td class="border border-gray-50 px-2 py-1 text-center">{{ $index + 1 }}</td>
+                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->company_name }}</td>
+                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->proprietor }}</td>
+                                            <td class="border border-gray-50 px-2 py-1">
                                                 ₱{{ number_format($bid->bid_amount, 2) }}</td>
-                                            <td class="border border-black px-2 py-1">{{ $bid->address }}</td>
-                                            <td class="border border-black px-2 py-1 whitespace-nowrap">
+                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->address }}</td>
+                                            <td class="border border-gray-50 px-2 py-1 whitespace-nowrap">
                                                 <div class="flex gap-3 h-full items-center  justify-center ">
 
                                                     <button title="Award" class="flex items-center hover:scale-110 transition"
