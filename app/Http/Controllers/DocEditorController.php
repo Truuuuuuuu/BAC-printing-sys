@@ -2,64 +2,159 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Symfony\Component\Process\Process;
 
 class DocEditorController extends Controller
 {
-    public function show(Project $project)
-    {   
-        $defaults = [
-            'project_title_upper'   => $project->project_title,
-            'approved_budget' => number_format($project->amount,2),
-        ];
-        return view('docs.resolution', compact('defaults'));
-    }
-    public function export(Request $request)
+    // ── Serve raw template file (replaces the hardcoded route closure) ────────
+
+    public function file(Project $project, string $template = 'bac-resolution')
     {
+        $def = $this->resolveTemplate($template);
+
+        return response()->file($def['template'], [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ]);
+    }
+
+    // ── Page ──────────────────────────────────────────────────────────────────
+
+    public function show(Project $project, string $template = 'bac-resolution')
+    {
+        $def = $this->resolveTemplate($template);
+
+        $config = [
+            'docUrl'     => route('doc.doc-template',       [$project, $template]),
+            'exportUrl'  => route('doc.editor-export',  [$project, $template]),
+            'previewUrl' => route('doc.editor-preview', [$project, $template]),
+
+            'fileName'     => $def['fileName'],
+            'downloadName' => $def['downloadName'],
+            'storageKey'   => "{$template}_{$project->id}",
+
+            'hints'        => $def['hints']        ?? [],
+            'tablesConfig' => $def['tablesConfig'] ?? [],
+            'defaults'     => $this->resolveDefaults($def, $project),
+        ];
+
+        return view('docs.resolution', compact('config'));
+    }
+
+    // ── Export ────────────────────────────────────────────────────────────────
+
+    public function export(Request $request, Project $project, string $template = 'bac-resolution')
+    {
+        $def       = $this->resolveTemplate($template);
         $args      = $request->input('args', []);
         $tableRows = $request->input('table_rows', []);
 
-        // Required static fields
-        $requiredArgs = [
-            'resolution_number'               => 'Resolution Number',
-            'total_interested_bidders_lower'  => 'Total Interested Bidders',
-            'number_of_responsive_bidders'    => 'Number of Responsive Bidders',
-            'project_title_upper'             => 'Project Title',
-            'approved_budget'                 => 'Approved Budget',
-            'winning_bidder_upper'            => 'Winning Bidder',
-            'philGEPS_posting_date'           => 'PhilGEPS Posting Date',
-            'conspicuous_place_posting_date'  => 'Conspicuous Place Posting Date',
-        ];
+        $errors = $this->validateInputs($def, $args, $tableRows);
 
+        if (!empty($errors)) {
+            return response()->json(['errors' => $errors], 422);
+        }
+
+        $outPath = $this->tempPath('out_', '.docx');
+
+        [$ok, $errorMsg] = $this->runPythonFill($def['template'], $args, $tableRows, $outPath);
+
+        if (!$ok) {
+            return response()->json(['error' => "Export failed: {$errorMsg}"], 500);
+        }
+
+        return response()->download($outPath, $def['downloadName'], [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ])->deleteFileAfterSend(true);
+    }
+
+    // ── Preview ───────────────────────────────────────────────────────────────
+
+    public function preview(Request $request, Project $project, string $template = 'bac-resolution')
+    {
+        
+        $def       = $this->resolveTemplate($template);
+        $args      = $request->input('args', []);
+        $tableRows = $request->input('table_rows', []);
+
+        $filledDocx = $this->tempPath('preview_', '.docx');
+
+        [$ok, $errorMsg] = $this->runPythonFill($def['template'], $args, $tableRows, $filledDocx);
+
+        if (!$ok) {
+            return response()->json(['error' => 'Fill failed', 'stderr' => $errorMsg], 500);
+        }
+
+        $tmpDir = storage_path('app/tmp/');
+        $pdf    = $this->convertToPdf($filledDocx, $tmpDir);
+        @unlink($filledDocx);
+
+        if (!$pdf) {
+            return response()->json(['error' => 'PDF conversion failed'], 500);
+        }
+
+        return response()->file($pdf, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline',
+        ])->deleteFileAfterSend(true);
+    }
+
+    // ── Private helpers ───────────────────────────────────────────────────────
+
+    private function resolveTemplate(string $slug): array
+    {
+        $def = config("doc_templates.{$slug}");
+        abort_if(!$def, 404, "Unknown document template: {$slug}");
+
+        // Resolve the full filesystem path here, not in the config file.
+        // public_path() cannot be called during config boot.
+        $def['template'] = public_path('docs/' . $def['file']);
+
+        return $def;
+    }
+
+    /**
+     * Map the template's 'defaults' dot-paths to actual model values.
+     * e.g. 'project_title_upper' => 'project_title' → $project->project_title
+     * Supports dot-notation for relations: 'bid.contractor.name'
+     */
+    private function resolveDefaults(array $def, Project $project): array
+    {
+        $defaults = [];
+        $formatAmount = $def['formatAmount'] ?? [];
+
+
+        foreach ($def['defaults'] ?? [] as $placeholder => $modelPath) {
+            $value = data_get($project, $modelPath, '');
+
+            if (in_array($placeholder, $formatAmount) && is_numeric($value)) {
+                $value = number_format((float) $value, 2);
+            }
+
+            $defaults[$placeholder] = $value;
+        }
+        return $defaults;
+    }
+
+    private function validateInputs(array $def, array $args, array $tableRows): array
+    {
         $errors = [];
 
-        // Check static fields
-        foreach ($requiredArgs as $key => $label) {
+        foreach ($def['requiredArgs'] ?? [] as $key => $label) {
             if (empty(trim($args[$key] ?? ''))) {
                 $errors[] = "{$label} is required.";
             }
         }
 
-        // Check table rows — at least one row, no empty fields
-        $requiredTableFields = [
-            'a' => [
-                'row_a_bidder_upper' => 'Table 1 Bidder Name',
-                'row_a_amount'       => 'Table 1 Bid Amount',
-            ],
-            'b' => [
-                'row_b_bidder_upper' => 'Table 2 Bidder Name',
-                'row_b_amount'       => 'Table 2 Bid Amount',
-            ],
-        ];
-
-        foreach ($requiredTableFields as $group => $fields) {
+        foreach ($def['requiredTableFields'] ?? [] as $group => $fields) {
             $rows = $tableRows[$group] ?? [];
+
             if (empty($rows)) {
-                $errors[] = "Table " . strtoupper($group) . " must have at least one row.";
+                $errors[] = 'Table ' . strtoupper($group) . ' must have at least one row.';
                 continue;
             }
+
             foreach ($rows as $i => $row) {
                 $rowNum = $i + 1;
                 foreach ($fields as $key => $label) {
@@ -70,84 +165,53 @@ class DocEditorController extends Controller
             }
         }
 
-        if (!empty($errors)) {
-            return response()->json(['errors' => $errors], 422);
+        return $errors;
+    }
+
+    private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath): array
+    {
+        if (!file_exists($templatePath)) {
+            return [false, "Template not found: {$templatePath}"];
         }
 
+        @mkdir(dirname($outPath), 0755, true);
 
-        $template  = public_path('docs/BAC Resolution Declaring LCRB.docx');
-        $outPath   = storage_path('app/tmp/' . uniqid('out_') . '.docx');
-
-        if (!file_exists($template)) {
-            return response()->json(['error' => 'Template not found.'], 404);
-        }
-
-        @mkdir(storage_path('app/tmp'), 0755, true);
-
-        $scriptPath = resource_path('scripts/fill_docx.py');
-
-        $process = new \Symfony\Component\Process\Process([
-            'python3', $scriptPath, $template, json_encode($args), json_encode($tableRows), $outPath
+        $process = new Process([
+            'python3',
+            resource_path('scripts/fill_docx.py'),
+            $templatePath,
+            json_encode($args),
+            json_encode($tableRows),
+            $outPath,
         ]);
         $process->run();
 
         if (!$process->isSuccessful() || !file_exists($outPath)) {
-            return response()->json(['error' => 'Export failed: ' . $process->getErrorOutput()], 500);
+            return [false, $process->getErrorOutput()];
         }
 
-        return response()->download($outPath, 'BAC Resolution Declaring LCRB.docx', [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        ])->deleteFileAfterSend(true);
+        return [true, ''];
     }
 
-   public function preview(Request $request)
+    private function convertToPdf(string $docxPath, string $outDir): ?string
     {
-        $args      = $request->input('args', []);
-        $tableRows = $request->input('table_rows', []);
-        $template  = public_path('docs/BAC Resolution Declaring LCRB.docx');
-        $tmpDir    = storage_path('app/tmp/');
-        $scriptPath = resource_path('scripts/fill_docx.py');
-
-        @mkdir($tmpDir, 0755, true);
-
-        $filledDocx = $tmpDir . uniqid('preview_') . '.docx';
-
-        $fill = new \Symfony\Component\Process\Process([
-            '/usr/bin/python3', $scriptPath, $template, json_encode($args), json_encode($tableRows), $filledDocx
+        $process = new Process([
+            '/opt/libreoffice26.2/program/soffice',
+            '--headless', '--convert-to', 'pdf',
+            $docxPath, '--outdir', $outDir,
         ]);
-        $fill->run();
+        $process->setTimeout(30);
+        $process->run();
 
-        if (!$fill->isSuccessful() || !file_exists($filledDocx)) {
-            return response()->json([
-                'error'  => 'Fill failed',
-                'stderr' => $fill->getErrorOutput(),
-                'stdout' => $fill->getOutput(),
-            ], 500);
-        }
+        $pdf = $outDir . pathinfo($docxPath, PATHINFO_FILENAME) . '.pdf';
 
-        $convert = new \Symfony\Component\Process\Process([
-            '/opt/libreoffice26.2/program/soffice', '--headless', '--convert-to', 'pdf',
-            $filledDocx, '--outdir', $tmpDir
-        ]);
-        $convert->setTimeout(30);
-        $convert->run();
-        @unlink($filledDocx);
+        return file_exists($pdf) ? $pdf : null;
+    }
 
-        $actualPdf = $tmpDir . pathinfo($filledDocx, PATHINFO_FILENAME) . '.pdf';
-
-        if (!file_exists($actualPdf)) {
-            return response()->json([
-                'error'        => 'PDF conversion failed',
-                'stderr'       => $convert->getErrorOutput(),
-                'stdout'       => $convert->getOutput(),
-                'pdf_expected' => $actualPdf,
-                'tmp_files'    => scandir($tmpDir),
-            ], 500);
-        }
-
-        return response()->file($actualPdf, [
-            'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => 'inline',
-        ])->deleteFileAfterSend(true);
+    private function tempPath(string $prefix, string $ext): string
+    {
+        $dir = storage_path('app/tmp/');
+        @mkdir($dir, 0755, true);
+        return $dir . uniqid($prefix) . $ext;
     }
 }
