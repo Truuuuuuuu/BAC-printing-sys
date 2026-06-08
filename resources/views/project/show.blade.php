@@ -150,7 +150,7 @@
                         </div>
                     @else
                         <div class="table-responsive w-full">
-                            <table class="w-full border-collapse text-sm">
+                            <table class="w-full border-collapse text-sm ">
                                 <thead>
                                     <tr class="text-primary">
                                         <th class="border border-gray-50 px-2 py-1 text-center font-bold">#</th>
