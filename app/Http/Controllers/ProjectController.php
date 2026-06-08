@@ -96,4 +96,14 @@ class ProjectController extends Controller
         $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(15);
         return view('project.show', compact('project', 'bids'));
     }
+
+    public function award(Bid $bid)
+    {
+
+        $bid->project->update([
+            'bid_id' => $bid->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Awarded successfully.');
+    }
 }

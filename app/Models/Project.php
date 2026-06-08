@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Project extends Model
 {
     protected $fillable = [
+        'bid_id',
         'project_title',
         'amount',
         'bidding_date',
@@ -41,6 +42,11 @@ class Project extends Model
         return $this->bids()
             ->orderBy('bid_amount')
             ->first();
+    }
+
+    public function awardedBid()
+    {
+        return $this->belongsTo(Bid::class, 'bid_id');
     }
 
 }

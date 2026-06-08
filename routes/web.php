@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])
     Route::post('/store', [ProjectController::class,'store'])->name('store');
     Route::put('/{project}/edit', [ProjectController::class,'update'])->name('update');
     Route::delete('/{project}/delete', [ProjectController::class,'destroy'])->name('destroy');
+    Route::put('/{bid}/award', [ProjectController::class,'award'])->name('award');
 
     Route::get('/{project}/detail', [ProjectController::class,'show'])->name('show');
 });

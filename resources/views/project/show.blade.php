@@ -9,12 +9,17 @@
             bid_amount: '{{ old('edit-bid_amount') }}',
             address: '{{ old('edit-address') }}',
         },
+        bidId: null,
+
         showDeleteBidModal: false,
         showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-address', 'edit-bid_amount']) ? 'true' : 'false' }},
         showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'address', 'bid_amount']) ? 'true' : 'false' }},
+        showAwardModal: false,
+        
         selectedProjectTitle: '{{ old('project_title') }}',
         selectedProjectId: '{{ old('project_id') }}',
         selectedProjectAmount: '{{ old('project_amount')}}',
+
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8  text-primary space-y-5">
             <button type="button" onclick="history.back()" class="inline-flex gap-2 items-center">
@@ -58,7 +63,7 @@
 
                 <div>
                     {{-- Print Resolution Declaring LCRB--}}
-                     <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>Bid Evaluation Report</span>
@@ -120,6 +125,7 @@
                 </div>
             </div>
 
+
             <div class="bg-foreground rounded-3xl p-4">
 
                 <div class="flex justify-between items-center my-3">
@@ -157,7 +163,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($bids as $index => $bid)
-                                        <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition">
+                                        <tr class=" {{ $project->awardedBid?->id == $bid->id ? 'text-green-text font-bold bg-bg-green/20 hover:bg-bg-green/50' : 'odd:bg-white  even:bg-gray-200 hover:bg-gray-100 ' }}  transition">
                                             <td class="border border-black px-2 py-1 text-center">{{ $index + 1 }}</td>
                                             <td class="border border-black px-2 py-1">{{ $bid->company_name }}</td>
                                             <td class="border border-black px-2 py-1">{{ $bid->proprietor }}</td>
@@ -166,12 +172,20 @@
                                             <td class="border border-black px-2 py-1">{{ $bid->address }}</td>
                                             <td class="border border-black px-2 py-1 whitespace-nowrap">
                                                 <div class="flex gap-3 h-full items-center  justify-center ">
-                                                    <button class="flex items-center hover:scale-110 transition"
+
+                                                    <button title="Award" class="flex items-center hover:scale-110 transition"
+                                                        @click=" bidId={{ $bid->id }};
+                                                        showAwardModal = true;
+                                                    ">
+                                                        <x-lucide-badge-check class="w-5 h-5 text-bg-green" />
+                                                    </button>
+
+                                                    <button class="flex items-center hover:scale-110 transition" title="Edit"
                                                         @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
                                                         <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
                                                     </button>
 
-                                                    <button class="flex items-center hover:scale-110 transition"
+                                                    <button class="flex items-center hover:scale-110 transition" title="Delete"
                                                         @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
                                                         <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
                                                     </button>
@@ -194,5 +208,6 @@
         <x-create-bid />
         <x-edit-bid />
         <x-delete-bid />
+        <x-award-bid/>
     </div>
 </x-app-layout>
