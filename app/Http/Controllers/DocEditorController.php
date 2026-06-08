@@ -37,7 +37,9 @@ class DocEditorController extends Controller
             'hints'        => $def['hints']        ?? [],
             'tablesConfig' => $def['tablesConfig'] ?? [],
             'defaults'     => $this->resolveDefaults($def, $project),
+            'defaultRows'  => $this->resolveDefaultRows($def, $project),
         ];
+
 
         return view('docs.resolution', compact('config'));
     }
@@ -135,6 +137,27 @@ class DocEditorController extends Controller
             $defaults[$placeholder] = $value;
         }
         return $defaults;
+    }
+
+    private function resolveDefaultRows(array $def, Project $project): array
+    {
+        $project->load('awardedBid');
+        $formatAmount = $def['formatAmount'] ?? [];
+
+        $defaultRows = [];
+        foreach ($def['defaultRows'] ?? [] as $group => $fields) {
+            $row = [];
+            foreach ($fields as $fieldKey => $modelPath) {
+                $value = data_get($project, $modelPath, '');
+
+                if (in_array($fieldKey, $formatAmount) && is_numeric($value)) {
+                    $value = number_format((float) $value, 2);
+                }
+                $row[$fieldKey] = $value;
+            }
+            $defaultRows[$group] = [$row]; 
+        }
+        return $defaultRows;
     }
 
     private function validateInputs(array $def, array $args, array $tableRows): array

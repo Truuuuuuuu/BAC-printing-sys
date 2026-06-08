@@ -60,11 +60,23 @@ return [
             ],
         ],
 
+        'defaultRows' => [
+            'a' => [
+                'row_a_bidder_upper' => 'awardedBid.company_name',
+                'row_a_amount'       => 'awardedBid.bid_amount',
+                'row_a_variance'     => 'variancePercentage',
+            ],
+            // 'b' => [
+            //     'row_b_bidder_upper' => 'awardedBid.company_name',
+            //     'row_b_amount'       => 'awardedBid.bid_amount',
+            // ],
+        ],
+
         'defaults' => [
             'project_title_upper' => 'project_title',
             'approved_budget'     => 'amount',
         ],
-        'formatAmount' => ['approved_budget'], 
+        'formatAmount' => ['approved_budget', 'bid_amount', 'row_a_amount'], 
     ],
 
     'evaluation-report' => [

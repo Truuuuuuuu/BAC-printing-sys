@@ -74,6 +74,17 @@ function docEditor() {
                     if (!this.args[k]) this.args[k] = v;
                 }
 
+                const defaultRows = cfg.defaultRows ?? {};
+                for (const [group, rows] of Object.entries(defaultRows)) {
+                    if (this.tableRows[group] && this.tableRows[group][0]) {
+                        for (const [field, value] of Object.entries(rows[0])) {
+                            if (!this.tableRows[group][0][field]) {
+                                this.tableRows[group][0][field] = value;
+                            }
+                        }
+                    }
+                }
+
             } catch (err) {
                 this.loadError = err.message;
             } finally {
@@ -206,5 +217,7 @@ function docEditor() {
                 console.warn('Could not restore from storage', e);
             }
         },
+
+        
     };
 }

@@ -48,5 +48,11 @@ class Project extends Model
     {
         return $this->belongsTo(Bid::class, 'bid_id');
     }
+    public function getVariancePercentageAttribute(): ?float
+    {
+        if (!$this->awardedBid || !$this->amount) return null;
 
+        return (($this->amount - $this->awardedBid->bid_amount) 
+            / $this->amount) * 100;
+    }
 }
