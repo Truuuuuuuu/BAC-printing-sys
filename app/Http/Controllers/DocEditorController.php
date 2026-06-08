@@ -40,6 +40,7 @@ class DocEditorController extends Controller
             'defaultRows'  => $this->resolveDefaultRows($def, $project),
 
             'inputPatterns' => $def['inputPatterns'] ?? [],
+            'labels' => $def['labels'] ?? [],
         ];
 
 
@@ -144,6 +145,10 @@ class DocEditorController extends Controller
 
             $defaults[$placeholder] = $value;
         }
+
+        foreach ($def['literals'] ?? [] as $placeholder => $value) {
+            $defaults[$placeholder] = $value;
+        }
         return $defaults;
     }
 
@@ -184,6 +189,8 @@ class DocEditorController extends Controller
                 $errors[] = "{$label} is required.";
             }
         }
+
+        
 
         foreach ($def['requiredTableFields'] ?? [] as $group => $fields) {
             $rows = $tableRows[$group] ?? [];

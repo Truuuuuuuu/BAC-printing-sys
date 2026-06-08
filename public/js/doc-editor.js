@@ -34,6 +34,7 @@ function docEditor() {
         debounceTimer: null,
 
         inputPatterns: cfg.inputPatterns ?? {},
+        placeholderLabels: cfg.labels ?? {},
 
         // ── init ──────────────────────────────────────────────────────────────
         async init() {
@@ -178,6 +179,8 @@ function docEditor() {
 
         // ── label / hint helpers ──────────────────────────────────────────────
         formatLabel(key) {
+            const customLabels = cfg.labels ?? {};
+            if (customLabels[key]) return customLabels[key];
             return key
                 .replace(/_upper$/,      '')
                 .replace(/_lower$/,      '')

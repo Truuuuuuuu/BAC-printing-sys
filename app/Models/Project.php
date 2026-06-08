@@ -60,4 +60,25 @@ class Project extends Model
     {
         return $this->bids()->count();
     }
+
+    public function getContractAmountInWordsAttribute(): string
+    {
+        if (!$this->amount) return '';
+
+        
+        $amount = number_format($this->awardedBid->bid_amount, 2, '.', '');
+
+        [$whole, $cents] = explode('.', $amount);
+
+        $formatter = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+
+        $words = collect(explode(' ', $formatter->format((int) $whole)))
+            ->map(fn($w) => ucfirst($w))
+            ->join(' ');
+
+        $centsText = (int) $cents > 0 ? " and {$cents}/100" : '';
+
+
+        return "{$words} Pesos{$centsText}";
+    }
 }
