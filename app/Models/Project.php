@@ -55,4 +55,9 @@ class Project extends Model
         return (($this->amount - $this->awardedBid->bid_amount) 
             / $this->amount) * 100;
     }
+
+    public function getTotalResponsiveBiddersAttribute(): ?int
+    {
+        return $this->bids()->count();
+    }
 }

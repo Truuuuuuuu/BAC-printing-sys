@@ -38,6 +38,8 @@ class DocEditorController extends Controller
             'tablesConfig' => $def['tablesConfig'] ?? [],
             'defaults'     => $this->resolveDefaults($def, $project),
             'defaultRows'  => $this->resolveDefaultRows($def, $project),
+
+            'inputPatterns' => $def['inputPatterns'] ?? [],
         ];
 
 
@@ -125,6 +127,8 @@ class DocEditorController extends Controller
     {
         $defaults = [];
         $formatAmount = $def['formatAmount'] ?? [];
+        $formatWords  = $def['formatWords']  ?? [];
+        
 
 
         foreach ($def['defaults'] ?? [] as $placeholder => $modelPath) {
@@ -134,9 +138,20 @@ class DocEditorController extends Controller
                 $value = number_format((float) $value, 2);
             }
 
+            if (in_array($placeholder, $formatWords) && is_numeric($value)) {
+                $value = $this->formatNumberToWords((int) $value);
+            }
+
             $defaults[$placeholder] = $value;
         }
         return $defaults;
+    }
+
+    private function formatNumberToWords(int $number): string
+    {
+        $formatter = new \NumberFormatter('en', \NumberFormatter::SPELLOUT);
+        $words = $formatter->format($number); 
+        return "{$words} ({$number})";
     }
 
     private function resolveDefaultRows(array $def, Project $project): array

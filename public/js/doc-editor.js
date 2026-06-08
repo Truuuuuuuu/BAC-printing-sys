@@ -33,6 +33,8 @@ function docEditor() {
         previewing:   false,
         debounceTimer: null,
 
+        inputPatterns: cfg.inputPatterns ?? {},
+
         // ── init ──────────────────────────────────────────────────────────────
         async init() {
             try {

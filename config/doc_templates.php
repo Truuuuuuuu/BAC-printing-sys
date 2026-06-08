@@ -9,7 +9,7 @@ return [
         'file'         => 'BAC Resolution Declaring LCRB.docx',
 
         'hints' => [
-            'total_interested_bidders'       => 'e.g. forty-eight (48)',
+            'total_interested_bidders'       => 'e.g. twenty-one (21)',
             'number_of_responsive_bidders'   => 'e.g. six (6)',
             'project_title'                  => 'e.g. Construction of Barangay Hall',
             'approved_budget'                => 'e.g. 400,000.00',
@@ -17,6 +17,7 @@ return [
             'winning_bidder'                 => 'e.g. ABC CONSTRUCTION',
             'philGEPS_posting_date'          => 'MM/DD/YY',
             'conspicuous_place_posting_date' => 'MM/DD/YY-MM/DD/YY',
+            'bidders'                        => 'e.g. ABC CONSTRUCTION, JUAN COMPANY, ...',      
         ],
 
         'requiredArgs' => [
@@ -28,6 +29,7 @@ return [
             'winning_bidder_upper'           => 'Winning Bidder',
             'philGEPS_posting_date'          => 'PhilGEPS Posting Date',
             'conspicuous_place_posting_date' => 'Conspicuous Place Posting Date',
+            'list_of_bidders_upper'          => 'List of Bidders',
         ],
 
         'requiredTableFields' => [
@@ -75,8 +77,12 @@ return [
         'defaults' => [
             'project_title_upper' => 'project_title',
             'approved_budget'     => 'amount',
+            'responsive_bidders'  => 'total_responsive_bidders',
+            'list_of_bidders_upper' => 'awardedBid.company_name'
         ],
         'formatAmount' => ['approved_budget', 'bid_amount', 'row_a_amount'], 
+        'formatWords' => ['responsive_bidders'],
+        'inputPatterns' => ['resolution_number' => '9999-99-999',],
     ],
 
     'evaluation-report' => [
@@ -103,8 +109,11 @@ return [
         'defaults' => [
             'project_title_upper' => 'project_title',
             'approved_budget'     => 'amount',
+            'company_name_upper'        => 'awardedBid.company_name',
+            'responsive_bidders'   => 'totalResponsiveBidders',
         ],
         'formatAmount' => ['approved_budget', 'bid_amount'], 
+        'formatWords' => ['responsive_bidders'],
     ],
 
 ];
