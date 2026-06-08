@@ -1,6 +1,6 @@
 @props(['defaults'])
 
-<div x-data="docEditor()" x-init="init()" class="min-h-screen bg-gray-50 p-6">
+<div x-data="docEditor()" x-init="init()" class="min-h-screen bg-gray-50 p-6 text-primary">
     <div class="max-w-7xl mx-auto flex gap-6">
 
         {{-- Left: argument inputs --}}
@@ -36,7 +36,7 @@
                     <template x-for="[group, config] in Object.entries(tablesConfig)" :key="group">
                         <div class="mt-4">
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-xs font-semibold text-gray-600 uppercase tracking-wide"
+                                <h3 class="text-xs font-semibold text-primary uppercase tracking-wide"
                                     x-text="config.label"></h3>
                                 <button type="button" @click="addTableRow(group)"
                                     class="text-xs text-blue-600 hover:text-blue-800 font-medium">+ Add Row</button>
@@ -49,7 +49,7 @@
                                             x-show="tableRows[group].length > 1"
                                             class="absolute top-1.5 right-1.5 text-gray-300 hover:text-red-400 text-xs">✕</button>
 
-                                        <p class="text-xs text-gray-400 font-medium mb-2">
+                                        <p class="text-xs text-primary font-semibold mb-2">
                                             Row <span x-text="rowIndex + 1"></span>
                                         </p>
 
