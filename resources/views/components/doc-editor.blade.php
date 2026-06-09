@@ -18,7 +18,7 @@
                     <p class="text-sm text-gray-400 italic">No placeholders found in document.</p>
                 </template>
 
-                <template x-for="key in placeholders" :key="key">
+                {{-- <template x-for="key in placeholders" :key="key">
                     <div class="mb-3">
                         <label class="block text-xs font-medium text-gray-500 mb-1" x-text="formatLabel(key)"></label>
 
@@ -30,6 +30,55 @@
                         </template>
 
                         <template x-if="!inputPatterns[key]">
+                            <input type="text"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
+                                @input="schedulePreview()">
+                        </template>
+                    </div>
+                </template> --}}
+
+                <template x-for="key in placeholders" :key="key">
+                    <div class="mb-3">
+                        <label class="block text-xs font-medium text-gray-500 mb-1" x-text="formatLabel(key)"></label>
+
+                        {{-- Select --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'select'">
+                            <select
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                x-model="args[key]" @change="schedulePreview()">
+                                <option value="">-- Select --</option>
+                                <template x-for="opt in fieldTypes[key].options" :key="opt">
+                                    <option :value="opt" x-text="opt"></option>
+                                </template>
+                            </select>
+                        </template>
+
+                        {{-- Date --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'date'">
+                            <input type="date"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                x-model="args[key]" @input="schedulePreview()">
+                        </template>
+
+                        {{-- Textarea --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'textarea'">
+                            <textarea
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
+                                @input="schedulePreview()" rows="3"></textarea>
+                        </template>
+
+                        {{-- Masked text --}}
+                        <template x-if="!fieldTypes[key] && inputPatterns[key]">
+                            <input type="text"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
+                                x-mask="9999-99-999" @input="schedulePreview()">
+                        </template>
+
+                        {{-- Default text --}}
+                        <template x-if="!fieldTypes[key] && !inputPatterns[key]">
                             <input type="text"
                                 class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                 :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"

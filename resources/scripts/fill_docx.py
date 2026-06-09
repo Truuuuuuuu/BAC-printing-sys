@@ -24,6 +24,12 @@ def format_value(key, val):
         return val.lower()
     if key.endswith('_capitalize'):
         return val.capitalize()
+    if key.endswith('_date'):     
+        try:
+            from datetime import datetime
+            return datetime.strptime(val, '%Y-%m-%d').strftime('%B %d, %Y')
+        except ValueError:
+            return val
     return val
 
 def merge_and_replace_paragraph(para, extra=None):

@@ -202,6 +202,27 @@ return [
             
         ],
 
+        'fieldTypes' => [
+            'month' => ['type' => 'select', 'options' => ['January','February','March','April','May','June','July','August','September','October','November','December']],
+            'year'  => ['type' => 'select', 'options' => ['2024','2025','2026','2027','2028','2029','2030','2031','2032','2033']], 
+
+            'resolution_date' => [
+                'type' => 'date',
+            ],
+            'procurement_mode' => [
+                'type'    => 'select',
+                'options' => [
+                    'Public Bidding',
+                    'Direct Contracting',
+                    'Negotiated Procurement',
+                    'Shopping',
+                ],
+            ],
+            'remarks' => [
+                'type' => 'textarea',
+            ],
+        ],
+
         'formatAmount' => [], 
         'formatWords' => [],
 
@@ -443,6 +464,28 @@ return [
         'formatAmount' => ['bid_amount'], 
         'formatWords' => [],
 
+    ],
+
+    'fieldTypes' => [
+        'day'   => ['type' => 'text'],
+        'month' => ['type' => 'select', 'options' => ['January','February','March','April','May','June','July','August','September','October','November','December']],
+        'year'  => ['type' => 'date'],  
+
+        'resolution_date' => [
+            'type' => 'date',
+        ],
+        'procurement_mode' => [
+            'type'    => 'select',
+            'options' => [
+                'Public Bidding',
+                'Direct Contracting',
+                'Negotiated Procurement',
+                'Shopping',
+            ],
+        ],
+        'remarks' => [
+            'type' => 'textarea',
+        ],
     ],
 
 ];

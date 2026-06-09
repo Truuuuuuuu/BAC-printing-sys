@@ -35,6 +35,8 @@ function docEditor() {
 
         inputPatterns: cfg.inputPatterns ?? {},
         placeholderLabels: cfg.labels ?? {},
+
+        fieldTypes: cfg.fieldTypes ?? {},
         
 
         // ── init ──────────────────────────────────────────────────────────────
