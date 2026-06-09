@@ -53,7 +53,7 @@
 
             <div class="flex flex-wrap justify-start gap-3">
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
+                    {{-- Edit/Print Resolution Declaring LCRB--}}
                     <a href="{{ route('doc.editor-show', [$project, 'bac-resolution']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
@@ -62,7 +62,7 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
+                    {{-- Edit/Print Bid Evluation Report--}}
                     <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
@@ -71,7 +71,7 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
+                    {{-- Edit/print NGPA_Contract-Form--}}
                     <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}"  class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
@@ -80,7 +80,7 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
+                    {{-- Edit/print Notice of Award--}}
                     <a href="{{ route('doc.editor-show', [$project, 'award-notice']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
@@ -89,8 +89,8 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
-                    <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    {{-- Edit/Print Notice Post-Qualification--}}
+                    <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>Notice of Post-Qualification</span>
@@ -98,8 +98,8 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
-                    <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    {{-- Edit/Print Notice to Proceed--}}
+                    <a href="{{ route('doc.editor-show', [$project, 'notice-proceed']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>Notice to Proceed</span>

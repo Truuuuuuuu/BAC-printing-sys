@@ -205,7 +205,6 @@ return [
     ],
 
 
-
     'award-notice' => [
         'fileName'      => 'Notice of Award.docx    ',
         'downloadName'  => 'Notice of Award.docx',
@@ -262,6 +261,88 @@ return [
         'formatAmount'  => ['bid_amount'], 
         'formatWords'   => [],
 
-    ]
+    ],
+
+    'notice-post-qualification' => [
+        'fileName'      => 'Notice of Post-Qualification.docx',
+        'downloadName'  => 'Notice of Post-Qualification.docx',
+        'file'          => 'Notice of Post-Qualification.docx',
+        
+        'hints' => [
+            'title'                   => 'e.g. MR, MS, MRS',
+            'proprietor'              => 'e.g. Juan B. Dela Cruz',
+            'company_name'            => 'e.g. JUAN CONSTRUCTION',
+            'project_title'           => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
+            'date'                    => 'e.g. MM/DD/YY',
+        ],
+
+        'requiredArgs' => [
+            'title_upper'                   => 'Title',
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
+        ],
+
+        'optionalArgs' => [
+
+        ],
+
+        'requiredTableFields' => [],
+        'tablesConfig'        => [],
+
+        'labels' => [
+            'title_upper'                         => 'Title',
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
+        ],
+
+        'defaults'=> [
+            'proprietor_upper'              => 'awardedBid.proprietor',
+            'company_name_upper'            => 'awardedBid.company_name',
+            'project_title_upper'           => 'project_title',
+        ],
+
+
+        'formatAmount' => [], 
+        'formatWords' => [],
+
+    ],
+
+    'notice-proceed' => [
+        'fileName'      => 'Notice to Proceed.docx',
+        'downloadName'  => 'Notice to Proceed.docx',
+        'file'          => 'Notice to Proceed.docx',
+        
+        'hints' => [
+            
+        ],
+
+        'requiredArgs' => [
+
+        ],
+
+        'optionalArgs' => [
+
+        ],
+
+        'requiredTableFields' => [],
+        'tablesConfig'        => [],
+
+        'labels' => [
+
+        ],
+
+        'defaults'=> [
+        
+        ],
+
+
+        'formatAmount' => [], 
+        'formatWords' => [],
+
+    ],
 
 ];

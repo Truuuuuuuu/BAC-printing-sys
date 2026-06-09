@@ -95,7 +95,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                         </svg>
-                        <span x-text="exporting ? 'Exporting...' : 'Export .docx'"></span>
+                        <span x-text="exporting ? 'Exporting...' : 'Verify & Export .docx'"></span>
                     </button>
 
                     <p x-show="exportError" x-text="exportError" class="mt-2 text-xs text-red-500 whitespace-pre-line">
