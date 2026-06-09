@@ -72,7 +72,7 @@
 
                 <div>
                     {{-- Edit/print NGPA_Contract-Form--}}
-                    <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}"  class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>NGPA Contract-Form</span>
@@ -90,7 +90,8 @@
 
                 <div>
                     {{-- Edit/Print Notice Post-Qualification--}}
-                    <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}" target="_blank"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>Notice of Post-Qualification</span>
@@ -126,9 +127,8 @@
             </div>
 
 
-            <div class="bg-foreground rounded-3xl p-4">
-
-                <div class="flex justify-between items-center my-3">
+            <div class="table-responsive w-full rounded-3xl border border-gray-100 shadow-md bg-foreground">
+                <div class="flex justify-between bg-foreground items-center my-3 px-3">
                     <h5 class="mb-0">A total of <strong>{{ $bids->count() }}</strong> Bidders</h5>
 
                     <button
@@ -142,72 +142,70 @@
                         <x-lucide-badge-plus class="w-6 h-6 absolute right-1 top-1/2 -translate-y-1/2" />
                     </button>
                 </div>
+                <table class="w-full border-collapse text-sm">
+                    <thead>
+                        <tr class="text-primary">
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">#</th>
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">Bidder</th>
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">Proprietor</th>
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">Contract Amount
+                            </th>
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">Address</th>
+                            <th class="border border-gray-50 px-2 py-1 text-center font-bold">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($bids as $index => $bid)
+                            <tr
+                                class=" {{ $project->awardedBid?->id == $bid->id ? 'text-green-text font-bold bg-bg-green/20 hover:bg-bg-green/50' : 'odd:bg-white  even:bg-gray-100 hover:bg-gray-100 ' }}  transition">
+                                <td class="border border-gray-50 px-2 py-1 text-center  {{ $project->awardedBid?->id == $bid->id ? 'border-l-4 border-l-bg-green' : '' }}">{{ $index + 1 }}</td>
+                                <td class="border border-gray-50 px-2 py-1">{{ $bid->company_name }}</td>
+                                <td class="border border-gray-50 px-2 py-1">{{ $bid->proprietor }}</td>
+                                <td class="border border-gray-50 px-2 py-1">
+                                    ₱{{ number_format($bid->bid_amount, 2) }}</td>
+                                <td class="border border-gray-50 px-2 py-1">{{ $bid->address }}</td>
+                                <td class="border border-gray-50 px-2 py-1 whitespace-nowrap">
+                                    <div class="flex gap-3 h-full items-center  justify-center ">
 
-                <div class="card-body p-0 w-">
-                    @if ($bids->isEmpty())
-                        <div class="text-center py-5 text-muted">
-                            <p class="mb-0">No bids have been submitted for this project yet.</p>
-                        </div>
-                    @else
-                        <div class="table-responsive w-full">
-                            <table class="w-full border-collapse text-sm ">
-                                <thead>
-                                    <tr class="text-primary">
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">#</th>
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Bidder</th>
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Proprietor</th>
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Contract Amount</th>
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Address</th>
-                                        <th class="border border-gray-50 px-2 py-1 text-center font-bold">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($bids as $index => $bid)
-                                        <tr class=" {{ $project->awardedBid?->id == $bid->id ? 'text-green-text font-bold bg-bg-green/20 hover:bg-bg-green/50' : 'odd:bg-white  even:bg-gray-200 hover:bg-gray-100 ' }}  transition">
-                                            <td class="border border-gray-50 px-2 py-1 text-center">{{ $index + 1 }}</td>
-                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->company_name }}</td>
-                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->proprietor }}</td>
-                                            <td class="border border-gray-50 px-2 py-1">
-                                                ₱{{ number_format($bid->bid_amount, 2) }}</td>
-                                            <td class="border border-gray-50 px-2 py-1">{{ $bid->address }}</td>
-                                            <td class="border border-gray-50 px-2 py-1 whitespace-nowrap">
-                                                <div class="flex gap-3 h-full items-center  justify-center ">
+                                        <button title="Award" class="flex items-center hover:scale-110 transition" @click=" bidId={{ $bid->id }};
+                                                                            showAwardModal = true;
+                                                                        ">
+                                            <x-lucide-badge-check class="w-5 h-5 text-bg-green" />
+                                        </button>
 
-                                                    <button title="Award" class="flex items-center hover:scale-110 transition"
-                                                        @click=" bidId={{ $bid->id }};
-                                                        showAwardModal = true;
-                                                    ">
-                                                        <x-lucide-badge-check class="w-5 h-5 text-bg-green" />
-                                                    </button>
+                                        <button class="flex items-center hover:scale-110 transition" title="Edit"
+                                            @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
+                                            <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
+                                        </button>
 
-                                                    <button class="flex items-center hover:scale-110 transition" title="Edit"
-                                                        @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
-                                                        <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
-                                                    </button>
-
-                                                    <button class="flex items-center hover:scale-110 transition" title="Delete"
-                                                        @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
-                                                        <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-                </div>
-
-                <br>
-
+                                        <button class="flex items-center hover:scale-110 transition" title="Delete"
+                                            @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
+                                            <x-lucide-trash class="w-5 h-5 text-red-text cursor-pointer" />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <div class="text-center py-5 text-muted">
+                                <p class="mb-0">No bids have been submitted for this project yet.</p>
+                            </div>
+                        @endforelse
+                    </tbody>
+                </table>
                 {{ $bids->links() }}
             </div>
+
+
+
+            <br>
+
+
+
         </div>
 
         <x-create-bid />
         <x-edit-bid />
         <x-delete-bid />
-        <x-award-bid/>
+        <x-award-bid />
     </div>
 </x-app-layout>
