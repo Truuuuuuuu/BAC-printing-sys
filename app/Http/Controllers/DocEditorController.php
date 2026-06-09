@@ -43,8 +43,21 @@ class DocEditorController extends Controller
             'labels' => $def['labels'] ?? [],
         ];
 
+            $titles = [
+                'bac-resolution'            => 'BAC Resolution Declaring LCRB',
+                'evaluation-report'         => 'Bid Evaluation Report',
+                'contract-form'             => 'NGPA Contract-Form',
+                'award-notice'              => 'Notice of Award',
+                'notice-post-qualification' => 'Notice of Post-Qualification',
+                'notice-proceed'            => 'Notice to Proceed',
+                'notif-lcb'                 => 'Notification of Lowest Calculated Bid',
+                'post-quali-eval'           => 'Post-Qualification Evaluation Report',
 
-        return view('docs.resolution', compact('config'));
+            ];
+            $title = $titles[$template] ?? 'BAC Printing System';
+
+
+        return view('docs.template', compact('config', 'title'));
     }
 
     // ── Export ────────────────────────────────────────────────────────────────
