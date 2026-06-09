@@ -116,8 +116,8 @@
                 </div>
 
                 <div>
-                    {{-- Print Resolution Declaring LCRB--}}
-                    <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                    {{-- Edit/Print Post-Qualification Evaluation Report--}}
+                    <a href="{{ route('doc.editor-show', [$project, 'post-quali-eval']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                         <x-lucide-printer class="w-5 h-5 text-foreground" />
                         <span>Post Qualification Evaluation Report</span>
