@@ -218,15 +218,15 @@ return [
             'contract_amount_in_words'  => 'e.g. One million',
             'bid_amount'                => 'e.g. 940,000',
             'contract_sign_period'      => 'e.g. eight (8)',
-            'date' => 'MM/DD/YY',
+            'date'                      => 'MM/DD/YY',
             
         ],
 
         'requiredArgs' => [
             'proprietor_upper'                      => 'Proprietor',
             'company_name_upper'                    => 'Company Name',
-            'project_title'             => 'Project Title',
-            'contract_amount_in_words'   => 'Contract Amount in Words',
+            'project_title'                         => 'Project Title',
+            'contract_amount_in_words'              => 'Contract Amount in Words',
             'bid_amount'                            => 'Contract Amount',
             'contract_sign_period'                  => 'Contract Signing Period',
             'date' => 'Date',
@@ -240,27 +240,27 @@ return [
         'tablesConfig'        => [],
 
         'labels' => [
-            'proprietor_upper'                      => 'Proprietor/Owner',
-            'company_name_upper'                    => 'Company Name',
-            'project_title'             => 'Project Title',
-            'contract_amount_in_words'   => 'Contract Amount in Words',
-            'bid_amount'                            => 'Contract Amount',
-            'contract_sign_period'                  => 'Contract Signing Period (Days)',
+            'proprietor_upper'            => 'Proprietor/Owner',
+            'company_name_upper'          => 'Company Name',
+            'project_title'               => 'Project Title',
+            'contract_amount_in_words'    => 'Contract Amount in Words',
+            'bid_amount'                  => 'Contract Amount',
+            'contract_sign_period'        => 'Contract Signing Period (Days)',
             'date' => 'Date',
 
         ],
 
         'defaults'=> [
-            'proprietor_upper'                      => 'awardedBid.proprietor',
-            'company_name_upper'                    => 'awardedBid.company_name',
-            'project_title'             => 'project_title',
-            'contract_amount_in_words'   => 'contract_amount_in_words',
-            'bid_amount'                            => 'awardedBid.bid_amount',
+            'proprietor_upper'              => 'awardedBid.proprietor',
+            'company_name_upper'            => 'awardedBid.company_name',
+            'project_title'                 => 'project_title',
+            'contract_amount_in_words'      => 'contract_amount_in_words',
+            'bid_amount'                    => 'awardedBid.bid_amount',
         ],
 
 
-        'formatAmount' => ['bid_amount'], 
-        'formatWords' => [],
+        'formatAmount'  => ['bid_amount'], 
+        'formatWords'   => [],
 
     ]
 
