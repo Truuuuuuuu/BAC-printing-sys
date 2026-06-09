@@ -169,4 +169,99 @@ return [
         'formatWords' => ['responsive_bidders'],
     ],
 
+
+    'contract-form' => [
+        'fileName'      => 'NGPA_Contract-Form.docx',
+        'downloadName'  => 'NGPA_Contract-Form.docx',
+        'file'          => 'NGPA_Contract-Form.docx',
+        
+        'hints' => [
+            
+        ],
+
+        'requiredArgs' => [
+
+        ],
+
+        'optionalArgs' => [
+
+        ],
+
+        'requiredTableFields' => [],
+        'tablesConfig'        => [],
+
+        'labels' => [
+
+        ],
+
+        'defaults'=> [
+        
+        ],
+
+
+        'formatAmount' => [], 
+        'formatWords' => [],
+
+    ],
+
+
+
+    'award-notice' => [
+        'fileName'      => 'Notice of Award.docx    ',
+        'downloadName'  => 'Notice of Award.docx',
+        'file'          => 'Notice of Award.docx',
+        
+        'hints' => [
+            'proprietor'                => 'e.g. Juan B. Dela Cruz',
+            'company_name'              => 'e.g. JUAN CONSTRUCTION',
+            'project_title'             => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
+            'contract_amount_in_words'  => 'e.g. One million',
+            'bid_amount'                => 'e.g. 940,000',
+            'contract_sign_period'      => 'e.g. eight (8)',
+            'date' => 'MM/DD/YY',
+            
+        ],
+
+        'requiredArgs' => [
+            'proprietor_upper'                      => 'Proprietor',
+            'company_name_upper'                    => 'Company Name',
+            'project_title'             => 'Project Title',
+            'contract_amount_in_words'   => 'Contract Amount in Words',
+            'bid_amount'                            => 'Contract Amount',
+            'contract_sign_period'                  => 'Contract Signing Period',
+            'date' => 'Date',
+        ],
+
+        'optionalArgs' => [
+
+        ],
+
+        'requiredTableFields' => [],
+        'tablesConfig'        => [],
+
+        'labels' => [
+            'proprietor_upper'                      => 'Proprietor/Owner',
+            'company_name_upper'                    => 'Company Name',
+            'project_title'             => 'Project Title',
+            'contract_amount_in_words'   => 'Contract Amount in Words',
+            'bid_amount'                            => 'Contract Amount',
+            'contract_sign_period'                  => 'Contract Signing Period (Days)',
+            'date' => 'Date',
+
+        ],
+
+        'defaults'=> [
+            'proprietor_upper'                      => 'awardedBid.proprietor',
+            'company_name_upper'                    => 'awardedBid.company_name',
+            'project_title'             => 'project_title',
+            'contract_amount_in_words'   => 'contract_amount_in_words',
+            'bid_amount'                            => 'awardedBid.bid_amount',
+        ],
+
+
+        'formatAmount' => ['bid_amount'], 
+        'formatWords' => [],
+
+    ]
+
 ];
