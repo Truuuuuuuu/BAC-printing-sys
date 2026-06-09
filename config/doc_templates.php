@@ -216,7 +216,6 @@ return [
             'project_title'             => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
             'contract_amount_in_words'  => 'e.g. One million',
             'bid_amount'                => 'e.g. 940,000',
-            'contract_sign_period'      => 'e.g. eight (8)',
             'date'                      => 'MM/DD/YY',
             
         ],
@@ -227,7 +226,6 @@ return [
             'project_title'                         => 'Project Title',
             'contract_amount_in_words'              => 'Contract Amount in Words',
             'bid_amount'                            => 'Contract Amount',
-            'contract_sign_period'                  => 'Contract Signing Period',
             'date' => 'Date',
         ],
 
@@ -244,7 +242,6 @@ return [
             'project_title'               => 'Project Title',
             'contract_amount_in_words'    => 'Contract Amount in Words',
             'bid_amount'                  => 'Contract Amount',
-            'contract_sign_period'        => 'Contract Signing Period (Days)',
             'date' => 'Date',
 
         ],
