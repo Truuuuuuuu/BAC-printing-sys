@@ -25,10 +25,8 @@
                         <template x-if="inputPatterns[key]">
                             <input type="text"
                                 class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" 
-                                x-model="args[key]"
-                                x-mask="9999-99-999" 
-                                @input="schedulePreview()">
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
+                                x-mask="9999-99-999" @input="schedulePreview()">
                         </template>
 
                         <template x-if="!inputPatterns[key]">
@@ -39,6 +37,8 @@
                         </template>
                     </div>
                 </template>
+
+
 
                 {{-- Dynamic table sections --}}
                 <div class="mt-4" x-show="Object.keys(tablesConfig).length > 0">
@@ -90,7 +90,7 @@
                 <div class="mt-4">
                     <button @click="exportDoc()" :disabled="exporting || loading || previewing"
                         class=" w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold hover:scale-105 transition-all duration-200 rounded-3xl px-4 py-2  flex items-center justify-center gap-2">
-                        <x-lucide-arrow-big-down-dash class="w-4 h-4"/>
+                        <x-lucide-arrow-big-down-dash class="w-4 h-4" />
                         <svg x-show="exporting" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />

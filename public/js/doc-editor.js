@@ -35,6 +35,7 @@ function docEditor() {
 
         inputPatterns: cfg.inputPatterns ?? {},
         placeholderLabels: cfg.labels ?? {},
+        
 
         // ── init ──────────────────────────────────────────────────────────────
         async init() {

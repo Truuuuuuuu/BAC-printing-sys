@@ -28,7 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('project.index', absolute: false));
+        $user = Auth::user()->name;
+
+        return redirect()->intended(route('project.index', absolute: false))->with('success','Welcome, '. $user);
     }
 
     /**

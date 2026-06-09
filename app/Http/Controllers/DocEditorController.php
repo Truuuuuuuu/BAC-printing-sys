@@ -41,6 +41,8 @@ class DocEditorController extends Controller
 
             'inputPatterns' => $def['inputPatterns'] ?? [],
             'labels' => $def['labels'] ?? [],
+
+            
         ];
 
             $titles = [

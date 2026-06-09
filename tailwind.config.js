@@ -13,7 +13,7 @@ export default {
         extend: {
             colors:{
                 'primary': '#003049',
-                'foreground': '#F8F9FA',
+                'foreground': '#f8f9fa',
                 'bg-green': '#008000',
                 'green-text': '#004B23',
                 'bg-red': '#D62828',

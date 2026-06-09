@@ -14,10 +14,10 @@
     showDeleteModal: false,
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
-            <div class="w-full lg:max-w-sm self-start px-3 lg:px-0 top-6 space-y-5">
+            <div class="w-full lg:max-w-sm self-start px-3 lg:px-0 top-6 space-y-5  ">
                 <div class="flex gap-2 items-center">
-                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
-                        <x-lucide-folder-open-dot class="w-8 h-8 text-primary" />
+                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-3">
+                        <x-heroicon-s-folder-open class="w-10 h-10 text-primary" />
                     </div>
                     <div class="flex flex-col">
                         <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Create New Project</h2>
@@ -65,25 +65,26 @@
 
 
                     <button type="submit"
-                        class="relative w-full bg-bg-green font-semibold text-foreground py-2 hover:shadow-sm hover:scale-105 rounded-3xl mt-5 hover:bg-primary/90 transition">Create
-                        Project
-                        <x-lucide-circle-plus class="w-8 h-8 absolute right-1 top-1/2 -translate-y-1/2" />
+                        class=" w-full flex gap-2 items-center justify-center  bg-bg-green font-semibold text-foreground py-2 hover:shadow-sm hover:scale-105 rounded-3xl mt-5 hover:bg-primary/90 transition">
+                        <x-lucide-plus class="w-5 h-5 text-foreground"/>
+                        <p>Create Project</p>
+                       
                     </button>
                 </form>
             </div>
 
-            <div class="w-full border bg-foreground rounded-2xl p-5">
+            <div class="w-full border border-gray-300 shadow-sm bg-foreground rounded-3xl p-5">
                 <div class="flex justify-end ">
                     <form method="GET" class="w-full">
                         {{-- Search Form --}}
                         <div class="flex justify-between flex-col md:flex-row gap-3 lg:gap-0 items-center">
                             <div>
                                 {{-- Projects View & Print button --}}
-                                <a href="{{ route('pdf.projects') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                {{-- <a href="{{ route('pdf.projects') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                 hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                     <x-lucide-printer class="w-5 h-5 text-foreground" />
                                     <span>View & Print All</span>
-                                </a>
+                                </a> --}}
                             </div>
                             <div class="relative w-full md:max-w-md lg:max-w-xs xl:max-w-xl" x-data="{ search: '{{ request('search') }}' }">
 
@@ -126,7 +127,7 @@
                         </thead>
                         <tbody>
                             @forelse($projects as $project)
-                                <tr class="border-t hover:cursor-pointer hover:bg-gray-200" onclick="window.location='{{ route('project.show', $project) }}'">
+                                <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100" onclick="window.location='{{ route('project.show', $project) }}'">
                                     <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
                                     <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>

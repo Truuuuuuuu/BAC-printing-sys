@@ -195,9 +195,12 @@ return [
         ],
 
         'defaults'=> [
-        
+            'project_title_upper'           => 'project_title',
+            'proprietor_upper'              => 'awardedBid.proprietor',
+            'company_name_upper'            => 'awardedBid.company_name',
+            'contract_amount_words'         => 'contract_amount_in_words',
+            
         ],
-
 
         'formatAmount' => [], 
         'formatWords' => [],

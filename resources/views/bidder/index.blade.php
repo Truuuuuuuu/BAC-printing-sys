@@ -71,18 +71,18 @@
                 {{ $projects->links() }}
             </div>
 
-            <div class="w-full min-w-0 border bg-foreground rounded-2xl p-5">
+            <div class="w-full min-w-0 border border-gray-300 shadow-sm bg-foreground rounded-3xl p-5">
                 <div class="flex justify-end ">
                     <form method="GET" class="w-full">
                         {{-- Search Form --}}
                         <div class="flex justify-between  flex-col md:flex-row gap-3 items-center">
                             <div>
                                 {{-- Projects View & Print button --}}
-                                <a href="{{ route('pdf.bids') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                {{-- <a href="{{ route('pdf.bids') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                     hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                     <x-lucide-printer class="w-5 h-5 text-foreground" />
                                     <span>View & Print All</span>
-                                </a>
+                                </a> --}}
                             </div>
                             <div class="relative w-full md:max-w-md lg:max-w-xl" x-data="{ search: '{{ request('search') }}' }">
 
@@ -116,9 +116,7 @@
                     <table class="w-full min-w-[900px]">
                         <thead>
                             <tr>
-                                <th class="text-left p-2 max-w-xs">Project Title</th>
-                                <th class="text-left p-2 ">Budget</th>
-                                <th class="text-left p-2 whitespace-nowrap">Bidding Date</th>
+                                <th class="text-left p-2 max-w-xs">Project</th>
                                 <th class="text-left p-2 ">Bidder</th>
                                 <th class="text-left p-2 whitespace-nowrap">Proprietor</th>
                                 <th class="text-left p-2 whitespace-nowrap">Contract Amount</th>
@@ -131,10 +129,11 @@
                         <tbody>
                             @forelse($bids as $bid)
 
-                                <tr class="border-t">
-                                    <td class="p-2 max-w-xs">{{ $bid->project->project_title }}</td>
-                                    <td class="p-2 ">₱{{ number_format($bid->project->amount, 2) }}</td>
-                                    <td class="p-2 whitespace-nowrap">{{ $bid->project->bidding_date->format('Y-m-d') }}
+                                <tr class="border-t odd:bg-foreground even:bg-gray-100">
+                                    <td class="p-2 max-w-xs">
+                                        <p>{{ $bid->project->project_title }}</p>
+                                        <p class="text-xs text-primary/70">₱{{ number_format($bid->project->amount, 2) }}</p>
+                                        
                                     </td>
                                     <td class="p-2 ">{{ $bid->company_name}}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $bid->proprietor}}</td>

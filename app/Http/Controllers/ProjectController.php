@@ -93,7 +93,7 @@ class ProjectController extends Controller
     
     public function show(Project $project)
     {
-        $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(15);
+        $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(10);
         return view('project.show', compact('project', 'bids'));
     }
 
@@ -104,6 +104,6 @@ class ProjectController extends Controller
             'bid_id' => $bid->id,
         ]);
 
-        return redirect()->back()->with('success', 'Awarded successfully.');
+        return redirect()->back()->with('clear_storage', true)->with('success', 'Awarded successfully.');
     }
 }
