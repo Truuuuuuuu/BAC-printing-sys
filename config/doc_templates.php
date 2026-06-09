@@ -292,7 +292,7 @@ return [
         'tablesConfig'        => [],
 
         'labels' => [
-            'title_upper'                         => 'Title',
+            'title_upper'                   => 'Title',
             'proprietor_upper'              => 'Proprietor/Owner',
             'company_name_upper'            => 'Company Name',
             'project_title_upper'           => 'Project Title',
@@ -324,6 +324,54 @@ return [
         ],
 
         'requiredArgs' => [
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
+        ],
+
+        'optionalArgs' => [
+
+        ],
+
+        'requiredTableFields' => [],
+        'tablesConfig'        => [],
+
+        'labels' => [
+            'title_upper'                   => 'Title',
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
+        ],
+
+        'defaults'=> [
+            'proprietor_upper'              => 'awardedBid.proprietor',
+            'company_name_upper'            => 'awardedBid.company_name',
+            'project_title_upper'           => 'project_title',
+        ],
+
+
+        'formatAmount' => [], 
+        'formatWords' => [],
+
+    ],
+
+    'notif-lcb' => [
+        'fileName'      => 'Notification of Lowest Calculated Bid.docx',
+        'downloadName'  => 'Notification of Lowest Calculated Bid.docx',
+        'file'          => 'Notification of Lowest Calculated Bid.docx',
+        
+        'hints' => [
+            'title'                   => 'e.g. MR, MS, MRS',
+            'proprietor'              => 'e.g. Juan B. Dela Cruz',
+            'company_name'            => 'e.g. JUAN CONSTRUCTION',
+            'project_title'           => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
+            'date'                    => 'e.g. MM/DD/YY',
+        ],
+
+        'requiredArgs' => [
+            'title_upper'                   => 'Title',
             'proprietor_upper'              => 'Proprietor/Owner',
             'company_name_upper'            => 'Company Name',
             'project_title_upper'           => 'Project Title',
