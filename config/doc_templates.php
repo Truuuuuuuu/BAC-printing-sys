@@ -317,11 +317,17 @@ return [
         'file'          => 'Notice to Proceed.docx',
         
         'hints' => [
-            
+            'proprietor'              => 'e.g. Juan B. Dela Cruz',
+            'company_name'            => 'e.g. JUAN CONSTRUCTION',
+            'project_title'           => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
+            'date'                    => 'e.g. MM/DD/YY',
         ],
 
         'requiredArgs' => [
-
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
         ],
 
         'optionalArgs' => [
@@ -332,11 +338,16 @@ return [
         'tablesConfig'        => [],
 
         'labels' => [
-
+            'proprietor_upper'              => 'Proprietor/Owner',
+            'company_name_upper'            => 'Company Name',
+            'project_title_upper'           => 'Project Title',
+            'date'                          => 'Date'
         ],
 
         'defaults'=> [
-        
+            'proprietor_upper'              => 'awardedBid.proprietor',
+            'company_name_upper'            => 'awardedBid.company_name',
+            'project_title_upper'           => 'project_title',
         ],
 
 
