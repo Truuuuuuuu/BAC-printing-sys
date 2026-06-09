@@ -63,81 +63,83 @@
                 <div class="mb-8">
                     <div class="w-full bg-gray-300 h-[1px] "></div>
                 </div>
+                @if($project->bids()->exists())
+                    <div class="flex flex-wrap justify-start gap-3">
+                        <div>
+                            {{-- Edit/Print Resolution Declaring LCRB--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'bac-resolution']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>BAC Resolution Declarating LCRB</span>
+                            </a>
+                        </div>
 
-                <div class="flex flex-wrap justify-start gap-3">
-                    <div>
-                        {{-- Edit/Print Resolution Declaring LCRB--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'bac-resolution']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>BAC Resolution Declarating LCRB</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/Print Bid Evluation Report--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Bid Evaluation Report</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/Print Bid Evluation Report--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Bid Evaluation Report</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/print NGPA_Contract-Form--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>NGPA Contract-Form</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/print NGPA_Contract-Form--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>NGPA Contract-Form</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/print Notice of Award--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'award-notice']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Notice of Award</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/print Notice of Award--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'award-notice']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Notice of Award</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/Print Notice Post-Qualification--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}"
+                                target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Notice of Post-Qualification</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/Print Notice Post-Qualification--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}"
-                            target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Notice of Post-Qualification</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/Print Notice to Proceed--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'notice-proceed']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Notice to Proceed</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/Print Notice to Proceed--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'notice-proceed']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Notice to Proceed</span>
-                        </a>
-                    </div>
+                        <div>
+                            {{-- Edit/Print Notification of Lowest Calculated Bid--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'notif-lcb']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Notification of Lowest Calculation Bid</span>
+                            </a>
+                        </div>
 
-                    <div>
-                        {{-- Edit/Print Notification of Lowest Calculated Bid--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'notif-lcb']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Notification of Lowest Calculation Bid</span>
-                        </a>
+                        <div>
+                            {{-- Edit/Print Post-Qualification Evaluation Report--}}
+                            <a href="{{ route('doc.editor-show', [$project, 'post-quali-eval']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                <x-lucide-printer class="w-5 h-5 text-foreground" />
+                                <span>Post Qualification Evaluation Report</span>
+                            </a>
+                        </div>
                     </div>
+                @endif
 
-                    <div>
-                        {{-- Edit/Print Post-Qualification Evaluation Report--}}
-                        <a href="{{ route('doc.editor-show', [$project, 'post-quali-eval']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                            <x-lucide-printer class="w-5 h-5 text-foreground" />
-                            <span>Post Qualification Evaluation Report</span>
-                        </a>
-                    </div>
-                </div>
             </div>
 
 
@@ -187,8 +189,8 @@
                                     <div class="flex gap-3 h-full items-center  justify-center ">
 
                                         <button title="Award" class="flex items-center hover:scale-110 transition" @click=" bidId={{ $bid->id }};
-                                                                                                                    showAwardModal = true;
-                                                                                                                ">
+                                                                                                                        showAwardModal = true;
+                                                                                                                    ">
                                             @if($bid->project->awardedBid->id == $bid->id)
                                                 <x-heroicon-s-check-badge class="w-6 h-6 text-bg-green" />
                                             @else
