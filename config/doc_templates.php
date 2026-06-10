@@ -564,6 +564,7 @@ return [
 
     ],
 
+    //Post-Qualification Evaluation Report
     'post-quali-eval' => [
         'fileName' => 'Post-Qualification Evaluation Report.docx',
         'downloadName' => 'Post-Qualification Evaluation Report.docx',
@@ -572,13 +573,13 @@ return [
         'hints' => [
             'company_name_upper' => 'e.g. JUAN CONSTRUCTION',
             'project_title_upper' => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
-            'bid_amount' => 'e.g. 800,000.00',
+            'bid_formatAmount' => 'e.g. 800,000.00',
         ],
 
         'requiredArgs' => [
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
-            'bid_amount' => 'Contract Amount',
+            'bid_formatAmount' => 'Contract Amount',
 
         ],
 
@@ -590,17 +591,20 @@ return [
         'tablesConfig' => [],
 
         'labels' => [
-
+            'bid_formatAmount' => 'Contract Amount'
+        ],
+        'fieldTypes' => [
+            'bid_formatAmount' => [
+                'type' => 'number'
+            ]
         ],
 
         'defaults' => [
             'company_name_upper' => 'awardedBid.company_name',
             'project_title_upper' => 'project_title',
-            'bid_amount' => 'awardedBid.bid_amount',
+            'bid_formatAmount' => 'awardedBid.bid_amount',
         ],
 
-        'formatAmount' => ['bid_amount'],
-        'formatWords' => [],
 
     ],
 
