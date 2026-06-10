@@ -450,7 +450,7 @@ return [
         'tablesConfig' => [],
 
         'labels' => [
-            'title_upper' => 'Title',
+            'title_upper' => 'Name Prefix',
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
@@ -560,6 +560,7 @@ return [
         'tablesConfig' => [],
 
         'labels' => [
+            'title_upper' => 'Name Prefix',
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
@@ -615,7 +616,8 @@ return [
         'tablesConfig' => [],
 
         'labels' => [
-            'bid_formatAmount' => 'Contract Amount'
+            'company_name_upper' => 'Name of Bidder',
+            'bid_formatAmount' => 'Bid Price'
         ],
         'fieldTypes' => [
             'project_title_upper' => [

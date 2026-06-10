@@ -85,7 +85,7 @@
 
                         <div>
                             {{-- Edit/print NGPA_Contract-Form--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                            <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
                                     hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>NGPA Contract-Form</span>

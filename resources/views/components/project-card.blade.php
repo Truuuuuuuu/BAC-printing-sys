@@ -19,7 +19,7 @@
         @click="location.href='{{ route('project.show', $project) }}'">
 
         <span class="block text-center">
-            Open
+            View Details
         </span>
 
         <x-lucide-circle-arrow-right class="w-6 h-6 absolute right-1 top-1/2 -translate-y-1/2" />

@@ -17,7 +17,7 @@
             <div class="w-full lg:max-w-sm self-start px-3 lg:px-0 top-6 space-y-5  ">
                 <div class="flex gap-2 items-center">
                     <div class="border rounded-2xl bg-foreground flex items-center justify-center p-3">
-                        <x-heroicon-s-folder-open class="w-10 h-10 text-primary" />
+                        <x-heroicon-s-folder-plus class="w-10 h-10 text-primary" />
                     </div>
                     <div class="flex flex-col">
                         <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Create New Project</h2>

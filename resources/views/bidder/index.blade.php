@@ -20,8 +20,8 @@
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
             <div class=" px-3 lg:px-0 self-start w-full lg:max-w-sm space-y-5">
                 <div class="flex gap-2 items-center">
-                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-4">
-                        <x-lucide-folder-open class="w-8 h-8 text-primary" />
+                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-2">
+                        <x-heroicon-s-folder-open class="w-10 h-10 text-primary" />
                     </div>
                     <div class="flex flex-col">
                         <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Projects</h2>
