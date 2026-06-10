@@ -83,6 +83,9 @@ return [
 
         'fieldTypes' => [
 
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'philGEPS_posting_date' => [
                 'type' => 'date',
             ],
@@ -138,6 +141,7 @@ return [
         
     ],
 
+    //Bid Evaluation Report
     'evaluation-report' => [
         'fileName' => 'Bid Evaluation Report.docx',
         'downloadName' => 'Bid Evaluation Report.docx',
@@ -211,6 +215,9 @@ return [
             'extension_revision_capitalize' => '3.4b Extension/Revisions if any',
         ],
         'fieldTypes' => [
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'approved_budget_formatAmount' => [
                 'type' => 'number',
             ],
@@ -285,17 +292,26 @@ return [
         'formatWords' => ['responsive_bidders'],
     ],
 
+    //NGPA_Contract-Form
     'contract-form' => [
         'fileName' => 'NGPA_Contract-Form.docx',
         'downloadName' => 'NGPA_Contract-Form.docx',
         'file' => 'NGPA_Contract-Form.docx',
 
         'hints' => [
-
+            'day_ordinal' => 'Select a valid day of the month',
+            'proprietor' => 'e.g. Juan B. Dela Cruz'
         ],
 
         'requiredArgs' => [
-
+            'project_title_upper' => 'Project Title',
+            'day' => 'Contract day',
+            'month' => 'Contract month',
+            'year' => 'Contract year',
+            'company_name_upper' => 'Company name',
+            'contract_amount_words' => 'Contract amount in words',
+            'description' => 'Description',
+            'proprietor_upper' => 'Proprietor'
         ],
 
         'optionalArgs' => [
@@ -306,41 +322,37 @@ return [
         'tablesConfig' => [],
 
         'labels' => [
-
+            'day_ordinal' => 'Contract execution (day)',
+            'month' => 'Contract execution (month)',
+            'year' => 'Contract execution (year)',
+            'contract_amount_words' => 'Contract Amoung in Words',
+            'proprietor_upper' => 'Proprietor/Owner'
         ],
 
-        'defaults' => [
+        'fieldTypes' => [
+            'day_ordinal' => [
+                'type' => 'day'
+            ],
+            'month' => ['type' => 'select', 'options' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']],
+            'year' => ['type' => 'select', 'options' => ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033']],
+
+            'description' => [
+                'type' => 'textarea',
+            ],
+
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
+            
+        ],
+
+         'defaults' => [
             'project_title_upper' => 'project_title',
             'proprietor_upper' => 'awardedBid.proprietor',
             'company_name_upper' => 'awardedBid.company_name',
             'contract_amount_words' => 'contract_amount_in_words',
 
         ],
-
-        'fieldTypes' => [
-            'month' => ['type' => 'select', 'options' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']],
-            'year' => ['type' => 'select', 'options' => ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033']],
-
-            'resolution_date' => [
-                'type' => 'date',
-            ],
-            'procurement_mode' => [
-                'type' => 'select',
-                'options' => [
-                    'Public Bidding',
-                    'Direct Contracting',
-                    'Negotiated Procurement',
-                    'Shopping',
-                ],
-            ],
-            'remarks' => [
-                'type' => 'textarea',
-            ],
-        ],
-
-        'formatAmount' => [],
-        'formatWords' => [],
-
     ],
 
     //Notice of Award
@@ -385,6 +397,9 @@ return [
         ],
 
         'fieldTypes' => [
+            'project_title' => [
+                'type' => 'textarea'
+            ],
             'bid_formatAmount' => [
                 'type' => 'number'
             ],
@@ -443,6 +458,9 @@ return [
         ],
 
         'fieldTypes' => [
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'title_upper' => ['type' => 'select', 'options' => ['MR','MRS','MS','MISS','DR', 'HON','ENGR','ATTY','ARCH']],
             'notice_date' => [
                 'type'=> 'date'
@@ -496,6 +514,9 @@ return [
         ],
 
         'fieldTypes' => [
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'notice_date' => [
                 'type' => 'date'
             ],
@@ -546,6 +567,9 @@ return [
         ],
 
         'fieldTypes' => [
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'title_upper' => ['type' => 'select', 'options' => ['MR','MRS','MS','MISS','DR', 'HON','ENGR','ATTY','ARCH']],
             'notice_date' => [
                 'type'=> 'date'
@@ -594,6 +618,9 @@ return [
             'bid_formatAmount' => 'Contract Amount'
         ],
         'fieldTypes' => [
+            'project_title_upper' => [
+                'type' => 'textarea'
+            ],
             'bid_formatAmount' => [
                 'type' => 'number'
             ]
@@ -608,26 +635,6 @@ return [
 
     ],
 
-    'fieldTypes' => [
-        'day' => ['type' => 'text'],
-        'month' => ['type' => 'select', 'options' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']],
-        'year' => ['type' => 'date'],
-
-        'resolution_date' => [
-            'type' => 'date',
-        ],
-        'procurement_mode' => [
-            'type' => 'select',
-            'options' => [
-                'Public Bidding',
-                'Direct Contracting',
-                'Negotiated Procurement',
-                'Shopping',
-            ],
-        ],
-        'remarks' => [
-            'type' => 'textarea',
-        ],
-    ],
+    
 
 ];

@@ -54,6 +54,17 @@ def format_value(key, val):
         except (ValueError, TypeError):
             return val
         
+    if key.endswith('_ordinal'):
+        try:
+            n = int(val.replace(',', ''))
+            if 11 <= (n % 100) <= 13:
+                suffix = 'th'
+            else:
+                suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
+            return '{}{}'.format(n, suffix)
+        except (ValueError, TypeError):
+            return val
+        
     if key.endswith('_wordNumLower'):                   
         try:
             import num2words

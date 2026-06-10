@@ -72,7 +72,8 @@
                         {{-- Textarea --}}
                         <template x-if="fieldTypes[key] && fieldTypes[key].type === 'textarea'">
                             <textarea
-                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-y overflow-auto"
+                                style="min-height: 4rem; max-height: 12rem;"
                                 :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
                                 @input="schedulePreview()" rows="3"></textarea>
                         </template>
@@ -92,6 +93,15 @@
                                 class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                 :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
                                 x-mask="9999-99-999" @input="schedulePreview()">
+                        </template>
+
+                        {{-- Day (1-31) --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'day'">
+                            <input type="number"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]" min="1"
+                                max="31"
+                                @input="if($event.target.value > 31) $event.target.value = 31; if($event.target.value < 1 && $event.target.value !== '') $event.target.value = 1; args[key] = $event.target.value; schedulePreview()" />
                         </template>
 
                         {{-- Default text --}}
