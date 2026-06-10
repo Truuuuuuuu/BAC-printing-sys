@@ -69,6 +69,15 @@
                                 @input="schedulePreview()" rows="3"></textarea>
                         </template>
 
+
+                        {{-- number --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'number'">
+                            <input type="number"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
+                                @input="schedulePreview()" />
+                        </template>
+
                         {{-- Masked text --}}
                         <template x-if="!fieldTypes[key] && inputPatterns[key]">
                             <input type="text"
@@ -83,7 +92,14 @@
                                 class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                 :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
                                 @input="schedulePreview()">
+
                         </template>
+
+                        <template x-if="getHint(key) === 'e.g. ABC CONSTRUCTION, JUAN COMPANY, ...'">
+                            <p class="text-xs text-gray-400 italic"  x-text="'Separate each item with a comma'"></p>
+                        </template>
+
+
                     </div>
                 </template>
 
@@ -93,7 +109,7 @@
                 <div class="mt-4" x-show="Object.keys(tablesConfig).length > 0">
                     <hr class="mb-4 border-gray-100">
 
-                    <template x-for="[group, groupCfg] in Object.entries(tablesConfig)" :key="group">
+                    {{-- <template x-for="[group, groupCfg] in Object.entries(tablesConfig)" :key="group">
                         <div class="mt-4">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="text-xs font-semibold text-primary uppercase tracking-wide"
@@ -126,6 +142,87 @@
                                                     class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
                                                     :placeholder="fieldCfg.placeholder" x-model="row[field]"
                                                     @input="schedulePreview()" />
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template> --}}
+
+                    <template x-for="[group, groupCfg] in Object.entries(tablesConfig)" :key="group">
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xs font-semibold text-primary uppercase tracking-wide"
+                                    x-text="groupCfg.label"></h3>
+                                <button type="button" @click="addTableRow(group)"
+                                    class="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                                    + Add Row
+                                </button>
+                            </div>
+
+                            <div class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                                <template x-for="(row, rowIndex) in tableRows[group]" :key="rowIndex">
+                                    <div class="border border-gray-100 rounded-lg p-2 bg-gray-50 relative"
+                                        x-data="{ currentGroup: group }"> {{-- ← capture group into own scope --}}
+
+                                        <button type="button" @click="removeTableRow(currentGroup, rowIndex)"
+                                            x-show="tableRows[currentGroup].length > 1"
+                                            class="absolute top-1.5 right-1.5 text-gray-300 hover:text-red-400 text-xs">✕</button>
+
+                                        <p class="text-xs text-primary font-semibold mb-2">
+                                            Row <span x-text="rowIndex + 1"></span>
+                                        </p>
+
+                                        <template
+                                            x-for="[field, fieldCfg] in Object.entries(tablesConfig[currentGroup].fields)"
+                                            :key="field">
+                                            <div class="mb-1.5">
+                                                <label class="block text-xs text-gray-400 mb-0.5"
+                                                    x-text="fieldCfg.label"></label>
+
+                                                {{-- Select --}}
+                                                <template x-if="fieldCfg.type === 'select'">
+                                                    <select
+                                                        class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                        x-model="row[field]" @change="schedulePreview()">
+                                                        <option value="">-- Select --</option>
+                                                        <template x-for="opt in fieldCfg.options" :key="opt">
+                                                            <option :value="opt" x-text="opt"></option>
+                                                        </template>
+                                                    </select>
+                                                </template>
+
+                                                {{-- Date --}}
+                                                <template x-if="fieldCfg.type === 'date'">
+                                                    <input type="date"
+                                                        class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                        x-model="row[field]" @input="schedulePreview()" />
+                                                </template>
+
+                                                {{-- Number --}}
+                                                <template x-if="fieldCfg.type === 'number'">
+                                                    <input type="number"
+                                                        class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                        :placeholder="fieldCfg.placeholder" x-model="row[field]"
+                                                        @input="schedulePreview()" />
+                                                </template>
+
+                                                {{-- Textarea --}}
+                                                <template x-if="fieldCfg.type === 'textarea'">
+                                                    <textarea
+                                                        class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                        :placeholder="fieldCfg.placeholder" x-model="row[field]"
+                                                        @input="schedulePreview()" rows="2"></textarea>
+                                                </template>
+
+                                                {{-- Default text --}}
+                                                <template x-if="!fieldCfg.type || fieldCfg.type === 'text'">
+                                                    <input type="text"
+                                                        class="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                                        :placeholder="fieldCfg.placeholder" x-model="row[field]"
+                                                        @input="schedulePreview()" />
+                                                </template>
                                             </div>
                                         </template>
                                     </div>

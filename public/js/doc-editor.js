@@ -180,6 +180,10 @@ function docEditor() {
             this.schedulePreview();
         },
 
+        getGroupFields(group) {
+            return Object.entries(this.tablesConfig[group]?.fields ?? {});
+        },
+
         // ── label / hint helpers ──────────────────────────────────────────────
         formatLabel(key) {
             const customLabels = cfg.labels ?? {};
@@ -187,6 +191,8 @@ function docEditor() {
             return key
                 .replace(/_upper$/,      '')
                 .replace(/_lower$/,      '')
+                .replace(/_wordNum$/,    '')
+                .replace(/_numWord$/,    '')
                 .replace(/_capitalize$/, '')
                 .replace(/_/g, ' ')
                 .replace(/\b\w/g, c => c.toUpperCase());
@@ -196,6 +202,7 @@ function docEditor() {
             const base = key
                 .replace(/_upper$/,      '')
                 .replace(/_lower$/,      '')
+                .replace(/_wordNum$/,    '')
                 .replace(/_capitalize$/, '');
             return this.placeholderHints[base] ?? '';
         },

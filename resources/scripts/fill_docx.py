@@ -30,7 +30,31 @@ def format_value(key, val):
             return datetime.strptime(val, '%Y-%m-%d').strftime('%B %d, %Y')
         except ValueError:
             return val
-    return val
+        
+    if key.endswith('_formatAmount'):
+        try:
+            return '{:,.2f}'.format(float(val.replace(',', '')))
+        except (ValueError, TypeError):
+            return val
+        
+    if key.endswith('_wordNum'):                   
+        try:
+            import num2words
+            n = int(val.replace(',', ''))
+            words = num2words.num2words(n)
+            return '{} ({})'.format(words, n)
+        except (ValueError, TypeError, ImportError):
+            return val
+        
+    if key.endswith('_numWord'):                   
+        try:
+            from num2words import num2words
+            n = int(val.replace(',', ''))
+            return num2words(n)
+        except (ValueError, TypeError, ImportError):
+            return val
+    return val    
+    
 
 def merge_and_replace_paragraph(para, extra=None):
     if not para.runs:
