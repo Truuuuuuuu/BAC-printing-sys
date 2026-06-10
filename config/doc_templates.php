@@ -282,7 +282,6 @@ return [
             'contract_calculated_formatAmount' => 'awardedBid.bid_amount',
             'contract_amount_words' => 'contract_amount_in_words',
         ],
-        // 'formatAmount' => ['approved_budget', 'bid_amount', 'contract_read_amount', 'contract_calculated_amount'],
         'formatWords' => ['responsive_bidders'],
     ],
 
@@ -344,6 +343,7 @@ return [
 
     ],
 
+    //Notice of Award
     'award-notice' => [
         'fileName' => 'Notice of Award.docx    ',
         'downloadName' => 'Notice of Award.docx',
@@ -354,8 +354,7 @@ return [
             'company_name' => 'e.g. JUAN CONSTRUCTION',
             'project_title' => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
             'contract_amount_in_words' => 'e.g. One million',
-            'bid_amount' => 'e.g. 940,000',
-            'date' => 'MM/DD/YY',
+            'bid_formatAmount' => 'e.g. 940,000',
 
         ],
 
@@ -364,8 +363,8 @@ return [
             'company_name_upper' => 'Company Name',
             'project_title' => 'Project Title',
             'contract_amount_in_words' => 'Contract Amount in Words',
-            'bid_amount' => 'Contract Amount',
-            'date' => 'Date',
+            'bid_formatAmount' => 'Contract Amount',
+            'notice_date' => 'Date',
         ],
 
         'optionalArgs' => [
@@ -380,9 +379,19 @@ return [
             'company_name_upper' => 'Company Name',
             'project_title' => 'Project Title',
             'contract_amount_in_words' => 'Contract Amount in Words',
-            'bid_amount' => 'Contract Amount',
-            'date' => 'Date',
+            'bid_formatAmount' => 'Contract Amount',
+            'notice_date' => 'Date',
 
+        ],
+
+        'fieldTypes' => [
+            'bid_formatAmount' => [
+                'type' => 'number'
+            ],
+
+            'notice_date' => [
+                'type' => 'date'
+            ],
         ],
 
         'defaults' => [
@@ -390,10 +399,9 @@ return [
             'company_name_upper' => 'awardedBid.company_name',
             'project_title' => 'project_title',
             'contract_amount_in_words' => 'contract_amount_in_words',
-            'bid_amount' => 'awardedBid.bid_amount',
+            'bid_formatAmount' => 'awardedBid.bid_amount',
         ],
 
-        'formatAmount' => ['bid_amount'],
         'formatWords' => [],
 
     ],
