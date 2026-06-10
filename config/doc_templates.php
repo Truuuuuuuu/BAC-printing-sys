@@ -406,6 +406,7 @@ return [
 
     ],
 
+    //Notice of Post-Qualification
     'notice-post-qualification' => [
         'fileName' => 'Notice of Post-Qualification.docx',
         'downloadName' => 'Notice of Post-Qualification.docx',
@@ -460,6 +461,7 @@ return [
 
     ],
 
+    //Notice to Proceed
     'notice-proceed' => [
         'fileName' => 'Notice to Proceed.docx',
         'downloadName' => 'Notice to Proceed.docx',
@@ -469,14 +471,13 @@ return [
             'proprietor' => 'e.g. Juan B. Dela Cruz',
             'company_name' => 'e.g. JUAN CONSTRUCTION',
             'project_title' => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
-            'date' => 'e.g. MM/DD/YY',
         ],
 
         'requiredArgs' => [
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
-            'date' => 'Date',
+            'notice_date' => 'Date',
         ],
 
         'optionalArgs' => [
@@ -491,7 +492,13 @@ return [
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
-            'date' => 'Date',
+            'notice_date' => 'Date',
+        ],
+
+        'fieldTypes' => [
+            'notice_date' => [
+                'type' => 'date'
+            ],
         ],
 
         'defaults' => [
@@ -500,8 +507,6 @@ return [
             'project_title_upper' => 'project_title',
         ],
 
-        'formatAmount' => [],
-        'formatWords' => [],
 
     ],
 
