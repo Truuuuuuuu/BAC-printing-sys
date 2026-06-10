@@ -191,7 +191,11 @@ function docEditor() {
             return key
                 .replace(/_upper$/,      '')
                 .replace(/_lower$/,      '')
-                .replace(/_wordNum$/,    '')
+                .replace(/_wordNumLower$/,    '')
+                .replace(/_wordNumUpper$/,    '')
+                .replace(/_date$/,    '')
+                .replace(/_dateTime$/,    '')
+                .replace(/__dateMonthDay$/,    '')
                 .replace(/_numWord$/,    '')
                 .replace(/_capitalize$/, '')
                 .replace(/_/g, ' ')
@@ -202,7 +206,12 @@ function docEditor() {
             const base = key
                 .replace(/_upper$/,      '')
                 .replace(/_lower$/,      '')
-                .replace(/_wordNum$/,    '')
+                .replace(/_wordNumLower$/,    '')
+                .replace(/_wordNumUpper$/,    '')
+                .replace(/_numWord$/,    '')
+                .replace(/_date$/,    '')
+                .replace(/_dateTime$/,    '')
+                .replace(/__dateMonthDay$/,    '')
                 .replace(/_capitalize$/, '');
             return this.placeholderHints[base] ?? '';
         },

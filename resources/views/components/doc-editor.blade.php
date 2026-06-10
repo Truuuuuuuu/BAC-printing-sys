@@ -61,6 +61,14 @@
                                 x-model="args[key]" @input="schedulePreview()">
                         </template>
 
+                        {{-- Datetime --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'datetime'">
+                            <input type="datetime-local"
+                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                x-model="args[key]" @input="schedulePreview()" />
+                        </template>
+
+
                         {{-- Textarea --}}
                         <template x-if="fieldTypes[key] && fieldTypes[key].type === 'textarea'">
                             <textarea
@@ -96,7 +104,7 @@
                         </template>
 
                         <template x-if="getHint(key) === 'e.g. ABC CONSTRUCTION, JUAN COMPANY, ...'">
-                            <p class="text-xs text-gray-400 italic"  x-text="'Separate each item with a comma'"></p>
+                            <p class="text-xs text-gray-400 italic" x-text="'Separate each item with a comma'"></p>
                         </template>
 
 

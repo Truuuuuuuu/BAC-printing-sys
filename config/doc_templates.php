@@ -10,7 +10,7 @@ return [
 
         'hints' => [
             'total_interested_bidders' => 'e.g. 5',
-            'responsive_bidders' => 'e.g. six (6)',
+            'responsive_bidders' => 'e.g. 6',
             'project_title' => 'e.g. Construction of Barangay Hall',
             'approved_budget' => 'e.g. 400,000.00',
             'resolution_number' => '0000-00-000',
@@ -24,8 +24,8 @@ return [
 
         'requiredArgs' => [
             'resolution_number' => 'Resolution Number',
-            'total_interested_bidders_wordNum' => 'Total Interested Bidders',
-            'responsive_bidders_wordNum' => 'Number of Responsive Bidders',
+            'total_interested_bidders_wordNumLower' => 'Total Interested Bidders',
+            'responsive_bidders_wordNumLower' => 'Number of Responsive Bidders',
             'project_title_upper' => 'Project Title',
             'approved_budget_formatAmount' => 'Approved Budget',
             'winning_bidder_upper' => 'Winning Bidder',
@@ -97,11 +97,11 @@ return [
                 'type' => 'number',
             ],
 
-            'total_interested_bidders_wordNum' => [
+            'total_interested_bidders_wordNumLower' => [
                 'type' => 'number',
             ],
 
-            'responsive_bidders_wordNum' => [
+            'responsive_bidders_wordNumLower' => [
                 'type' => 'number',
             ],
 
@@ -145,18 +145,16 @@ return [
 
         'hints' => [
             'company_name' => 'e.g. ABC CONSTRUCTION CORP.',
-            'contract_read_amount' => 'e.g. 1,250,000.00',
-            'contract_calculated_amount' => 'e.g. 1,250,000.00',
-            'date_of_publication' => 'e.g. June 5, 2026',
-            'date_of_eligibility' => 'e.g. June 5, 2026',
-            'num_of_eligibility' => 'Two (2)',
-            'period_of_availability' => 'e.g. June 3 - July 1, 2026',
-            'num_of_docs_issued' => 'Two (2)',
-            'date_of_conference' => 'e.g. June 5, 2026',
-            'orig_date_time' => 'e.g. August 4, 2025, at 8:30am',
+            'contract_read_formatAmount' => 'e.g. 1,250,000.00',
+            'contract_calculated_formatAmount' => 'e.g. 1,250,000.00',
+            'eligibility' => 'e.g. 5',
+            'issued_docs' => 'e.g. 5',
+            'conference_date' => 'e.g. June 5, 2026',
+            'responsive_bidders' => 'e.g. 6',
+            'orig' => 'e.g. August 4, 2025, at 8:30am',
             'extension' => 'e.g. August 4, 2025, at 8:30 am ',
-            'bid_opening_date_time' => 'e.g. July 3, 2026, at 11:00am',
-            'num_submitted_bids' => 'e.g. One (1)',
+            'bid_opening' => 'e.g. July 3, 2026, at 11:00am',
+            'num_submitted_bids' => 'e.g. 5',
             'orig_specified' => 'e.g. 120',
             'extension_revision' => 'e.g. Date',
 
@@ -165,22 +163,25 @@ return [
         'requiredArgs' => [
             'project_title_upper' => 'Project Title',
             'company_name_upper' => 'Awardee',
-            'approved_budget' => 'amount',
-            'contract_calculated_amount' => 'Contract Amount',
-            'date_of_publication_capitalize' => 'Date of Publication',
-            'date_of_eligibility_capitalize' => 'Date of Eligibility Check',
-            'num_of_eligibility_capitalize' => 'Number of eligibility envelopes received',
-            'period_of_availability_capitalize' => 'Period of availability of Bid Docs',
-            'num_of_docs_issued_capitalize' => 'Number of Bid Docs issued',
-            'date_of_conference_capitalize' => 'Date of Conference',
-            'orig_date_time_capitalize' => 'Original Date, Time',
-            'bid_opening_date_time_capitalize' => 'Bid Opening date, time',
-            'num_submitted_bids_capitalize' => 'Number of bids submitted',
+            'approved_budget_formatAmount' => 'amount',
+            'publication_date' => 'Date of Publication',
+            'eligibility_date' => 'Date of Eligibility Check',
+            'eligibility_wordNumUpper' => 'Number of eligibility envelopes received',
+            'start_dateMonthDay' => 'Start period of availability of Bid Docs',
+            'availability_date' => 'Period of availability of Bid Docs',
+            'issued_docs_wordNumUpper' => 'Number of Bid Docs issued',
+            'conference_date' => 'Date of Conference',
+            'responsive_bidders_wordNumLower' => 'Total Responsive Bidders',
+            'orig_dateTime' => 'Original Date, Time',
+            'bid_opening_dateTime' => 'Bid Opening date, time',
+            'num_submitted_bids_wordNumUpper' => 'Number of bids submitted',
             'orig_specified' => 'Originally specified',
+            'contract_read_formatAmount' => 'Contract Amount (As Read)',
+            'contract_calculated_formatAmount' => 'Contract Amount (As Calculated)',
         ],
 
         'optionalArgs' => [
-            'extension_capitalize',
+            'extension_dateTime',
             'extension_revision_capitalize',
         ],
 
@@ -189,35 +190,99 @@ return [
 
         'labels' => [
             'company_name_upper' => 'Company Name',
-            'contract_read_amount' => 'Contract Amount (As Read)',
-            'contract_calculated_amount' => 'Contract Amount (As Calculated)',
+            'contract_read_formatAmount' => 'Contract Amount (As Read)',
+            'contract_calculated_formatAmount' => 'Contract Amount (As Calculated)',
             'contract_amount_words' => 'Contract Amount in Words',
             'responsive_bidders' => 'Number of Responsive Bidders',
-            'approved_budget' => 'Approved Budget',
-            'date_of_publication' => '2.2a Date of Publication',
-            'date_of_eligibility' => '2.3a Date of Eligibility Check',
-            'num_of_eligibility_capitalize' => '2.3b Number of eligibility envelopes received',
-            'period_of_availability_capitalize' => '2.4a Period of availability of Bid Docs',
-            'num_of_docs_issued_capitalize' => '2.4b Number of Bid Docs issued',
-            'date_of_conference_capitalize' => '2.5a Date of Conference',
-            'orig_date_time_capitalize' => '3.1a Original date, time',
-            'extension_capitalize' => '3.1b Extensions, if any',
-            'bid_opening_date_time_capitalize' => '3.2 Bid Opening date, time',
-            'num_submitted_bids_capitalize' => '3.3 Numbers of bids submitted',
+            'approved_budget_formatAmount' => 'Approved Budget',
+            'publication_date' => '2.2a Date of Publication',
+            'eligibility_date' => '2.3a Date of Eligibility Check',
+            'eligibility_wordNumUpper' => '2.3b Number of eligibility envelopes received',
+            'start_dateMonthDay' => '2.4a Start Period of availability of Bid Docs',
+            'availability_date' => '2.4a End Period of availability of Bid Docs',
+            'issued_docs_wordNumUpper' => '2.4b Number of Bid Docs issued',
+            'conference_date' => '2.5a Date of Conference',
+            'responsive_bidders_wordNumLower'   => 'Total Responsive Bidders',
+            'orig_dateTime' => '3.1a Original date, time',
+            'extension_dateTime' => '3.1b Extensions, if any',
+            'bid_opening_dateTime' => '3.2 Bid Opening date, time',
+            'num_submitted_bids_wordNumUpper' => '3.3 Numbers of bids submitted',
             'orig_specified' => '3.4a Originally Specified',
             'extension_revision_capitalize' => '3.4b Extension/Revisions if any',
+        ],
+        'fieldTypes' => [
+            'approved_budget_formatAmount' => [
+                'type' => 'number',
+            ],
+
+            'publication_date' => [
+                'type' => 'date',
+            ],
+            'eligibility_date' => [
+                'type' => 'date',
+            ],
+            'eligibility_wordNumUpper'=> [
+                'type' => 'number'
+            ],
+
+            'start_dateMonthDay'=> [
+                'type'=> 'date'
+            ],
+
+            'availability_date'=> [
+                'type'=> 'date'
+            ],
+
+            'issued_docs_wordNumUpper'=> [
+                'type'=> 'number'
+            ],
+
+            'conference_date' => [
+                'type' => 'date'
+            ],
+
+            'responsive_bidders_wordNumLower'=> [
+                'type'  => 'number'
+            ],
+
+            'orig_dateTime' => [
+                'type'=> 'datetime'
+            ],
+            'bid_opening_dateTime' => [
+                'type'=> 'datetime'
+            ],
+            'extension_dateTime' => [
+                'type'=> 'datetime'
+            ],
+
+            'num_submitted_bids_wordNumUpper' => [
+                'type'=> 'number'
+            ],
+
+            'orig_specified' => [
+                'type'=> 'number'
+            ],
+
+            'contract_read_formatAmount' => [
+                'type' => 'number'
+            ],
+
+            'contract_calculated_formatAmount' => [
+                'type' => 'number'
+            ],
+
         ],
 
         'defaults' => [
             'project_title_upper' => 'project_title',
-            'approved_budget' => 'amount',
+            'approved_budget_formatAmount' => 'amount',
             'company_name_upper' => 'awardedBid.company_name',
             'responsive_bidders' => 'totalResponsiveBidders',
-            'contract_read_amount' => 'awardedBid.bid_amount',
-            'contract_calculated_amount' => 'awardedBid.bid_amount',
+            'contract_read_formatAmount' => 'awardedBid.bid_amount',
+            'contract_calculated_formatAmount' => 'awardedBid.bid_amount',
             'contract_amount_words' => 'contract_amount_in_words',
         ],
-        'formatAmount' => ['approved_budget', 'bid_amount', 'contract_read_amount', 'contract_calculated_amount'],
+        // 'formatAmount' => ['approved_budget', 'bid_amount', 'contract_read_amount', 'contract_calculated_amount'],
         'formatWords' => ['responsive_bidders'],
     ],
 

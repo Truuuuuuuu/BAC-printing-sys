@@ -30,6 +30,23 @@ def format_value(key, val):
             return datetime.strptime(val, '%Y-%m-%d').strftime('%B %d, %Y')
         except ValueError:
             return val
+    if key.endswith('_dateTime'):
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(val, '%Y-%m-%dT%H:%M')
+            hour = dt.hour % 12 or 12
+            minute = dt.strftime('%M')
+            period = 'am' if dt.hour < 12 else 'pm'
+            return '{} {}, {}, at {}:{} {}'.format(
+                dt.strftime('%B'),
+                dt.day,
+                dt.year,
+                hour,
+                minute,
+                period
+            )
+        except ValueError:
+            return val  
         
     if key.endswith('_formatAmount'):
         try:
@@ -37,11 +54,19 @@ def format_value(key, val):
         except (ValueError, TypeError):
             return val
         
-    if key.endswith('_wordNum'):                   
+    if key.endswith('_wordNumLower'):                   
         try:
             import num2words
             n = int(val.replace(',', ''))
             words = num2words.num2words(n)
+            return '{} ({})'.format(words, n)
+        except (ValueError, TypeError, ImportError):
+            return val
+    if key.endswith('_wordNumUpper'):                   
+        try:
+            import num2words
+            n = int(val.replace(',', ''))
+            words = num2words.num2words(n).title()
             return '{} ({})'.format(words, n)
         except (ValueError, TypeError, ImportError):
             return val
@@ -53,6 +78,15 @@ def format_value(key, val):
             return num2words(n)
         except (ValueError, TypeError, ImportError):
             return val
+        
+    if key.endswith('_dateMonthDay'):
+        try:
+            from datetime import datetime
+            dt = datetime.strptime(val, '%Y-%m-%d')
+            return dt.strftime('%B') + ' ' + str(dt.day)
+        except ValueError:
+            return val
+        
     return val    
     
 
