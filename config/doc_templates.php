@@ -510,6 +510,7 @@ return [
 
     ],
 
+    //Notification of Lowest Calculated Bid
     'notif-lcb' => [
         'fileName' => 'Notification of Lowest Calculated Bid.docx',
         'downloadName' => 'Notification of Lowest Calculated Bid.docx',
@@ -520,7 +521,6 @@ return [
             'proprietor' => 'e.g. Juan B. Dela Cruz',
             'company_name' => 'e.g. JUAN CONSTRUCTION',
             'project_title' => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
-            'date' => 'e.g. MM/DD/YY',
         ],
 
         'requiredArgs' => [
@@ -528,7 +528,7 @@ return [
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
-            'date' => 'Date',
+            'notice_date' => 'Date',
         ],
 
         'optionalArgs' => [
@@ -542,7 +542,15 @@ return [
             'proprietor_upper' => 'Proprietor/Owner',
             'company_name_upper' => 'Company Name',
             'project_title_upper' => 'Project Title',
-            'date' => 'Date',
+            'notice_date' => 'Date',
+        ],
+
+        'fieldTypes' => [
+            'title_upper' => ['type' => 'select', 'options' => ['MR','MRS','MS','MISS','DR', 'HON','ENGR','ATTY','ARCH']],
+            'notice_date' => [
+                'type'=> 'date'
+            ],
+            
         ],
 
         'defaults' => [
