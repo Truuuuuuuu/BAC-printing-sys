@@ -112,7 +112,7 @@ class BidderController extends Controller
             'address' => $request->input('edit-address'),
         ]);
 
-        return redirect()->back()->with('success', 'Project updated successfully.');
+        return redirect()->back()->with('clear_storage', true)->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Bid $bid)

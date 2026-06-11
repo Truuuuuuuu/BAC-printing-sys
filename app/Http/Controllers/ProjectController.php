@@ -81,7 +81,7 @@ class ProjectController extends Controller
             'status'        => $request->input('edit-status'),
         ]);
 
-        return redirect()->back()->with('success', 'Project updated successfully.');
+        return redirect()->back()->with('clear_storage',true)->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Project $project)

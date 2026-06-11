@@ -185,4 +185,11 @@
         </button>
     </div>
 
+    {{-- Clear localstorage in browser when bid info edited --}}
+    @if(session('clear_storage'))
+        <script>
+            localStorage.clear();
+        </script>
+    @endif
+
 </x-app-layout>

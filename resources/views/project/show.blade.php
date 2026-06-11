@@ -164,7 +164,7 @@
                 <table class="w-full border-collapse text-sm">
                     <thead>
                         <tr class="text-primary bg-gray-200 [&>th]:py-3">
-                            <th class="px-2 py-1 text-left font-bold">#</th>
+                            <th class="px-2 py-1 text-center font-bold">#</th>
                             <th class="px-2 py-1 text-left font-bold">Bidder</th>
                             <th class="px-2 py-1 text-left font-bold">Proprietor</th>
                             <th class="px-2 py-1 text-left font-bold">Contract Amount</th>

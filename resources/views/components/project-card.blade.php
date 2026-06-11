@@ -15,7 +15,7 @@
     </div>
 
     <button
-        class="relative w-full bg-bg-green hover:bg-primary hover:scale-105 text-foreground font-semibold rounded-3xl py-1 hover:shadow-md transition-all duration-200"
+        class="relative w-full bg-primary hover:scale-105 text-foreground font-semibold rounded-3xl py-1 hover:shadow-md transition-all duration-200"
         @click="location.href='{{ route('project.show', $project) }}'">
 
         <span class="block text-center">

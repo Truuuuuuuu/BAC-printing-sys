@@ -60,7 +60,7 @@
                </div>
 
                <div class=" flex justify-center items-center">
-                    <img src=" {{ asset('BAC-favicon.png') }}" alt="System Logo" class="w-64 h-64"/>
+                    <img src=" {{ asset('BAC-favicon.png') }}" alt="System Logo" class="w-64 h-64 hover:scale-105 transition"/>
                </div>
                 
             </main>
