@@ -50,10 +50,10 @@ class Project extends Model
     }
     public function getVariancePercentageAttribute(): ?float
     {
-        if (!$this->awardedBid || !$this->amount) return null;
+        if (!$this->awardedBid || !$this->approved_budget) return null;
 
-        return (($this->amount - $this->awardedBid->bid_amount) 
-            / $this->amount) * 100;
+        return round((($this->approved_budget - $this->awardedBid->bid_amount) 
+            / $this->approved_budget) * 100, 2);
     }
 
     public function getTotalResponsiveBiddersAttribute(): ?int
@@ -63,7 +63,7 @@ class Project extends Model
 
     public function getContractAmountInWordsAttribute(): string
     {
-        if (!$this->amount) return '';
+        if (!$this->awardedBid || !$this->awardedBid->bid_amount) return '';
 
         
         $amount = number_format($this->awardedBid->bid_amount, 2, '.', '');

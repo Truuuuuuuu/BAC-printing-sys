@@ -33,18 +33,22 @@ class Bid extends Model
         return implode(', ', $parts);
     }
 
-
-   public function scopeSearch($query, $search)
-    {   
-        if ($search) {
-            $query->whereHas('project', function ($q) use ($search) {
-                $q->where('project_title', 'like', '%' . $search . '%');
-            })
-            ->orWhere('company_name', 'like', '%' . $search . '%')
-            ->orWhere('proprietor', 'like', '%' . $search . '%');
-        }
-
-        return $query;
+    public function getPartialAddressAttribute(): string
+    {
+        return $this->barangay . ', ' . $this->municipality_city;
     }
+
+    public function scopeSearch($query, $search)
+        {   
+            if ($search) {
+                $query->whereHas('project', function ($q) use ($search) {
+                    $q->where('project_title', 'like', '%' . $search . '%');
+                })
+                ->orWhere('company_name', 'like', '%' . $search . '%')
+                ->orWhere('proprietor', 'like', '%' . $search . '%');
+            }
+
+            return $query;
+        }
 
 }
