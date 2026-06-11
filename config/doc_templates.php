@@ -319,19 +319,29 @@ return [
         'file'          => 'NGPA_Contract-Form.docx',
 
         'hints' => [
-            'day_ordinal'   => 'Select a valid day of the month',
-            'proprietor'    => 'e.g. Juan B. Dela Cruz'
+            'day_ordinal'                     => 'Select a valid day of the month',
+            'proprietor'                      => 'e.g. Juan B. Dela Cruz',
+            'entity_name'                     => 'e.g. Entity Name',
+            'entity_position_designation'     => 'e.g. Postion/Designation',
+            'proprietor_position_designation' => 'e.g. Postion/Designation',
+            'entity_date'                     => 'Entity Date',
+            'proprietor_date'                 => 'Proprietor Date'
         ],
 
         'requiredArgs' => [
-            'project_title_upper'   => 'Project Title',
-            'day'                   => 'Contract day',
-            'month'                 => 'Contract month',
-            'year'                  => 'Contract year',
-            'company_name_upper'    => 'Company name',
-            'contract_amount_words' => 'Contract amount in words',
-            'description'           => 'Description',
-            'proprietor_upper'      => 'Proprietor'
+            'project_title_upper'               => 'Project Title',
+            'day_ordinal'                       => 'Contract day',
+            'month'                             => 'Contract month',
+            'year'                              => 'Contract year',
+            'company_name_upper'                => 'Company name',
+            'contract_amount_words'             => 'Contract amount in words',
+            'description'                       => 'Description',
+            'proprietor_upper'                  => 'Proprietor',
+            'entity_name_upper'                 => 'Entity Name',
+            'entity_position_designation'       => 'Entity Position/Designation',
+            'proprietor_position_designation'   => 'Proprietor Postion/Designation',
+            'entity_date'                       => 'Entity Date',
+            'proprietor_date'                   => 'Proprietor Date'
         ],
 
         'optionalArgs' => [
@@ -342,11 +352,16 @@ return [
         'tablesConfig'          => [],
 
         'labels' => [
-            'day_ordinal'           => 'Contract execution (day)',
-            'month'                 => 'Contract execution (month)',
-            'year'                  => 'Contract execution (year)',
-            'contract_amount_words' => 'Contract Amount in Words',
-            'proprietor_upper'      => 'Proprietor/Owner'
+            'day_ordinal'                       => 'Contract execution (day)',
+            'month'                             => 'Contract execution (month)',
+            'year'                              => 'Contract execution (year)',
+            'contract_amount_words'             => 'Contract Amount in Words',
+            'proprietor_upper'                  => 'Proprietor/Owner',
+            'entity_name_upper'                 => 'Name of the Procuring Entity',
+            'entity_position_designation'       => 'Procuring Entity Position/Designation',
+            'proprietor_position_designation'   => 'Proprietor Postion/Designation',
+            'entity_date'                       => 'Procuring Entity Date',
+            'proprietor_date'                   => 'Proprietor Date'
         ],
 
         'fieldTypes' => [
@@ -370,6 +385,14 @@ return [
             'project_title_upper' => [
                 'type' => 'textarea'
             ],
+
+            'entity_date' => [
+                'type' => 'date'
+            ],
+
+            'proprietor_date' => [
+                'type' => 'date'
+            ]
             
         ],
 
@@ -626,14 +649,12 @@ return [
             'company_name_upper'    => 'e.g. JUAN CONSTRUCTION',
             'project_title_upper'   => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
             'bid_formatAmount'      => 'e.g. 800,000.00',
-            'entity_name'           => 'e.g. Entity Name',
         ],
 
         'requiredArgs' => [
             'company_name_upper'    => 'Company Name',
             'project_title_upper'   => 'Project Title',
             'bid_formatAmount'      => 'Contract Amount',
-            'entity_name'           => 'Entity Name'
         ],
 
         'optionalArgs' => [
@@ -646,9 +667,8 @@ return [
         'labels' => [
             'company_name_upper' => 'Name of Bidder',
             'bid_formatAmount'   => 'Bid Price',
-            'entity_name'        => 'Name of Procuring Entity',
         ],
-        
+
         'fieldTypes' => [
             'project_title_upper' => [
                 'type' => 'textarea'
