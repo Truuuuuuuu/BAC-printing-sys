@@ -91,6 +91,17 @@ function docEditor() {
                     }
                 }
 
+                this.placeholders = allKeys.filter(k => !k.startsWith('row_'));
+
+                // ── Extra placeholders not in docx ──
+                const extras = cfg.extraPlaceholders ?? [];
+                for (const k of extras) {
+                    if (!this.placeholders.includes(k)) {
+                        this.placeholders.push(k);
+                        this.args[k] = '';
+                    }
+                }
+
             } catch (err) {
                 this.loadError = err.message;
             } finally {

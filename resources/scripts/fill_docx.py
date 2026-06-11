@@ -142,6 +142,48 @@ def get_row_group(row):
                 return match.group(1)
     return None
 
+#Conditional paragraph removal 
+selected_mode = args.get('procurement_mode', '')
+
+mode_tag_map = {
+    'Goods':          'if_goods',
+    'Infrastructure': 'if_infra',
+    'Consulting':     'if_consulting',
+}
+active_tag = mode_tag_map.get(selected_mode, '')
+
+paragraphs = list(doc.paragraphs)
+paragraphs_to_remove = []
+inside_block = False
+block_active = False
+
+for para in paragraphs:
+    full_text = ''.join(r.text for r in para.runs).strip()
+
+    # Detect start tag
+    start_match = re.match(r'\{\{#(\w+)_start\}\}', full_text)
+    end_match   = re.match(r'\{\{#(\w+)_end\}\}',   full_text)
+
+    if start_match:
+        tag = start_match.group(1)
+        inside_block = True
+        block_active = (tag == active_tag)
+        paragraphs_to_remove.append(para)  # always remove the marker itself
+        continue
+
+    if end_match:
+        inside_block = False
+        block_active = False
+        paragraphs_to_remove.append(para)  # always remove the marker itself
+        continue
+
+    if inside_block and not block_active:
+        paragraphs_to_remove.append(para)
+
+for para in paragraphs_to_remove:
+    p = para._element
+    p.getparent().remove(p)
+
 # Static body paragraphs
 for para in doc.paragraphs:
     merge_and_replace_paragraph(para)

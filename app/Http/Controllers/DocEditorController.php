@@ -42,6 +42,8 @@ class DocEditorController extends Controller
             'inputPatterns' => $def['inputPatterns'] ?? [],
             'labels' => $def['labels'] ?? [],
             'fieldTypes'    => $def['fieldTypes']    ?? [], 
+
+            'extraPlaceholders' => $def['extraPlaceholders'] ?? [],
             
         ];
 

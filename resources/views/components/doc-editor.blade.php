@@ -104,6 +104,20 @@
                                 @input="if($event.target.value > 31) $event.target.value = 31; if($event.target.value < 1 && $event.target.value !== '') $event.target.value = 1; args[key] = $event.target.value; schedulePreview()" />
                         </template>
 
+                        {{-- Radio --}}
+                        <template x-if="fieldTypes[key] && fieldTypes[key].type === 'radio'">
+                            <div class="space-y-2">
+                                <template x-for="[optValue, optLabel] in Object.entries(fieldTypes[key].options)"
+                                    :key="optValue">
+                                    <label class="flex items-start gap-2 cursor-pointer">
+                                        <input type="radio" class="mt-0.5 accent-blue-600" :name="key" :value="optValue"
+                                            x-model="args[key]" @change="schedulePreview()" />
+                                        <span class="text-xs text-gray-600" x-text="optLabel"></span>
+                                    </label>
+                                </template>
+                            </div>
+                        </template>
+
                         {{-- Default text --}}
                         <template x-if="!fieldTypes[key] && !inputPatterns[key]">
                             <input type="text"

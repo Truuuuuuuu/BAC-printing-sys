@@ -364,6 +364,8 @@ return [
             'proprietor_date'                   => 'Proprietor Date'
         ],
 
+        'extraPlaceholders' => ['procurement_mode'],
+
         'fieldTypes' => [
             'day_ordinal' => [
                 'type' => 'day'
@@ -392,7 +394,16 @@ return [
 
             'proprietor_date' => [
                 'type' => 'date'
-            ]
+            ],
+
+            'procurement_mode' => [
+                'type' => 'radio',
+                'options' => [
+                    'Goods' => 'Procurement of Goods',
+                    'Infrastructure' => 'Procurement of Infrastructure Projects',
+                    'Consulting' => 'Procurement of Consulting Services',
+                ],
+            ],
             
         ],
 
