@@ -86,10 +86,12 @@ class BidderController extends Controller
     public function update(Request $request, Bid $bid)
     {
         $request->validate([
-            'edit-company_name' => ['required','string','max:255'],
-            'edit-proprietor' => ['required','string','max:255'],
-            'edit-bid_amount' => ['required','numeric','min:1'],
-            'edit-address' => ['required','string','max:255'],
+            'edit-company_name'         => ['required','string','max:255'],
+            'edit-proprietor'           => ['required','string','max:255'],
+            'edit-bid_amount'           => ['required','numeric','min:1'],
+            'edit-street'               => ['required','string','max:255'],
+            'edit-barangay'             => ['required','string','max:255'],
+            'edit-municipality_city'    => ['required','string','max:255'],
         ],
         [
             'edit-company_name.required' => 'Company name is required.',
@@ -104,25 +106,37 @@ class BidderController extends Controller
             'edit-bid_amount.numeric'    => 'Bid amount must be a valid number.',
             'edit-bid_amount.min'        => 'Bid amount must be at least 1.',
 
-            'edit-address.required'      => 'Address is required.',
-            'edit-address.string'        => 'Address must be valid text.',
-            'edit-address.max'           => 'Address may not exceed 255 characters.',
+            'edit-street.required'              => 'Street is required.',
+            'edit-barangay.required'            => 'Barangay is required.',
+            'edit-municipality_city.required'   => 'Municipality/City is required.',
 
         ]);
 
+         $municipality_city = $request->input('edit-municipality_city') !== 'Sorsogon City'
+            ? $request->input('edit-municipality_city') . ', Sorsogon'
+            : $request->input('edit-municipality_city');
+
+        // Checks if nothing changed to avoid toast trigger 
         if (
             $bid->company_name === $request->input('edit-company_name') &&
             $bid->proprietor === $request->input('edit-proprietor') &&
-            $bid->bid_amount == $request->input('edit-bid_amount') && $bid->address === $request->input('edit-address')
+            $bid->bid_amount == $request->input('edit-bid_amount') && 
+            $bid->street === $request->input('edit-street') && 
+            $bid->barangay === $request->input('edit-barangay') && 
+            $bid->municipality_city === $municipality_city
         ) {
             return redirect()->back();
         }
 
+       
+
         $bid->update([
-            'company_name' => $request->input('edit-company_name'),
-            'proprietor' => $request->input('edit-proprietor'),
+            'company_name'      => $request->input('edit-company_name'),
+            'proprietor'        => $request->input('edit-proprietor'),
             'bid_amount'        => $request->input('edit-bid_amount'),
-            'address' => $request->input('edit-address'),
+            'street'            => $request->input('edit-street'),
+            'barangay'          => $request->input('edit-barangay'),
+            'municipality_city' => $municipality_city,
         ]);
 
         return redirect()->back()->with('clear_storage', true)->with('success', 'Project updated successfully.');

@@ -7,12 +7,14 @@
             company_name: '{{ old('edit-company_name') }}',
             proprietor: '{{ old('edit-proprietor') }}',
             bid_amount: '{{ old('edit-bid_amount') }}',
-            address: '{{ old('edit-address') }}',
+            street: '{{ old('edit-street') }}',
+            barangay: '{{ old('edit-barangay') }}',
+            municipality_city: '{{ old('edit-municipality_city') }}',
         },
         bidId: null,
 
         showDeleteBidModal: false,
-        showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-address', 'edit-bid_amount']) ? 'true' : 'false' }},
+        showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-bid_amount', 'edit-street', 'edit-barangay', 'edit-municipality_city']) ? 'true' : 'false' }},
         showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'bid_amount', 'street', 'barangay', 'municipality_city']) ? 'true' : 'false' }},
         showAwardModal: false,
         
@@ -20,6 +22,12 @@
         selectedProjectId: '{{ old('project_id') }}',
         selectedProjectAmount: '{{ old('project_amount')}}',
 
+        async onEditModalOpen() {
+            this.$dispatch('edit-modal-opened', { 
+                municipality_city: this.editBid.municipality_city,
+                barangay: this.editBid.barangay
+            });
+        },
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8  text-primary space-y-5">
             <button type="button" onclick="history.back()" class="inline-flex gap-2 items-center">
@@ -198,10 +206,19 @@
                                             @endif
                                         </button>
 
-                                        <button class="flex items-center hover:scale-110 transition" title="Edit"
-                                            @click="editId = {{ $bid->id }}; editBid = {{ json_encode($bid) }}; showEditBidModal = true">
-                                            <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
-                                        </button>
+                                        <button @click="
+                                            editId = {{ $bid->id }};
+                                            editBid = {{ json_encode($bid) }};
+                                            showEditBidModal = true;
+                                            $nextTick(() => window.dispatchEvent(new CustomEvent('open-edit', {
+                                                detail: {
+                                                    municipality_city: '{{ addslashes($bid->municipality_city) }}',
+                                                    barangay: '{{ addslashes($bid->barangay) }}'
+                                                }
+                                            })));
+                                        ">
+                                        <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
+                                    </button>
 
                                         <button class="flex items-center hover:scale-110 transition" title="Delete"
                                             @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
@@ -233,7 +250,7 @@
         </div>
 
         <x-create-bid :$cities/>
-        <x-edit-bid />
+        <x-edit-bid :$cities/>
         <x-delete-bid />
         <x-award-bid />
     </div>
