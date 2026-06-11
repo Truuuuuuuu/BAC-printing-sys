@@ -132,13 +132,13 @@
                                 <tr class="border-t odd:bg-foreground even:bg-gray-100">
                                     <td class="p-2 max-w-xs">
                                         <p>{{ $bid->project->project_title }}</p>
-                                        <p class="text-xs text-primary/70">₱{{ number_format($bid->project->amount, 2) }}</p>
+                                        <p class="text-xs text-primary/70">₱{{ number_format($bid->project->approved_budget, 2) }}</p>
                                         
                                     </td>
                                     <td class="p-2 ">{{ $bid->company_name}}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $bid->proprietor}}</td>
                                     <td class="p-2 whitespace-nowrap">₱{{ number_format($bid->bid_amount, 2)}}</td>
-                                    <td class="p-2 capitalize">{{ $bid->address}}</td>
+                                    <td class="p-2 capitalize">{{ $bid->full_address}}</td>
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex gap-3 h-full items-center  justify-center ">
                                             <button class="flex items-center hover:scale-110 transition"
@@ -167,7 +167,7 @@
             </div>
         </div>
 
-        <x-create-bid />
+        <x-create-bid :$cities/>
         <x-delete-bid />
         <x-edit-bid />
     </div>

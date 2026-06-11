@@ -9,7 +9,7 @@ class Project extends Model
     protected $fillable = [
         'bid_id',
         'project_title',
-        'amount',
+        'approved_budget',
         'bidding_date',
         'status',
     ];

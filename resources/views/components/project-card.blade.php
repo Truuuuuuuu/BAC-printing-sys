@@ -11,7 +11,7 @@
 
     <div class="flex gap-1 items-center text-primary">
         <x-lucide-wallet class="w-4 h-4" />
-        <p class="text-md text-primary font-medium">₱{{ number_format($project->amount, 2) }}</p>
+        <p class="text-md text-primary font-medium">₱{{ number_format($project->approved_budget, 2) }}</p>
     </div>
 
     <button

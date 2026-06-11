@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Bid;
 
 return new class extends Migration
 {
@@ -13,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Bid::class)->after('id')->nullable();
             $table->string('project_title');
-            $table->decimal('amount', 15, 2);
+            $table->decimal('approved_budget', 15, 2);
             $table->date('bidding_date');
             $table->enum('status', ['awarded', 'failed']);
             $table->timestamps();

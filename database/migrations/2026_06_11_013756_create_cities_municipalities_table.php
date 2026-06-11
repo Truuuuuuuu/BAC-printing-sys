@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Project;
 
 return new class extends Migration
 {
@@ -12,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bids', function (Blueprint $table) {
+        Schema::create('municipalities_cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Project::class);
-            $table->string('company_name');
-            $table->string('proprietor');
-            $table->decimal('bid_amount', 15, 2);
-            $table->string('address');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bids');
+        Schema::dropIfExists('cities_municipalities');
     }
 };

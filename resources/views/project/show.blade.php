@@ -13,7 +13,7 @@
 
         showDeleteBidModal: false,
         showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-address', 'edit-bid_amount']) ? 'true' : 'false' }},
-        showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'address', 'bid_amount']) ? 'true' : 'false' }},
+        showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'bid_amount', 'street', 'barangay', 'municipality_city']) ? 'true' : 'false' }},
         showAwardModal: false,
         
         selectedProjectTitle: '{{ old('project_title') }}',
@@ -39,7 +39,7 @@
                 <div class="grid grid-cols-3 py-3">
                     <div>
                         <p class="text-xs text-primary/70">Approved Budget</p>
-                        <h1 class="font-semibold text-lg">₱{{ number_format($project->amount, 2) }}</h1>
+                        <h1 class="font-semibold text-lg">₱{{ number_format($project->approved_budget, 2) }}</h1>
                     </div>
 
 
@@ -154,7 +154,7 @@
 
                     <button
                         class=" px-5 flex items-center justify-center gap-2 bg-bg-green hover:bg-primary hover:scale-105 text-foreground font-semibold rounded-xl py-2 hover:shadow-md transition-all duration-200"
-                        @click="showCreateBidModal = true; selectedProjectTitle='{{ $project->project_title }}'; selectedProjectId='{{ $project->id }}'; selectedProjectAmount='{{ $project->amount }}'">
+                        @click="showCreateBidModal = true; selectedProjectTitle='{{ $project->project_title }}'; selectedProjectId='{{ $project->id }}'; selectedProjectAmount='{{ $project->approved_budget }}'">
                         <x-heroicon-s-plus-circle class="w-6 h-6 text-foreground" />
                         <span class="block text-center text-lg">
                             New Bid
@@ -184,14 +184,14 @@
                                 <td class="px-2 py-1">{{ $bid->proprietor }}</td>
                                 <td class="px-2 py-1 font-bold">
                                     ₱{{ number_format($bid->bid_amount, 2) }}</td>
-                                <td class="px-2 py-1">{{ $bid->address }}</td>
+                                <td class="px-2 py-1">{{ $bid->full_address }} </td>
                                 <td class="px-2 py-1 whitespace-nowrap">
                                     <div class="flex gap-3 h-full items-center  justify-center ">
 
                                         <button title="Award" class="flex items-center hover:scale-110 transition" @click=" bidId={{ $bid->id }};
                                                                                                                         showAwardModal = true;
                                                                                                                     ">
-                                            @if($bid->project->awardedBid->id == $bid->id)
+                                            @if($bid->project->awardedBid?->id == $bid->id)
                                                 <x-heroicon-s-check-badge class="w-6 h-6 text-bg-green" />
                                             @else
                                                 <x-heroicon-o-check-badge class="w-6 h-6 text-primary" />
@@ -232,7 +232,7 @@
 
         </div>
 
-        <x-create-bid />
+        <x-create-bid :$cities/>
         <x-edit-bid />
         <x-delete-bid />
         <x-award-bid />

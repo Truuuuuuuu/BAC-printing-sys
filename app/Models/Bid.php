@@ -12,12 +12,25 @@ class Bid extends Model
         'company_name',
         'proprietor',
         'bid_amount',
-        'address',
+        'street',
+        'barangay',
+        'municipality_city'
     ];
 
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function getFullAddressAttribute(): string
+    {
+        $parts = array_filter([
+            $this->street,
+            $this->barangay,
+            $this->municipality_city,
+        ]);
+
+        return implode(', ', $parts);
     }
 
 

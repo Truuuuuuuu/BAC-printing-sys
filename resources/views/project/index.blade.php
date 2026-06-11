@@ -5,12 +5,12 @@
     editId: {{ old('edit-id', 'null') }},
     editProject: {
         project_title: '{{ old('edit-project_title') }}',
-        amount: '{{ old('edit-amount') }}',
+        approved_budget: '{{ old('edit-approved_budget') }}',
         bidding_date: '{{ old('edit-bidding_date') }}',
         status: '{{ old('edit-status') }}'
     },
     deleteId: null,
-    showEditModal: {{ $errors->hasAny(['edit-project_title', 'edit-amount', 'edit-bidding_date', 'edit-status']) ? 'true' : 'false' }},
+    showEditModal: {{ $errors->hasAny(['edit-project_title', 'edit-approved_budget', 'edit-bidding_date', 'edit-status']) ? 'true' : 'false' }},
     showDeleteModal: false,
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
@@ -38,10 +38,10 @@
                     </div>
 
                     <div>
-                        <label for="amount">Amount</label>
-                        <input id="amount" type="number" name="amount" value="{{ old('amount') }}"
+                        <label for="approved_budget">Approved Budget</label>
+                        <input id="approved_budget" type="number" name="approved_budget" value="{{ old('approved_budget') }}"
                             placeholder="e.g., 100000" class="w-full p-2 border border-gray-300 rounded-xl ">
-                        @error('amount')
+                        @error('approved_budget')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -129,7 +129,7 @@
                             @forelse($projects as $project)
                                 <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100" onclick="window.location='{{ route('project.show', $project) }}'">
                                     <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
-                                    <td class="p-2 ">₱{{ number_format($project->amount, 2) }}</td>
+                                    <td class="p-2 ">₱{{ number_format($project->approved_budget, 2) }}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
                                     <td class="p-2 whitespace-nowrap capitalize">
                                         <div

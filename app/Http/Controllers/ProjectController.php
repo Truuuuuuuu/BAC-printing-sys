@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Bid;
+use App\Models\CityMunicipality;
 class ProjectController extends Controller
 {
     
@@ -27,21 +28,21 @@ class ProjectController extends Controller
     {
         $attributes = $request->validate([
             'project_title' => 'required',
-            'amount' => ['required', 'numeric', 'min:1'],
+            'approved_budget' => ['required', 'numeric', 'min:1'],
             'bidding_date' => ['required', 'date', 'after:today'],
             'status' => ['required', 'in:awarded,failed'],
         ],
         [
             'project_title.required' => 'Please enter a project title.',
-            'amount.required' => 'Please enter an amount.',
-            'amount.numeric' => 'Amount must be a valid number.',
+            'approved_budget.required' => 'Please enter an amount.',
+            'approved_budget.numeric' => 'Amount must be a valid number.',
             'bidding_date.after' => 'The bidding date must be in the future.',
             'status.in' => 'Please select a valid status.',
         ]);
 
         Project::create([
             'project_title' => $attributes['project_title'],
-            'amount' => $attributes['amount'],
+            'approved_budget' => $attributes['approved_budget'],
             'bidding_date' => $attributes['bidding_date'],
             'status' => $attributes['status'],
         ]);
@@ -53,21 +54,21 @@ class ProjectController extends Controller
     {
         $request->validate([
             'edit-project_title' => ['required', 'string'],
-            'edit-amount'        => ['required', 'numeric'],
+            'edit-approved_budget'        => ['required', 'numeric'],
             'edit-bidding_date'  => ['required', 'date', 'after:today'],
             'edit-status'        => ['required', 'in:awarded,failed'],
         ],
         [
             'edit-project_title.required' => 'Please enter a project title.',
-            'edit-amount.required' => 'Please enter an amount.',
-            'edit-amount.numeric' => 'Amount must be a valid number.',
+            'edit-approved_budget.required' => 'Please enter an amount.',
+            'edit-approved_budget.numeric' => 'Amount must be a valid number.',
             'edit-bidding_date.after' => 'The bidding date must be in the future.',
             'edit-status.in' => 'Please select a valid status.',
         ]);
 
         if (
             $project->project_title === $request->input('edit-project_title') &&
-            $project->amount == $request->input('edit-amount') &&
+            $project->approved_budget == $request->input('edit-approved_budget') &&
             $project->bidding_date->format('Y-m-d') === $request->input('edit-bidding_date') &&
             $project->status === $request->input('edit-status')
         ) {
@@ -76,7 +77,7 @@ class ProjectController extends Controller
 
         $project->update([
             'project_title' => $request->input('edit-project_title'),
-            'amount'        => $request->input('edit-amount'),
+            'approved_budget'        => $request->input('edit-approved_budget'),
             'bidding_date'  => $request->input('edit-bidding_date'),
             'status'        => $request->input('edit-status'),
         ]);
@@ -94,7 +95,8 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(10);
-        return view('project.show', compact('project', 'bids'));
+        $cities = CityMunicipality::orderBy('name')->get();
+        return view('project.show', compact('project', 'bids', 'cities'));
     }
 
     public function award(Bid $bid)

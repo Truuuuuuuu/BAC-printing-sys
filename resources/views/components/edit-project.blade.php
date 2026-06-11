@@ -18,9 +18,9 @@
 
             <div>
                 <label class="text-sm">Amount</label>
-                <input type="number" name="edit-amount" x-model="editProject.amount" class="w-full p-2 border rounded-xl">
+                <input type="number" name="edit-approved_budget" x-model="editProject.approved_budget" class="w-full p-2 border rounded-xl">
             </div>
-            @error('edit-amount')
+            @error('edit-approved_budget')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
 

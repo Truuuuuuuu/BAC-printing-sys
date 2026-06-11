@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Bid;
+use App\Models\CityMunicipality;
+
 
 class BidderController extends Controller
 {
@@ -25,17 +27,21 @@ class BidderController extends Controller
         ->paginate(10)
         ->withQueryString();
 
-        return view('bidder.index', compact('projects', 'bids'));
+        $cities = CityMunicipality::orderBy('name')->get();
+
+        return view('bidder.index', compact('projects', 'bids', 'cities'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'project_id' => ['required','exists:projects,id'],
-            'company_name' => ['required','string','max:255'],
-            'proprietor' => ['required','string','max:255'],
-            'bid_amount' => ['required','numeric','min:1'],
-            'address' => ['required','string','max:255'],
+            'project_id'        => ['required','exists:projects,id'],
+            'company_name'      => ['required','string','max:255'],
+            'proprietor'        => ['required','string','max:255'],
+            'bid_amount'        => ['required','numeric','min:1'],
+            'street'            => ['required','string','max:255'],
+            'barangay'          => ['required','string','max:255'],
+            'municipality_city' => ['required','string','max:255'],
         ],
         [
             'project_id.required'   => 'Please select a project.',
@@ -53,17 +59,24 @@ class BidderController extends Controller
             'bid_amount.numeric'    => 'The bid amount must be a valid number.',
             'bid_amount.min'        => 'The bid amount must be greater than zero.',
 
-            'address.required'      => 'Please enter an address.',
-            'address.string'        => 'The address must be valid text.',
-            'address.max'           => 'The address may not exceed 255 characters.',
+            'street.required'               => 'Please enter the street address.',
+            'barangay.required'             => 'Please select a barangay.',
+            'municipality_city.required'    => 'Please select a city or municipality.',
         ]);
+
+        $municipality_city = $request->municipality_city !== 'Sorsogon City'
+            ? $request->municipality_city . ', Sorsogon'
+            : $request->municipality_city;
+
 
         Bid::create([
             'project_id' => $request->project_id,
             'company_name' => $request->company_name,
             'proprietor' => $request->proprietor,
             'bid_amount' => $request->bid_amount,
-            'address' => $request->address,
+            'street' => $request->street,
+            'barangay' => $request->barangay,
+            'municipality_city' => $municipality_city, 
         ]);
 
         return back()->with('success','Bid created successfully.');
