@@ -16,13 +16,30 @@ Route::middleware(['auth', 'verified'])
     ->name('project.')
     ->group(function () {
     
-    Route::get('/index', [ProjectController::class,'index'])->name('index');
-    Route::post('/store', [ProjectController::class,'store'])->name('store');
-    Route::put('/{project}/edit', [ProjectController::class,'update'])->name('update');
-    Route::delete('/{project}/delete', [ProjectController::class,'destroy'])->name('destroy');
-    Route::put('/{bid}/award', [ProjectController::class,'award'])->name('award');
+    Route::get('/index', [ProjectController::class,'index'])
+        ->middleware('permission:view-project')
+        ->name('index');
 
-    Route::get('/{project}/detail', [ProjectController::class,'show'])->name('show');
+    Route::post('/store', [ProjectController::class,'store'])
+        ->middleware('permission:add-project')
+        ->name('store');
+
+    Route::put('/{project}/edit', [ProjectController::class,'update'])
+        ->middleware('permission:edit-project')
+        ->name('update');
+
+    Route::delete('/{project}/delete', [ProjectController::class,'destroy'])
+        ->middleware('permission:delete-project')
+        ->name('destroy');
+
+    Route::put('/{bid}/award', [ProjectController::class,'award'])
+        ->middleware('permission:award-bid')
+        ->name('award');
+
+    Route::get('/{project}/detail', [ProjectController::class,'show'])
+        ->middleware('permission:view-project')
+        ->name('show');
+
 });
 
 
@@ -31,10 +48,21 @@ Route::middleware(['auth', 'verified'])
     ->name('bidder.')
     ->group(function () {
     
-    Route::get('/index', [BidderController::class,'index'])->name('index');
-    Route::post('/store', [BidderController::class, 'store'])->name('store');
-    Route::put('/{bid}/edit', [BidderController::class,'update'])->name('update');
-    Route::delete('/{bid}/delete', [BidderController::class,'destroy'])->name('destroy');
+    Route::get('/index', [BidderController::class,'index'])
+        ->middleware('permission:view-bid')
+        ->name('index');
+
+    Route::post('/store', [BidderController::class, 'store'])
+        ->middleware('permission:add-bid')
+        ->name('store');
+
+    Route::put('/{bid}/edit', [BidderController::class,'update'])
+        ->middleware('permission:edit-bid')
+        ->name('update');
+
+    Route::delete('/{bid}/delete', [BidderController::class,'destroy'])
+        ->middleware('permission:delete-bid')
+        ->name('destroy');
 
 });
 
@@ -71,6 +99,7 @@ Route::middleware('auth')
 
 
 Route::prefix('{project}')
+    ->middleware(['permission:edit-docs','permission:print-docs'])
     ->name('doc.')
     ->group(function () {
     
