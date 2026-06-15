@@ -34,7 +34,7 @@
                 <x-lucide-chevron-left class="w-5 h-5 text-primary" />
                 Back
             </a>
-            <div class=" w-full rounded-3xl p-4 pt-8 border border-gray-300 shadow-sm bg-foreground">
+            <div class=" w-full rounded-3xl p-4 pt-8 border-2 border-white shadow-sm bg-foreground">
                 <div class="mb-2">
                     <p class="text-xs text-primary/70">Project Title</p>
                     <h1 class="font-semibold text-xl">{{ $project->project_title }}</h1>
@@ -152,7 +152,7 @@
 
 
 
-            <div class="table-responsive w-full rounded-3xl border border-gray-300 shadow-md bg-foreground pb-5">
+            <div class="table-responsive w-full rounded-3xl border-2 border-white shadow-md bg-foreground pb-5">
                 <div class="flex justify-between bg-foreground items-center my-5 px-5">
                     <div>
                         <h3 class="text-xl font-semibold text-primary">Competitive Bidders</h3>

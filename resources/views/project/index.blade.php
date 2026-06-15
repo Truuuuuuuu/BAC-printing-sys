@@ -14,14 +14,14 @@
     showDeleteModal: false,
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
-            <div class="w-full lg:max-w-sm self-start px-3 lg:px-0 top-6 space-y-5  ">
-                <div class="flex gap-2 items-center">
-                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-2">
+            <div class="w-full lg:max-w-sm self-start px-3 lg:px-3 bg-foreground/70 lg:py-5 top-6 space-y-5 border-2 border-white rounded-3xl ">
+                <div class="flex gap-2 items-center  ">
+                    <div class="border-2 border-white rounded-2xl bg-gray-100 flex items-center justify-center p-2">
                         <x-heroicon-s-folder-plus class="w-10 h-10 text-primary" />
                     </div>
                     <div class="flex flex-col">
                         <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Create New Project</h2>
-                        <p class="text-[11px] text-primary/80">Enter the information below to create a new project record.
+                        <p class="text-[11px] text-primary/80">Enter the information below to create a new project.
                         </p>
                     </div>
                 </div>
@@ -30,8 +30,8 @@
                     @csrf
                     <div>
                         <label for="project_title">Project title</label>
-                        <input id="project_title" type="text" name="project_title" value="{{ old('project_title') }}"
-                            placeholder="e.g., Covered Court" class="w-full p-2 border border-gray-300 rounded-xl">
+                        <textarea id="project_title"  name="project_title" 
+                            placeholder="e.g., Covered Court" class="w-full p-2 border border-white h-24 resize-none rounded-xl">{{ old('project_title') }}</textarea>
                         @error('project_title')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -40,7 +40,7 @@
                     <div>
                         <label for="approved_budget">Approved Budget</label>
                         <input id="approved_budget" type="number" name="approved_budget" value="{{ old('approved_budget') }}"
-                            placeholder="e.g., 100000" class="w-full p-2 border border-gray-300 rounded-xl ">
+                            placeholder="e.g., 100000" class="w-full p-2 border border-white rounded-xl ">
                         @error('approved_budget')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -49,7 +49,7 @@
                     <div>
                         <label for="bidding_date">Bidding date</label>
                         <input id="bidding_date" type="date" name="bidding_date" value="{{ old('bidding_date') }}"
-                            class="w-full p-2 border rounded-xl border-gray-300">
+                            class="w-full p-2 border rounded-xl border-white">
                         @error('bidding_date')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -57,7 +57,7 @@
 
                     <div>
                         <label for="status">Status</label>
-                        <select id="status" name="status" class="w-full p-2 border rounded-xl border border-gray-300 ">
+                        <select id="status" name="status" class="w-full p-2 border rounded-xl border border-white ">
                             <option value="awarded">Awarded</option>
                             <option value="failed">Failed</option>
                         </select>
@@ -73,8 +73,8 @@
                 </form>
             </div>
 
-            <div class="w-full border border-gray-300 shadow-sm bg-foreground rounded-3xl p-5">
-                <div class="flex justify-end ">
+            <div class="table-responsive w-full rounded-3xl border-2 border-white bg-foreground">
+                <div class="flex justify-end mt-5 px-5">
                     <form method="GET" class="w-full">
                         {{-- Search Form --}}
                         <div class="flex justify-between flex-col md:flex-row gap-3 lg:gap-0 items-center">
@@ -113,31 +113,31 @@
                         </div>
                     </form>
                 </div>
-                <div class="overflow-x-auto w-full mt-10">
-                    <table class="w-full">
+                <div class="overflow-x-auto w-full mt-5">
+                    <table class="w-full ">
                         <thead>
                             <tr>
-                                <th class="text-left p-2 max-w-xs">Project Title</th>
-                                <th class="text-left p-2 ">Amount</th>
-                                <th class="text-left p-2 whitespace-nowrap">Bidding Date</th>
-                                <th class="text-left p-2 whitespace-nowrap">Status</th>
-                                <th class="text-left p-2 whitespace-nowrap">Actions</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm opacity-60 max-w-xs">Project Title</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm opacity-60">Amount</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm opacity-60 whitespace-nowrap">Bidding Date</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm opacity-60 whitespace-nowrap">Status</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm opacity-60 whitespace-nowrap">Actions</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($projects as $project)
                                 <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100" onclick="window.location='{{ route('project.show', ['project' => $project, 'from' => url()->current()]) }}'">
-                                    <td class="p-2 max-w-xs">{{ $project->project_title }}</td>
-                                    <td class="p-2 ">₱{{ number_format($project->approved_budget, 2) }}</td>
-                                    <td class="p-2 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
-                                    <td class="p-2 whitespace-nowrap capitalize">
+                                    <td class="px-5 py-1 max-w-xs">{{ $project->project_title }}</td>
+                                    <td class="px-5 py-1 opacity-80">₱{{ number_format($project->approved_budget, 2) }}</td>
+                                    <td class="px-5 py-1 opacity-80 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
+                                    <td class="px-5 py-1 whitespace-nowrap capitalize">
                                         <div
                                             class="rounded-xl {{ $project->status === 'awarded' ? 'bg-bg-green/30 text-green-text/70' : 'bg-bg-red/30 text-red-text/70' }} font-semibold text-xs flex justify-center items-center ">
                                             {{ $project->status }}
                                         </div>
                                     </td>
-                                    <td class="p-2 whitespace-nowrap" onclick="event.stopPropagation()">
+                                    <td class="px-5 py-1 whitespace-nowrap" onclick="event.stopPropagation()">
                                         <div class="flex gap-3 h-full">
                                             <button class="flex items-center hover:scale-110 transition"
                                                 @click="editId = {{ $project->id }}; editProject = {{ json_encode($project) }};  editProject.bidding_date = '{{ $project->bidding_date->format('Y-m-d') }}'; showEditModal = true">

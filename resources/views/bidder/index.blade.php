@@ -29,7 +29,7 @@
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
             <div class=" px-3 lg:px-0 self-start w-full lg:max-w-sm space-y-5">
                 <div class="flex gap-2 items-center">
-                    <div class="border rounded-2xl bg-foreground flex items-center justify-center p-2">
+                    <div class="border-2 border-white rounded-2xl bg-foreground flex items-center justify-center p-2">
                         <x-heroicon-s-folder-open class="w-10 h-10 text-primary" />
                     </div>
                     <div class="flex flex-col">
@@ -41,14 +41,14 @@
 
 
                 <div>
-                    <div class="relative w-full" x-data="{ search: '{{ request('project_search') }}' }">
+                    <div class="relative w-full " x-data="{ search: '{{ request('project_search') }}' }">
 
                         <form method="GET">
                             {{-- to preserve search input in bidders --}}
                             <input type="hidden" name="bid_search" value="{{ request('bid_search') }}">
 
                             <input type="text" name="project_search" x-model="search" placeholder="Search projects..."
-                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
+                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-white">
 
                             {{-- Clear Input Search --}}
                             <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -83,8 +83,8 @@
                 {{ $projects->links() }}
             </div>
 
-            <div class="w-full min-w-0 border border-gray-300 shadow-sm bg-foreground rounded-3xl p-5">
-                <div class="flex justify-end ">
+            <div class="w-full min-w-0 border-2 border-white shadow-sm bg-foreground rounded-3xl ">
+                <div class="flex justify-end p-5 ">
 
                     {{-- Search Form --}}
 
@@ -120,16 +120,16 @@
 
 
                 </div>
-                <div class="overflow-x-auto w-full mt-10">
+                <div class="overflow-x-auto w-full ">
                     <table class="w-full min-w-[900px]">
                         <thead>
                             <tr>
-                                <th class="text-left p-2 max-w-xs">Project</th>
-                                <th class="text-left p-2 ">Bidder</th>
-                                <th class="text-left p-2 whitespace-nowrap">Proprietor</th>
-                                <th class="text-left p-2 whitespace-nowrap">Contract Amount</th>
-                                <th class="text-left p-2 ">Address</th>
-                                <th class="text-left p-2 whitespace-nowrap">Actions</th>
+                                <th class=" px-5 text-left py-1 font-medium text-sm  opacity-60 max-w-xs">Project</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm  opacity-60 ">Bidder</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm  opacity-60 whitespace-nowrap">Proprietor</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm  opacity-60 whitespace-nowrap">Contract Amount</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm  opacity-60">Address</th>
+                                <th class="px-5 text-left py-1 font-medium text-sm  opacity-60 whitespace-nowrap">Actions</th>
 
 
                             </tr>
@@ -138,19 +138,21 @@
                             @forelse($bids as $bid)
 
                                 <tr class="border-t odd:bg-foreground even:bg-gray-100">
-                                    <td class="p-2 max-w-xs">
+                                    <td class="px-5 py-1 max-w-xs">
                                         <p>{{ $bid->project->project_title }}</p>
                                         <p class="text-xs text-primary/70">
                                             ₱{{ number_format($bid->project->approved_budget, 2) }}</p>
 
                                     </td>
-                                    <td class="p-2 ">{{ $bid->company_name}}</td>
-                                    <td class="p-2 whitespace-nowrap">{{ $bid->proprietor}}</td>
-                                    <td class="p-2 whitespace-nowrap">₱{{ number_format($bid->bid_amount, 2)}}</td>
-                                    <td class="p-2 capitalize">{{ $bid->full_address}}</td>
-                                    <td class="p-2 whitespace-nowrap">
+                                    <td class="px-5 py-1 opacity-80">{{ $bid->company_name}}</td>
+                                    <td class="px-5 py-1 opacity-80 whitespace-nowrap">{{ $bid->proprietor}}</td>
+                                    <td class="px-5 py-1 whitespace-nowrap">₱{{ number_format($bid->bid_amount, 2)}}</td>
+                                    <td class="px-5 py-1 opacity-80 capitalize">{{ $bid->full_address}}</td>
+                                    <td class="px-5 py-1 whitespace-nowrap">
                                         <div class="flex gap-3 h-full items-center  justify-center ">
-                                            <button @click="
+                                            <button 
+                                                    class="hover:scale-110 transition"
+                                                    @click="
                                                     editId = {{ $bid->id }};
                                                     editBid = {{ json_encode($bid) }};
                                                     showEditBidModal = true;
