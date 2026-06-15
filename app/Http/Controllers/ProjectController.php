@@ -102,6 +102,8 @@ class ProjectController extends Controller
     public function award(Bid $bid)
     {
 
+        abort_if(is_null($bid->project), 404);
+
         $bid->project->update([
             'bid_id' => $bid->id,
         ]);

@@ -38,6 +38,12 @@ return [
             'approved_date'                         => 'Date Approved',
         ],
 
+        'labels' => [
+            'resolution_date' => 'Date of Resolution',
+            'approved_date' => 'Approval Date',
+            'bid_evaluation_date'   => 'Bid Evaluation Date',
+        ],
+
         'requiredTableFields' => [
             'a' => [
                 'row_a_bidder_upper'        => 'Table 1 Bidder Name',
@@ -341,7 +347,8 @@ return [
             'entity_position_designation'       => 'Entity Position/Designation',
             'proprietor_position_designation'   => 'Proprietor Postion/Designation',
             'entity_date'                       => 'Entity Date',
-            'proprietor_date'                   => 'Proprietor Date'
+            'proprietor_date'                   => 'Proprietor Date',
+            'procurement_mode'                  => 'Procurement Mode',
         ],
 
         'optionalArgs' => [
