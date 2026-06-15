@@ -35,6 +35,7 @@ class ProjectController extends Controller
         [
             'project_title.required' => 'Please enter a project title.',
             'approved_budget.required' => 'Please enter an amount.',
+            'approved_budget.min'=> 'Please enter a valid amount',
             'approved_budget.numeric' => 'Amount must be a valid number.',
             'bidding_date.after' => 'The bidding date must be in the future.',
             'status.in' => 'Please select a valid status.',
