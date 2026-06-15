@@ -44,13 +44,16 @@
                     <div class="relative w-full" x-data="{ search: '{{ request('project_search') }}' }">
 
                         <form method="GET">
+                            {{-- to preserve search input in bidders --}}
+                            <input type="hidden" name="bid_search" value="{{ request('bid_search') }}">
+
                             <input type="text" name="project_search" x-model="search" placeholder="Search projects..."
                                 class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
 
                             {{-- Clear Input Search --}}
                             <button x-show="search.length > 0" x-cloak type="button" @click="
                                             search = '';
-                                            window.location = '{{ route('bidder.index') }}';
+                                            window.location = '{{ route('bidder.index') }}?bid_search={{ request('bid_search') }}';
                                         "
                                 class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                                 <x-lucide-x class="w-4 h-4" />
@@ -82,44 +85,40 @@
 
             <div class="w-full min-w-0 border border-gray-300 shadow-sm bg-foreground rounded-3xl p-5">
                 <div class="flex justify-end ">
-                    <form method="GET" class="w-full">
-                        {{-- Search Form --}}
-                        <div class="flex justify-between  flex-col md:flex-row gap-3 items-center">
-                            <div>
-                                {{-- Projects View & Print button --}}
-                                {{-- <a href="{{ route('pdf.bids') }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
-                                    <x-lucide-printer class="w-5 h-5 text-foreground" />
-                                    <span>View & Print All</span>
-                                </a> --}}
-                            </div>
-                            <div class="relative w-full md:max-w-md lg:max-w-xl" x-data="{ search: '{{ request('bid_search') }}' }">
 
-                                <form method="GET">
-                                    <input type="text" name="bid_search" x-model="search"
-                                        placeholder="Search bid records..."
-                                        class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
+                    {{-- Search Form --}}
 
-                                    {{-- Clear Input Search --}}
-                                    <button x-show="search.length > 0" x-cloak type="button" @click="
+                    <div class="relative w-full md:max-w-md lg:max-w-xl"
+                        x-data="{ search: '{{ request('bid_search') }}' }">
+
+                        <form method="GET">
+                            
+                            {{-- to preserve search input in projects --}}
+                            <input type="hidden" name="project_search" value="{{ request('project_search') }}">
+
+                            <input type="text" name="bid_search" x-model="search" placeholder="Search bid records..."
+                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
+
+                            {{-- Clear Input Search --}}
+                            <button x-show="search.length > 0" x-cloak type="button" @click="
                                                 search = '';
-                                                window.location = '{{ route('bidder.index') }}';
+                                                window.location = '{{ route('bidder.index')}}?project_search={{ request('project_search') }}'; 
                                             "
-                                        class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                                        <x-lucide-x class="w-4 h-4" />
-                                    </button>
+                                class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <x-lucide-x class="w-4 h-4" />
+                            </button>
 
 
-                                    {{-- Submit Search --}}
-                                    <button type="submit"
-                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
-                                        <x-lucide-search class="w-5 h-5" />
-                                    </button>
-                                </form>
+                            {{-- Submit Search --}}
+                            <button type="submit"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
+                                <x-lucide-search class="w-5 h-5" />
+                            </button>
+                        </form>
 
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+
+
                 </div>
                 <div class="overflow-x-auto w-full mt-10">
                     <table class="w-full min-w-[900px]">
@@ -141,8 +140,9 @@
                                 <tr class="border-t odd:bg-foreground even:bg-gray-100">
                                     <td class="p-2 max-w-xs">
                                         <p>{{ $bid->project->project_title }}</p>
-                                        <p class="text-xs text-primary/70">₱{{ number_format($bid->project->approved_budget, 2) }}</p>
-                                        
+                                        <p class="text-xs text-primary/70">
+                                            ₱{{ number_format($bid->project->approved_budget, 2) }}</p>
+
                                     </td>
                                     <td class="p-2 ">{{ $bid->company_name}}</td>
                                     <td class="p-2 whitespace-nowrap">{{ $bid->proprietor}}</td>
@@ -151,16 +151,16 @@
                                     <td class="p-2 whitespace-nowrap">
                                         <div class="flex gap-3 h-full items-center  justify-center ">
                                             <button @click="
-                                                editId = {{ $bid->id }};
-                                                editBid = {{ json_encode($bid) }};
-                                                showEditBidModal = true;
-                                                $nextTick(() => window.dispatchEvent(new CustomEvent('open-edit', {
-                                                    detail: {
-                                                        municipality_city: '{{ addslashes($bid->municipality_city) }}',
-                                                        barangay: '{{ addslashes($bid->barangay) }}'
-                                                    }
-                                                })));
-                                            ">
+                                                    editId = {{ $bid->id }};
+                                                    editBid = {{ json_encode($bid) }};
+                                                    showEditBidModal = true;
+                                                    $nextTick(() => window.dispatchEvent(new CustomEvent('open-edit', {
+                                                        detail: {
+                                                            municipality_city: '{{ addslashes($bid->municipality_city) }}',
+                                                            barangay: '{{ addslashes($bid->barangay) }}'
+                                                        }
+                                                    })));
+                                                ">
                                                 <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
                                             </button>
 
@@ -185,9 +185,9 @@
             </div>
         </div>
 
-        <x-create-bid :$cities/>
+        <x-create-bid :$cities />
         <x-delete-bid />
-        <x-edit-bid :$cities/>
+        <x-edit-bid :$cities />
     </div>
 
     {{-- auto scroll up button --}}
