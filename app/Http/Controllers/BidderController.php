@@ -14,7 +14,7 @@ class BidderController extends Controller
     {
         $projects = Project::query();
 
-        $projects->search($request->search);
+        $projects->search($request->project_search);
 
         $projects = $projects->latest()
             ->paginate(5)
@@ -22,7 +22,7 @@ class BidderController extends Controller
         
           
         $bids = Bid::query();
-        $bids->search($request->search);
+        $bids->search($request->bid_search);
         $bids = $bids->latest()
         ->paginate(10)
         ->withQueryString();

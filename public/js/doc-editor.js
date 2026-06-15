@@ -1,14 +1,4 @@
-/**
- * doc-editor.js
- *
- * Alpine component for the dynamic DOCX placeholder editor.
- * All document-specific config is injected via window.DOC_CONFIG from the blade.
- * This file never needs to change between different document templates.
- *
- * Expected window globals (set by blade):
- *   DOC_CONFIG  — full config object (see blade component for shape)
- *   CSRF_TOKEN  — Laravel CSRF token string
- */
+
 
 function docEditor() {
     const cfg = window.DOC_CONFIG;

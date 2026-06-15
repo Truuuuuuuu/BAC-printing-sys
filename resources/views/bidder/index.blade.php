@@ -41,10 +41,10 @@
 
 
                 <div>
-                    <div class="relative w-full" x-data="{ search: '{{ request('search') }}' }">
+                    <div class="relative w-full" x-data="{ search: '{{ request('project_search') }}' }">
 
                         <form method="GET">
-                            <input type="text" name="search" x-model="search" placeholder="Search projects..."
+                            <input type="text" name="project_search" x-model="search" placeholder="Search projects..."
                                 class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
 
                             {{-- Clear Input Search --}}
@@ -93,10 +93,10 @@
                                     <span>View & Print All</span>
                                 </a> --}}
                             </div>
-                            <div class="relative w-full md:max-w-md lg:max-w-xl" x-data="{ search: '{{ request('search') }}' }">
+                            <div class="relative w-full md:max-w-md lg:max-w-xl" x-data="{ search: '{{ request('bid_search') }}' }">
 
                                 <form method="GET">
-                                    <input type="text" name="search" x-model="search"
+                                    <input type="text" name="bid_search" x-model="search"
                                         placeholder="Search bid records..."
                                         class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
 
