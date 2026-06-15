@@ -30,10 +30,10 @@
         },
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8  text-primary space-y-5">
-            <button type="button" onclick="history.back()" class="inline-flex gap-2 items-center">
+            <a href="{{ request('from', url()->previous()) }}" class="inline-flex gap-2 items-center">
                 <x-lucide-chevron-left class="w-5 h-5 text-primary" />
                 Back
-            </button>
+            </a>
             <div class=" w-full rounded-3xl p-4 pt-8 border border-gray-300 shadow-sm bg-foreground">
                 <div class="mb-2">
                     <p class="text-xs text-primary/70">Project Title</p>

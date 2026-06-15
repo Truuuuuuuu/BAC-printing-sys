@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//unsused atm, useful for pdf
 Route::middleware('auth')
     ->prefix('pdf')
     ->name('pdf.')
