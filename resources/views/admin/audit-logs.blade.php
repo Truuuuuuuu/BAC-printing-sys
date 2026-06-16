@@ -66,7 +66,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="p-5 text-center text-gray-500">
-                                    No projects found.
+                                    No records found.
                                 </td>
                             </tr>
                         @endforelse

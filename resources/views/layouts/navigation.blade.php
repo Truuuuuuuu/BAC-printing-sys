@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('project.index') }}">
+                    <a href="{{ request()->routeIs('project.index') ? route('project.index') : route('admin.index') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -30,6 +30,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('admin.audit-logs')" :active="request()->routeIs('admin.audit-logs')">
                         {{ __('Audit Logs') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
+                        {{ __('All Users') }}
                     </x-nav-link>
                 </div>
                 @endrole
