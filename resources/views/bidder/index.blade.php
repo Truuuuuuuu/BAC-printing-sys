@@ -139,9 +139,9 @@
 
                                 <tr class="border-t odd:bg-foreground even:bg-gray-100">
                                     <td class="px-5 py-1 max-w-xs">
-                                        <p>{{ $bid->project->project_title }}</p>
+                                        <p>{{ $bid->project?->project_title }}</p>
                                         <p class="text-xs text-primary/70">
-                                            ₱{{ number_format($bid->project->approved_budget, 2) }}</p>
+                                            ₱{{ number_format($bid->project?->approved_budget, 2) }}</p>
 
                                     </td>
                                     <td class="px-5 py-1 opacity-80">{{ $bid->company_name}}</td>
@@ -183,7 +183,9 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $bids->links() }}
+                <div class="mt-5 p-4">
+                    {{ $bids->links() }}
+                </div>
             </div>
         </div>
 

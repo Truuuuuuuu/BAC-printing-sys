@@ -165,7 +165,7 @@
 
                 <x-edit-project />
                 <x-delete-project />
-                <div class="mt-4">
+                <div class="mt-5 p-4">
                     {{ $projects->links() }}
                 </div>
             </div>

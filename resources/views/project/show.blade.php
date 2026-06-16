@@ -160,6 +160,7 @@
                             participating</h5>
                     </div>
 
+                    @unlessrole('admin')
                     <button
                         class=" px-5 flex items-center justify-center gap-2 bg-bg-green hover:bg-primary hover:scale-105 text-foreground font-semibold rounded-xl py-2 hover:shadow-md transition-all duration-200"
                         @click="showCreateBidModal = true; selectedProjectTitle='{{ $project->project_title }}'; selectedProjectId='{{ $project->id }}'; selectedProjectAmount='{{ $project->approved_budget }}'">
@@ -168,6 +169,7 @@
                             New Bid
                         </span>
                     </button>
+                    @endunlessrole
                 </div>
                 <table class="w-full border-collapse text-sm">
                     <thead>

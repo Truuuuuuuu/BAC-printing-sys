@@ -13,11 +13,11 @@ trait Auditable
         ));
 
         static::updated(fn($model) => AuditLogger::log(
-            strtolower(class_basename($model)) . '.updated', $model, ['name' => $model->project_title ?? null]
+            strtolower(class_basename($model)) . '.updated', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
         ));
 
         static::deleted(fn($model) => AuditLogger::log(
-            strtolower(class_basename($model)) . '.deleted', $model, ['name' => $model->project_title ?? null]
+            strtolower(class_basename($model)) . '.deleted', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
         ));
 
         
