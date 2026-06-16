@@ -49,6 +49,9 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        if(Auth::user()->hasRole('admin')) {
+            return redirect()->route('admin.index');
+        }
         
         return redirect(route('project.index', absolute: false))->with('success','Welcome, '. $user->name);
     }

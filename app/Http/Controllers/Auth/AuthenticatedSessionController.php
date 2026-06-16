@@ -30,6 +30,11 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user()->name;
 
+        if(Auth::user()->hasRole('admin')) {
+            return redirect()->route('admin.index');
+        }
+        
+
         return redirect()->intended(route('project.index', absolute: false))->with('success','Welcome, '. $user);
     }
 

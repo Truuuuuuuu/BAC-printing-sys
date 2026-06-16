@@ -5,6 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BidderController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\DocEditorController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -117,5 +118,15 @@ Route::prefix('{project}')
         ->name('doc-template');
  
 });
+
+    Route::middleware(['auth','role:admin'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function(){
+        
+        Route::get('/index', [AdminController::class,'index'])->name('index');
+    });
+
+
 
 require __DIR__.'/auth.php';
