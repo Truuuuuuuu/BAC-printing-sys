@@ -4,8 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Auditable;
 class Project extends Model
 {
+
+    use HasFactory, Auditable;
+
     protected $fillable = [
         'bid_id',
         'project_title',

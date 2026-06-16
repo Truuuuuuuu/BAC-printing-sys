@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use App\Services\AuditLogger;
 
 class RegisteredUserController extends Controller
 {
@@ -47,6 +48,8 @@ class RegisteredUserController extends Controller
         $user->assignRole('staff');
 
         event(new Registered($user));
+
+        AuditLogger::log('User registered', $user, ['name' => $user->name]);
 
         Auth::login($user);
         if(Auth::user()->hasRole('admin')) {

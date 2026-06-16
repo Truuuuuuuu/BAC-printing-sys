@@ -125,6 +125,7 @@ Route::prefix('{project}')
         ->group(function(){
         
         Route::get('/index', [AdminController::class,'index'])->name('index');
+        Route::get('/audit-logs',[AdminController::class,'auditLogs'])->name('audit-logs');
     });
 
 

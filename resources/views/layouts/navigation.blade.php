@@ -9,7 +9,8 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-
+                
+                @role('staff')
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('project.index')" :active="request()->routeIs('project.index') || request()->routeIs('project.show')">
@@ -19,6 +20,19 @@
                         {{ __('Bidder') }}
                     </x-nav-link>
                 </div>
+                @endrole
+
+                @role('admin')
+                 <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.audit-logs')" :active="request()->routeIs('admin.audit-logs')">
+                        {{ __('Audit Logs') }}
+                    </x-nav-link>
+                </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->
