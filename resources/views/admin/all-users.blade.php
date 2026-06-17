@@ -2,7 +2,10 @@
 
     <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5 py-12">
         <div class="table-responsive w-full rounded-3xl border-2 border-white bg-foreground">
-            <div class="flex justify-end mt-5 px-5">
+            <div class="flex justify-between mt-5 px-5">
+                 <div class=" w-full">
+                    <p class="text-2xl font-semibold tracking-wide text-primary">ALL USERS</p>
+                </div>
                 <form method="GET" class="w-full">
                     {{-- Search Form --}}
                     <div class="flex justify-between flex-col md:flex-row gap-3 lg:gap-0 items-center">
