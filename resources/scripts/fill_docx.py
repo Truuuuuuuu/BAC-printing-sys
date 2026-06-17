@@ -14,9 +14,11 @@ if not isinstance(args, dict):
 if not isinstance(table_rows, dict):
     table_rows = {}
 
+is_preview = len(sys.argv) > 5 and sys.argv[5] == 'preview'
+
 def format_value(key, val):
-    if val is None:
-        return ''
+    if val is None or str(val).strip() == '':
+        return '_____' if is_preview else ''
     val = str(val)
     if key.endswith('_upper'):
         return val.upper()

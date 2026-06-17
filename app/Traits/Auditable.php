@@ -20,6 +20,7 @@ trait Auditable
             strtolower(class_basename($model)) . '.deleted', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
         ));
 
+
         
     }
 }

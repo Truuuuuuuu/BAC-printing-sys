@@ -35,6 +35,7 @@ class AuditLog extends Model
             'bid.created' => "Created bid for <strong>{$name}</strong>",
             'bid.updated' => "Updated bid for <strong>{$name}</strong>",
             'bid.deleted' => "Deleted bid for <strong>{$name}</strong>",
+            'doc.exported' => "Exported document : <strong>{$name}</strong>",
             'auth.login'      => "Logged in",
             'auth.login_failed' => "Failed login attempt",
             default           => $this->action,

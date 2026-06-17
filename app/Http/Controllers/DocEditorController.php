@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Symfony\Component\Process\Process;
+use App\Models\AuditLog;
+use Illuminate\Support\Facades\Auth;
 
 class DocEditorController extends Controller
 {
@@ -86,6 +88,17 @@ class DocEditorController extends Controller
             return response()->json(['error' => "Export failed: {$errorMsg}"], 500);
         }
 
+
+        $model = $project::class;
+
+        AuditLog::create([
+            'user_id'        => Auth::id(),
+            'action'         => 'doc.exported',
+            'auditable_type' => $model ?? null,
+            'auditable_id'   => $project->id,
+            'metadata'       => ['name' => $project->project_title],
+        ]);
+
         return response()->download($outPath, $def['downloadName'], [
             'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         ])->deleteFileAfterSend(true);
@@ -102,7 +115,7 @@ class DocEditorController extends Controller
 
         $filledDocx = $this->tempPath('preview_', '.docx');
 
-        [$ok, $errorMsg] = $this->runPythonFill($def['template'], $args, $tableRows, $filledDocx);
+        [$ok, $errorMsg] = $this->runPythonFill($def['template'], $args, $tableRows, $filledDocx, true);
 
         if (!$ok) {
             return response()->json(['error' => 'Fill failed', 'stderr' => $errorMsg], 500);
@@ -230,7 +243,32 @@ class DocEditorController extends Controller
         return $errors;
     }
 
-    private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath): array
+    // private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath): array
+    // {
+    //     if (!file_exists($templatePath)) {
+    //         return [false, "Template not found: {$templatePath}"];
+    //     }
+
+    //     @mkdir(dirname($outPath), 0755, true);
+        
+    //     $process = new Process([
+    //         'python3',
+    //         resource_path('scripts/fill_docx.py'),
+    //         $templatePath,
+    //         json_encode($args),
+    //         json_encode($tableRows),
+    //         $outPath,
+    //     ]);
+    //     $process->run();
+
+    //     if (!$process->isSuccessful() || !file_exists($outPath)) {
+    //         return [false, $process->getErrorOutput()];
+    //     }
+
+    //     return [true, ''];
+    // }
+
+    private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath, bool $isPreview = false): array
     {
         if (!file_exists($templatePath)) {
             return [false, "Template not found: {$templatePath}"];
@@ -238,14 +276,20 @@ class DocEditorController extends Controller
 
         @mkdir(dirname($outPath), 0755, true);
 
-        $process = new Process([
+        $cmd = [
             'python3',
             resource_path('scripts/fill_docx.py'),
             $templatePath,
             json_encode($args),
             json_encode($tableRows),
             $outPath,
-        ]);
+        ];
+
+        if ($isPreview) {
+            $cmd[] = 'preview';  // ← 5th arg Python checks
+        }
+
+        $process = new Process($cmd);
         $process->run();
 
         if (!$process->isSuccessful() || !file_exists($outPath)) {
