@@ -198,6 +198,7 @@ function docEditor() {
                 .replace(/_dateTime$/,    '')
                 .replace(/__dateMonthDay$/,    '')
                 .replace(/_numWord$/,    '')
+                .replace(/_formatAmount$/,    '')
                 .replace(/_capitalize$/, '')
                 .replace(/_/g, ' ')
                 .replace(/\b\w/g, c => c.toUpperCase());

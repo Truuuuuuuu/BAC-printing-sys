@@ -15,8 +15,6 @@ return [
             'approved_budget'                   => 'e.g. 400,000.00',
             'resolution_number'                 => '0000-00-000',
             'winning_bidder'                    => 'e.g. ABC CONSTRUCTION',
-            'philGEPS_posting_date'             => 'MM/DD/YY',
-            'conspicuous_place_posting_date'    => 'MM/DD/YY-MM/DD/YY',
             'list_of_bidders'                   => 'e.g. ABC CONSTRUCTION, JUAN COMPANY, ...',
             'eligible_bidders'                  => 'e.g. 7',
 
@@ -30,8 +28,9 @@ return [
             'approved_budget_formatAmount'          => 'Approved Budget',
             'winning_bidder_upper'                  => 'Winning Bidder',
             'philGEPS_posting_date'                 => 'PhilGEPS Posting Date',
-            'conspicuous_place_posting_date'        => 'Conspicuous Place Posting Date',
-            'bidders_upper'                         => 'List of Bidders',
+            'conspicuous_place_posting_start_date'  => 'Conspicuous Place Posting Start Date',
+            'conspicuous_place_posting_end_date'    => 'Conspicuous Place Posting End Date',
+            'list_of_bidders_upper'                 => 'List of Bidders',
             'bid_evaluation_date'                   => 'Bid Evaluation Date',
             'eligible_bidders_numWord'              => 'Eligible Bidders',
             'resolution_date'                       => 'Resolution Date',
@@ -48,10 +47,12 @@ return [
             'a' => [
                 'row_a_bidder_upper'        => 'Table 1 Bidder Name',
                 'row_a_amount_formatAmount' => 'Table 1 Bid Amount',
+                'row_a_variance'            => 'Table 1 Variance',
             ],
             'b' => [
                 'row_b_bidder_upper'        => 'Table 2 Bidder Name',
                 'row_b_amount_formatAmount' => 'Table 2 Bid Amount',
+                'row_b_variance'            => 'Table 2 Variance',
             ],
         ],
 
@@ -138,6 +139,9 @@ return [
             'responsive_bidders_wordNumLower' => [
                 'type' => 'number',
             ],
+            'list_of_bidders_upper' => [
+                'type' => 'textarea'
+            ],
 
             'bid_evaluation_date' => [
                 'type'=> 'date',
@@ -163,7 +167,7 @@ return [
             'project_title_upper'           => 'project_title',
             'approved_budget_formatAmount'  => 'approved_budget',
             'responsive_bidders_wordNum'    => 'total_responsive_bidders',
-            'list_of_bidders_upper'         => 'awardedBid.company_name',
+            'list_of_bidders_upper'         => 'bidding_companies',
             'winning_bidder_upper'          => 'awardedBid.company_name',
             'eligible_bidders_numWord'      => 'total_responsive_bidders'
         ],
@@ -195,6 +199,7 @@ return [
 
         'requiredArgs' => [
             'project_title_upper'               => 'Project Title',
+            'project_location'                  => 'Project Location',
             'company_name_upper'                => 'Awardee',
             'approved_budget_formatAmount'      => 'amount',
             'publication_date'                  => 'Date of Publication',
@@ -227,16 +232,16 @@ return [
             'approved_budget_formatAmount'      => 'Approved Budget',
             'publication_date'                  => '2.2a Date of Publication',
             'eligibility_date'                  => '2.3a Date of Eligibility Check',
-            'eligibility_wordNumUpper'          => '2.3b Number of eligibility envelopes received',
-            'start_dateMonthDay'                => '2.4a Start Period of availability of Bid Docs',
-            'availability_date'                 => '2.4a End Period of availability of Bid Docs',
+            'eligibility_wordNumUpper'          => '2.3b Number of Eligibility Envelopes Received',
+            'start_dateMonthDay'                => '2.4a Start Period of Availability of Bid Docs',
+            'availability_date'                 => '2.4a End Period of Availability of Bid Docs',
             'issued_docs_wordNumUpper'          => '2.4b Number of Bid Docs issued',
             'conference_date'                   => '2.5a Date of Conference',
             'responsive_bidders_wordNumLower'   => 'Total Responsive Bidders',
-            'orig_dateTime'                     => '3.1a Original date, time',
+            'orig_dateTime'                     => '3.1a Original Date & Time',
             'extension_dateTime'                => '3.1b Extensions, if any',
-            'bid_opening_dateTime'              => '3.2 Bid Opening date, time',
-            'num_submitted_bids_wordNumUpper'   => '3.3 Numbers of bids submitted',
+            'bid_opening_dateTime'              => '3.2 Bid Opening Date & Time',
+            'num_submitted_bids_wordNumUpper'   => '3.3 Numbers of Bids Submitted',
             'orig_specified'                    => '3.4a Originally Specified',
             'extension_revision_capitalize'     => '3.4b Extension/Revisions if any',
         ],
@@ -315,7 +320,7 @@ return [
             'contract_calculated_formatAmount'  => 'awardedBid.bid_amount',
             'contract_amount_words'             => 'contract_amount_in_words',
         ],
-        'formatWords' => ['responsive_bidders'],
+        
     ],
 
     //NGPA_Contract-Form

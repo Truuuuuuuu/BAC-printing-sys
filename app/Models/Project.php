@@ -86,4 +86,15 @@ class Project extends Model
 
         return "{$words} Pesos{$centsText}";
     }
+
+    public function getBiddingCompaniesAttribute(): string
+    {
+        return $this->bids()
+            ->pluck('company_name')
+            ->filter()
+            ->unique()
+            ->values()
+            ->implode(', ');
+    }
+
 }
