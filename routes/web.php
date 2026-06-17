@@ -35,6 +35,10 @@ Route::middleware(['auth', 'verified'])
 
     Route::put('/{bid}/award', [ProjectController::class,'award'])
         ->middleware('permission:award-bid')
+        ->name('remove-award');
+    
+    Route::put('/{bid}/remove-award', [ProjectController::class,'removeAward'])
+        ->middleware('permission:award-bid')
         ->name('award');
 
     Route::get('/{project}/detail', [ProjectController::class,'show'])

@@ -17,6 +17,7 @@
         showEditBidModal: {{ $errors->hasAny(['edit-company_name', 'edit-proprietor', 'edit-bid_amount', 'edit-street', 'edit-barangay', 'edit-municipality_city']) ? 'true' : 'false' }},
         showCreateBidModal: {{ $errors->hasAny(['project_title', 'company_name', 'proprietor', 'bid_amount', 'street', 'barangay', 'municipality_city']) ? 'true' : 'false' }},
         showAwardModal: false,
+        showRemoveAwardModal: false,
         
         selectedProjectTitle: '{{ old('project_title') }}',
         selectedProjectId: '{{ old('project_id') }}',
@@ -75,8 +76,9 @@
                     <div class="flex flex-wrap justify-start gap-3">
                         <div>
                             {{-- Edit/Print Resolution Declaring LCRB--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'bac-resolution']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'bac-resolution']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>BAC Resolution Declarating LCRB</span>
                             </a>
@@ -84,8 +86,9 @@
 
                         <div>
                             {{-- Edit/Print Bid Evluation Report--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'evaluation-report']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Bid Evaluation Report</span>
                             </a>
@@ -93,8 +96,9 @@
 
                         <div>
                             {{-- Edit/print NGPA_Contract-Form--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'contract-form']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>NGPA Contract-Form</span>
                             </a>
@@ -102,8 +106,9 @@
 
                         <div>
                             {{-- Edit/print Notice of Award--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'award-notice']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'award-notice']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Notice of Award</span>
                             </a>
@@ -112,8 +117,9 @@
                         <div>
                             {{-- Edit/Print Notice Post-Qualification--}}
                             <a href="{{ route('doc.editor-show', [$project, 'notice-post-qualification']) }}"
-                                target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                                target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Notice of Post-Qualification</span>
                             </a>
@@ -121,8 +127,9 @@
 
                         <div>
                             {{-- Edit/Print Notice to Proceed--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'notice-proceed']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'notice-proceed']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Notice to Proceed</span>
                             </a>
@@ -130,8 +137,9 @@
 
                         <div>
                             {{-- Edit/Print Notification of Lowest Calculated Bid--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'notif-lcb']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'notif-lcb']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Notification of Lowest Calculation Bid</span>
                             </a>
@@ -139,8 +147,9 @@
 
                         <div>
                             {{-- Edit/Print Post-Qualification Evaluation Report--}}
-                            <a href="{{ route('doc.editor-show', [$project, 'post-quali-eval']) }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
-                                    hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
+                            <a href="{{ route('doc.editor-show', [$project, 'post-quali-eval']) }}" target="_blank"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-3xl
+                                                        hover:bg-primary/80 hover:shadow-sm hover:scale-105 transition text-sm">
                                 <x-lucide-printer class="w-5 h-5 text-foreground" />
                                 <span>Post Qualification Evaluation Report</span>
                             </a>
@@ -198,29 +207,32 @@
                                 <td class="px-2 py-1 whitespace-nowrap">
                                     <div class="flex gap-3 h-full items-center  justify-center ">
 
-                                        <button title="Award" class="flex items-center hover:scale-110 transition" @click=" bidId={{ $bid->id }};
-                                                                                                                        showAwardModal = true;
-                                                                                                                    ">
-                                            @if($bid->project->awardedBid?->id == $bid->id)
+                                        @if ($bid->project?->awardedBid?->id === $bid->id)
+                                            <button title="Remove Award" class="flex items-center hover:scale-110 transition"
+                                                @click=" bidId={{ $bid->id }}; showRemoveAwardModal = true;">
                                                 <x-heroicon-s-check-badge class="w-6 h-6 text-bg-green" />
-                                            @else
+                                            </button>
+                                        @else
+                                            <button title="Award" class="flex items-center hover:scale-110 transition"
+                                                @click=" bidId={{ $bid->id }}; showAwardModal = true;">
                                                 <x-heroicon-o-check-badge class="w-6 h-6 text-primary" />
-                                            @endif
-                                        </button>
+                                            </button>
+                                        @endif
+
 
                                         <button @click="
-                                            editId = {{ $bid->id }};
-                                            editBid = {{ json_encode($bid) }};
-                                            showEditBidModal = true;
-                                            $nextTick(() => window.dispatchEvent(new CustomEvent('open-edit', {
-                                                detail: {
-                                                    municipality_city: '{{ addslashes($bid->municipality_city) }}',
-                                                    barangay: '{{ addslashes($bid->barangay) }}'
-                                                }
-                                            })));
-                                        ">
-                                        <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
-                                    </button>
+                                                                editId = {{ $bid->id }};
+                                                                editBid = {{ json_encode($bid) }};
+                                                                showEditBidModal = true;
+                                                                $nextTick(() => window.dispatchEvent(new CustomEvent('open-edit', {
+                                                                    detail: {
+                                                                        municipality_city: '{{ addslashes($bid->municipality_city) }}',
+                                                                        barangay: '{{ addslashes($bid->barangay) }}'
+                                                                    }
+                                                                })));
+                                                            ">
+                                            <x-lucide-pencil class="w-5 h-5 text-primary cursor-pointer" />
+                                        </button>
 
                                         <button class="flex items-center hover:scale-110 transition" title="Delete"
                                             @click="deleteId = {{ $bid->id }}; showDeleteBidModal = true">
@@ -251,10 +263,11 @@
 
         </div>
 
-        <x-create-bid :$cities/>
-        <x-edit-bid :$cities/>
+        <x-create-bid :$cities />
+        <x-edit-bid :$cities />
         <x-delete-bid />
         <x-award-bid />
+        <x-remove-award-bid/>
     </div>
 
     {{-- Clear localstorage in browser every new bid awarded --}}

@@ -11,7 +11,10 @@
                 <div class="flex justify-between items-center">
                     <h1 class="text-2xl font-semibold mb-3">Latest Projects</h1>
                     <a href="{{ route('project.index') }}"
-                        class="bg-primary px-3 rounded-xl text-foreground cursor-pointer hover:scale-105">View all</a>
+                        class="bg-primary px-3 rounded-xl text-foreground cursor-pointer hover:scale-105 flex gap-2 relative w-full max-w-[100px]">
+                        <p>View all</p>
+                        <x-lucide-circle-arrow-right class="w-4 h-4 absolute right-1 top-1/2 -translate-y-1/2" />
+                    </a>
                 </div>
                 @forelse ($projects as $project)
                     <x-project-card :$project />
@@ -24,8 +27,12 @@
                 <div class="flex justify-between items-center">
                     <h1 class="text-2xl font-semibold mb-3">New Bids</h1>
                     <a href="{{ route('bidder.index') }}"
-                        class="bg-primary px-3 rounded-xl text-foreground cursor-pointer hover:scale-105">View all</a>
-                </div>
+                        class="bg-primary px-3 rounded-xl text-foreground cursor-pointer hover:scale-105 relative w-full max-w-[100px]">
+                        <p>View all</p>
+                        <x-lucide-circle-arrow-right class="w-4 h-4 absolute right-1 top-1/2 -translate-y-1/2" />
+
+                    </a>
+                </div>  
                 @forelse ($bids as $bid)
                     <x-bid-card :$bid />
                 @empty

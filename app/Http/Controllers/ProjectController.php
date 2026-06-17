@@ -95,6 +95,7 @@ class ProjectController extends Controller
     
     public function show(Project $project)
     {
+        
         $bids = $project->bids()->orderBy('bid_amount', 'asc')->paginate(10);
         $cities = CityMunicipality::orderBy('name')->get();
         return view('project.show', compact('project', 'bids', 'cities'));
@@ -110,5 +111,15 @@ class ProjectController extends Controller
         ]);
 
         return redirect()->back()->with('clear_storage', true)->with('success', 'Awarded successfully.');
+    }
+
+    public function removeAward(Bid $bid){
+        abort_if(is_null($bid->project), 404);
+
+        $bid->project->update([
+            'bid_id' => null,
+        ]);
+
+        return redirect()->back()->with('clear_storage', true)->with('success', 'Award removed successfully.');
     }
 }
