@@ -127,7 +127,7 @@
                         </thead>
                         <tbody>
                             @forelse($projects as $project)
-                                <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100" onclick="window.location='{{ route('project.show', ['project' => $project, 'from' => url()->current()]) }}'">
+                                <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100" onclick="window.location='{{ route('project.show', ['project' => $project, 'from' => request()->fullUrl()]) }}'">
                                     <td class="px-5 py-1 max-w-xs">{{ $project->project_title }}</td>
                                     <td class="px-5 py-1 opacity-80">₱{{ number_format($project->approved_budget, 2) }}</td>
                                     <td class="px-5 py-1 opacity-80 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>

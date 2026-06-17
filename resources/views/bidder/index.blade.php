@@ -83,11 +83,11 @@
                         <tbody>
                             @forelse($bids as $bid)
 
-                                <tr class="border-t odd:bg-foreground even:bg-gray-100">
+                                <tr class="border-t odd:bg-foreground even:bg-gray-100 hover:bg-gray-200">
                                     <td class="px-5 py-1 ">
-                                        <p>{{ $bid->project?->project_title }}</p>
+                                        <p class="{{ $bid->project ? '' : 'opacity-50 italic' }}">{{ $bid->project?->project_title ?? 'Deleted Project'}}</p>
                                         <p class="text-xs text-primary/70">
-                                            ₱{{ number_format($bid->project?->approved_budget, 2) }}</p>
+                                            ₱{{ number_format($bid->project?->approved_budget, 2)  }}</p>
 
                                     </td>
                                     <td class="px-5 py-1 opacity-80">{{ $bid->company_name}}</td>
