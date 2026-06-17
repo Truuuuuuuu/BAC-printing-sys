@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                         @forelse($users as $user)
-                            <tr class="border-t hover:cursor-pointer hover:bg-gray-200 odd:bg-foreground even:bg-gray-100">
+                            <tr class="border-t  hover:bg-gray-200 odd:bg-foreground even:bg-gray-100">
                                 <td class="px-5 py-1 max-w-xs font-semibold">{{ $user->name }}</td>
                                 <td class="px-5 py-1 opacity-80 font-light">{{'@' . $user->username}}</td>
                                 <td class="px-5 py-1 opacity-80 whitespace-nowrap capitalize">

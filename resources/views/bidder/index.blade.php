@@ -8,7 +8,7 @@
             company_name: '{{ old('edit-company_name') }}',
             proprietor: '{{ old('edit-proprietor') }}',
             bid_amount: '{{ old('edit-bid_amount') }}',
-            street: '{{ old('edit-street') }}',
+            street: '{{ old('edit-street') }}', 
             barangay: '{{ old('edit-barangay') }}',
             municipality_city: '{{ old('edit-municipality_city') }}',
         },
