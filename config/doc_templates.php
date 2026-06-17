@@ -336,7 +336,8 @@ return [
             'entity_position_designation'     => 'e.g. Postion/Designation',
             'proprietor_position_designation' => 'e.g. Postion/Designation',
             'entity_date'                     => 'Entity Date',
-            'proprietor_date'                 => 'Proprietor Date'
+            'proprietor_date'                 => 'Proprietor Date',
+            'laws_city_country'               => 'e.g. Sorsogon, Philippines',
         ],
 
         'requiredArgs' => [
@@ -345,6 +346,7 @@ return [
             'month'                             => 'Contract month',
             'year'                              => 'Contract year',
             'company_name_upper'                => 'Company name',
+            'office_address'                    => 'Principal Office Address',
             'contract_amount_words'             => 'Contract amount in words',
             'description'                       => 'Description',
             'proprietor_upper'                  => 'Proprietor',
@@ -354,6 +356,7 @@ return [
             'entity_date'                       => 'Entity Date',
             'proprietor_date'                   => 'Proprietor Date',
             'procurement_mode'                  => 'Procurement Mode',
+            'laws_city_country'                 => 'Laws of City and Country',
         ],
 
         'optionalArgs' => [
@@ -364,16 +367,19 @@ return [
         'tablesConfig'          => [],
 
         'labels' => [
-            'day_ordinal'                       => 'Contract execution (day)',
-            'month'                             => 'Contract execution (month)',
-            'year'                              => 'Contract execution (year)',
+            'day_ordinal'                       => 'Contract Execution (day)',
+            'month'                             => 'Contract Execution (month)',
+            'year'                              => 'Contract Execution (year)',
             'contract_amount_words'             => 'Contract Amount in Words',
             'proprietor_upper'                  => 'Proprietor/Owner',
+            'office_address'                    => 'Principal Office Address',
             'entity_name_upper'                 => 'Name of the Procuring Entity',
             'entity_position_designation'       => 'Procuring Entity Position/Designation',
             'proprietor_position_designation'   => 'Proprietor Postion/Designation',
             'entity_date'                       => 'Procuring Entity Date',
-            'proprietor_date'                   => 'Proprietor Date'
+            'proprietor_date'                   => 'Proprietor Date',
+            'company_name_upper'                => 'Supplier /Contractor/ Consultant',
+            'laws_city_country'                 => 'Under the Laws of (City and Country)',
         ],
 
         'extraPlaceholders' => ['procurement_mode'],
@@ -424,7 +430,7 @@ return [
             'proprietor_upper'      => 'awardedBid.proprietor',
             'company_name_upper'    => 'awardedBid.company_name',
             'contract_amount_words' => 'contract_amount_in_words',
-
+            'office_address'        => 'awardedBid.full_address',
         ],
     ],
 
@@ -613,7 +619,7 @@ return [
         'file'          => 'Notification of Lowest Calculated Bid.docx',
 
         'hints' => [
-            'title'         => 'e.g. MR, MS, MRS',
+            'name_prefix'         => 'e.g. MR, MS, MRS',
             'proprietor'    => 'e.g. Juan B. Dela Cruz',
             'company_name'  => 'e.g. JUAN CONSTRUCTION',
             'project_title' => 'e.g. Concreting of Canal and Sidewalk at Housing Project, Brgy. San Antonio, Casiguran, Sorsogon',
@@ -621,7 +627,7 @@ return [
         ],
 
         'requiredArgs' => [
-            'title_upper'           => 'Title',
+            'name_prefix_upper'           => 'Title',
             'proprietor_upper'      => 'Proprietor/Owner',
             'company_name_upper'    => 'Company Name',
             'project_title_upper'   => 'Project Title',
@@ -634,7 +640,7 @@ return [
         ],
 
         'labels' => [
-            'title_upper'         => 'Name Prefix',
+            'name_prefix_upper'         => 'Name Prefix',
             'proprietor_upper'    => 'Proprietor/Owner',
             'company_name_upper'  => 'Company Name',
             'project_title_upper' => 'Project Title',
@@ -646,7 +652,7 @@ return [
             'project_title_upper' => [
                 'type' => 'textarea'
             ],
-            'title_upper' => ['type' => 'select', 'options' => ['MR','MRS','MS','MISS','DR', 'HON','ENGR','ATTY','ARCH']],
+            'name_prefix_upper' => ['type' => 'select', 'options' => ['MR','MRS','MS','MISS','DR', 'HON','ENGR','ATTY','ARCH']],
             'notice_date' => [
                 'type'=> 'date'
             ],
