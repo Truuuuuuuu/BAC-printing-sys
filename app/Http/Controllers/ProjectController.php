@@ -18,7 +18,7 @@ class ProjectController extends Controller
         $projects->search($request->search);
 
         $projects = $projects->latest()
-            ->paginate(10)
+            ->paginate(15)
             ->withQueryString();
 
         return view('project.index', compact('projects'));

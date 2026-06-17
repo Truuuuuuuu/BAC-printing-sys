@@ -18,14 +18,26 @@ class AdminController extends Controller
             $query->where('name', 'admin');
         })->count();
 
+        $bids = Bid::with('project')
+            ->latest()
+            ->paginate(7);
+
+
+        $projects = Project::latest()
+            ->paginate(8);
+
+        return view('admin.index', compact('bids', 'projects','totalProjects','totalBids', 'totalUsers'));
+    }
+
+    public function projects(Request $request){
         $projects = Project::query();
         $projects->search($request->search);
 
         $projects = $projects->latest()
-            ->paginate(15)
+            ->paginate(8)
             ->withQueryString();
 
-        return view('admin.index', compact('projects','totalProjects','totalBids', 'totalUsers'));
+        return view('admin.projects', compact('projects'));
     }
 
     public function auditLogs(Request $request){

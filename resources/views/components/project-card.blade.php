@@ -1,7 +1,7 @@
 @props(['project'])
 
-
-<div class="border rounded-2xl border-2 border-white p-5 space-y-1 bg-foreground">
+<a href="{{ route('project.show', ['project' => $project, 'from' => url()->current()]) }}" 
+   class="block border rounded-2xl border-2 border-white p-5 space-y-1 bg-foreground hover:bg-gray-200 hover:border-primary hover:scale-105 transition">
     <div>
         <div class="inline-block bg-blue-100 text-primary rounded-xl px-2 text-xs">
             {{ $project->created_at->format('F j, Y') }}
@@ -10,18 +10,8 @@
     </div>
 
     <div class="flex gap-1 items-center text-primary">
-        <x-lucide-wallet class="w-4 h-4" />
+        <x-heroicon-s-wallet class="w-4 h-4" />
         <p class="text-md text-primary font-medium">₱{{ number_format($project->approved_budget, 2) }}</p>
     </div>
+</a>
 
-    <button
-        class="relative w-full bg-primary hover:scale-105 text-foreground font-semibold rounded-3xl py-1 hover:shadow-md transition-all duration-200"
-        @click="location.href='{{ route('project.show', ['project' => $project, 'from' => url()->current()]) }}'">
-
-        <span class="block text-center">
-            View Details
-        </span>
-
-        <x-lucide-circle-arrow-right class="w-6 h-6 absolute right-1 top-1/2 -translate-y-1/2" />
-    </button>
-</div>
