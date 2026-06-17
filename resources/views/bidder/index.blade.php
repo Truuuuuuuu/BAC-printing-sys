@@ -27,61 +27,7 @@
         },
     }">
         <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
-            <div class=" px-3 lg:px-0 self-start w-full lg:max-w-sm space-y-5">
-                <div class="flex gap-2 items-center">
-                    <div class="border-2 border-white rounded-2xl bg-foreground flex items-center justify-center p-2">
-                        <x-heroicon-s-folder-open class="w-10 h-10 text-primary" />
-                    </div>
-                    <div class="flex flex-col">
-                        <h2 class="text-2xl sm:text-3xl text-primary font-semibold">Projects</h2>
-                        <p class="text-xs text-primary/80">Browse and select available projects to create a bid.
-                        </p>
-                    </div>
-                </div>
-
-
-                <div>
-                    <div class="relative w-full " x-data="{ search: '{{ request('project_search') }}' }">
-
-                        <form method="GET">
-                            {{-- to preserve search input in bidders --}}
-                            <input type="hidden" name="bid_search" value="{{ request('bid_search') }}">
-
-                            <input type="text" name="project_search" x-model="search" placeholder="Search projects..."
-                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-white">
-
-                            {{-- Clear Input Search --}}
-                            <button x-show="search.length > 0" x-cloak type="button" @click="
-                                            search = '';
-                                            window.location = '{{ route('bidder.index') }}?bid_search={{ request('bid_search') }}';
-                                        "
-                                class="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                                <x-lucide-x class="w-4 h-4" />
-                            </button>
-
-
-                            {{-- Submit Search --}}
-                            <button type="submit"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition">
-                                <x-lucide-search class="w-5 h-5" />
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 md:gap-2 lg:grid-cols-1 lg:gap-0 lg:space-y-2  w-full">
-                    @forelse ($projects as $project)
-
-                        <x-project-card :project="$project" />
-
-                    @empty
-
-                        <p class="text-gray-500 text-center ">No projects found.</p>
-
-                    @endforelse
-                </div>
-                {{ $projects->links() }}
-            </div>
+            
 
             <div class="w-full min-w-0 border-2 border-white shadow-sm bg-foreground rounded-3xl ">
                 <div class="flex justify-end p-5 ">
@@ -138,7 +84,7 @@
                             @forelse($bids as $bid)
 
                                 <tr class="border-t odd:bg-foreground even:bg-gray-100">
-                                    <td class="px-5 py-1 max-w-xs">
+                                    <td class="px-5 py-1 ">
                                         <p>{{ $bid->project?->project_title }}</p>
                                         <p class="text-xs text-primary/70">
                                             ₱{{ number_format($bid->project?->approved_budget, 2) }}</p>
