@@ -205,8 +205,8 @@ return [
             'publication_date'                  => 'Date of Publication',
             'eligibility_date'                  => 'Date of Eligibility Check',
             'eligibility_wordNumUpper'          => 'Number of eligibility envelopes received',
-            'start_dateMonthDay'                => 'Start period of availability of Bid Docs',
-            'availability_date'                 => 'Period of availability of Bid Docs',
+            'start_dateMonthDay'                => 'Start Period of availability of Bid Docs',
+            'availability_end_date'             => 'End Period of availability of Bid Docs',
             'issued_docs_wordNumUpper'          => 'Number of Bid Docs issued',
             'conference_date'                   => 'Date of Conference',
             'responsive_bidders_wordNumLower'   => 'Total Responsive Bidders',
@@ -234,7 +234,7 @@ return [
             'eligibility_date'                  => '2.3a Date of Eligibility Check',
             'eligibility_wordNumUpper'          => '2.3b Number of Eligibility Envelopes Received',
             'start_dateMonthDay'                => '2.4a Start Period of Availability of Bid Docs',
-            'availability_date'                 => '2.4a End Period of Availability of Bid Docs',
+            'availability_end_date'             => '2.4a End Period of Availability of Bid Docs',
             'issued_docs_wordNumUpper'          => '2.4b Number of Bid Docs issued',
             'conference_date'                   => '2.5a Date of Conference',
             'responsive_bidders_wordNumLower'   => 'Total Responsive Bidders',
@@ -267,7 +267,7 @@ return [
                 'type'=> 'date'
             ],
 
-            'availability_date'=> [
+            'availability_end_date'=> [
                 'type'=> 'date'
             ],
 
