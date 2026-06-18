@@ -1,10 +1,10 @@
 @props(['config'])
 
-<div x-data="docEditor()" x-init="init()" class="min-h-screen bg-gray-50 p-6 text-primary">
-    <div class="max-w-7xl mx-auto flex gap-6">
+<div x-data="docEditor()" x-init="init()" class="min-h-screen bg-gray-50 p-3 text-primary ">
+    <div class="max-w-[1440px] lg:px-8 mx-auto flex gap-6 flex flex-col md:flex-row">
 
         {{-- ── Left: placeholder inputs ──────────────────────────────────── --}}
-        <div class="w-1/4 shrink-0">
+        <div class="w-full max-w-md ">
             <div class="bg-white rounded-xl border border-gray-200 p-4 sticky top-6">
                 <div class="mb-4">
                     <h2 class="font-semibold text-gray-800 text-sm">Fill placeholders</h2>
@@ -18,25 +18,6 @@
                     <p class="text-sm text-gray-400 italic">No placeholders found in document.</p>
                 </template>
 
-                {{-- <template x-for="key in placeholders" :key="key">
-                    <div class="mb-3">
-                        <label class="block text-xs font-medium text-gray-500 mb-1" x-text="formatLabel(key)"></label>
-
-                        <template x-if="inputPatterns[key]">
-                            <input type="text"
-                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
-                                x-mask="9999-99-999" @input="schedulePreview()">
-                        </template>
-
-                        <template x-if="!inputPatterns[key]">
-                            <input type="text"
-                                class="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                :placeholder="getHint(key) || 'Enter ' + formatLabel(key)" x-model="args[key]"
-                                @input="schedulePreview()">
-                        </template>
-                    </div>
-                </template> --}}
 
                 <template x-for="key in placeholders" :key="key">
                     <div class="mb-3">
@@ -311,7 +292,7 @@
     </div>
 </div>
 
-{{-- Inject config as a single JS object. No logic here. --}}
+{{-- Inject config as a single JS object --}}
 <script>
     window.DOC_CONFIG = @json($config);
     window.CSRF_TOKEN = '{{ csrf_token() }}';

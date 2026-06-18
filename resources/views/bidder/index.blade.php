@@ -26,7 +26,7 @@
             });
         },
     }">
-        <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
+        <div class="max-w-[1440px] w-full mx-auto px-3 lg:px-8 flex flex-col lg:flex-row gap-5">
             
 
             <div class="w-full min-w-0 border-2 border-white shadow-sm bg-foreground rounded-3xl ">
@@ -43,7 +43,7 @@
                             <input type="hidden" name="project_search" value="{{ request('project_search') }}">
 
                             <input type="text" name="bid_search" x-model="search" placeholder="Search bid records..."
-                                class="w-full border px-3 py-2 pr-20 rounded-3xl border-gray-300">
+                                class="w-full border px-3 py-2 pr-20 rounded-2xl border-gray-300">
 
                             {{-- Clear Input Search --}}
                             <button x-show="search.length > 0" x-cloak type="button" @click="

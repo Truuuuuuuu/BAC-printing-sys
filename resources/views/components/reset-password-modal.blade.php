@@ -1,19 +1,19 @@
-<div x-data="{ show: false, pw: '', showPw: false, userId: null }"
-    @open-reset.window="show = true; userId = $event.detail.id" x-show="show" x-cloak
+<div x-data="{ show: false, pw: '', showPw: false, resetUrl: null }"
+    @open-reset.window="show = true; resetUrl = $event.detail.url" x-show="show" x-cloak
     class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40" @click.self="show = false; pw = ''">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl" @click.stop>
 
         <div class="flex items-center justify-between mb-4">
-            <div class="flex gap-2 justify-start items-center font-medium text-gray-900">
-                <x-heroicon-s-key class="w-4 h-4" />
-                <p>Reset Password</p>
+            <div class="flex  justify-start items-center font-medium text-gray-900">
+                
+                <p class="text-3xl font-semibold text-primary">Reset Password</p>
             </div>
             <button @click="show = false; pw = ''" class="text-gray-400 hover:text-gray-600 text-xl">&times;</button>
         </div>
 
         <p class="text-sm text-gray-500 mb-4">Set a new password for this user.</p>
 
-        <form :action="`/admin/users/${userId}/reset-password`" method="POST">
+        <form x-bind:action="resetUrl" method="POST">
             @csrf
 
             <label class="text-xs text-gray-500 mb-1 block">New password</label>
@@ -34,7 +34,7 @@
                     Cancel
                 </button>
                 <button type="submit" :disabled="pw.length < 8"
-                    class="flex-1 py-2.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed">
+                    class="flex-1 py-2.5 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed">
                     Save
                 </button>
             </div>

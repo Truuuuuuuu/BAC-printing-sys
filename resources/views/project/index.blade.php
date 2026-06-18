@@ -13,7 +13,7 @@
     showEditModal: {{ $errors->hasAny(['edit-project_title', 'edit-approved_budget', 'edit-bidding_date', 'edit-status']) ? 'true' : 'false' }},
     showDeleteModal: false,
     }">
-        <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5">
+        <div class="max-w-[1440px] w-full mx-auto px-3 lg:px-8 flex flex-col lg:flex-row gap-5">
             <div class="w-full lg:max-w-sm self-start px-3 lg:px-3 bg-foreground/70 lg:py-5 top-6 space-y-5 border-2 border-white rounded-3xl ">
                 <div class="flex gap-2 items-center  ">
                     <div class="border-2 border-white rounded-2xl bg-gray-100 flex items-center justify-center p-2">
@@ -65,7 +65,7 @@
 
 
                     <button type="submit"
-                        class=" w-full flex gap-2 items-center justify-center  bg-bg-green font-semibold text-foreground py-2 hover:shadow-sm hover:scale-105 rounded-3xl mt-5 hover:bg-primary/90 transition">
+                        class=" w-full flex gap-2 items-center justify-center  bg-bg-green font-semibold text-foreground py-2 hover:shadow-sm hover:scale-105 rounded-2xl mt-5 hover:bg-primary/90 transition">
                         <x-lucide-plus class="w-5 h-5 text-foreground"/>
                         <p>Create Project</p>
                        
@@ -90,7 +90,7 @@
 
                                 <form method="GET">
                                     <input type="text" name="search" x-model="search" placeholder="Search projects..."
-                                        class="w-full border px-3 py-2 pr-20 rounded-3xl border border-gray-300">
+                                        class="w-full border px-3 py-2 pr-20 rounded-2xl border border-gray-300">
 
                                     {{-- Clear Input Search --}}
                                     <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -133,7 +133,7 @@
                                     <td class="px-5 py-1 opacity-80 whitespace-nowrap">{{ $project->bidding_date->format('Y-m-d') }}</td>
                                     <td class="px-5 py-1 whitespace-nowrap capitalize">
                                         <div
-                                            class="rounded-xl {{ $project->status === 'awarded' ? 'bg-bg-green/30 text-green-text/70' : 'bg-bg-red/30 text-red-text/70' }} font-semibold text-xs flex justify-center items-center ">
+                                            class="rounded-xl {{ $project->status === 'awarded' ? 'md:bg-bg-green/30 text-green-text/70' : 'md:bg-bg-red/30 text-red-text/70' }} font-semibold text-xs md:px-2  flex justify-center items-center ">
                                             {{ $project->status }}
                                         </div>
                                     </td>

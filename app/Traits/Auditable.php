@@ -9,15 +9,15 @@ trait Auditable
     public static function bootAuditable(): void
     {
         static::created(fn($model) => AuditLogger::log(
-            strtolower(class_basename($model)) . '.created', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
+            strtolower(class_basename($model)) . '.created', $model, ['name' => $model->project_title ?? $model->company_name  ?? null]
         ));
 
         static::updated(fn($model) => AuditLogger::log(
-            strtolower(class_basename($model)) . '.updated', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
+            strtolower(class_basename($model)) . '.updated', $model, ['name' => $model->project_title ?? $model->company_name  ?? null]
         ));
 
         static::deleted(fn($model) => AuditLogger::log(
-            strtolower(class_basename($model)) . '.deleted', $model, ['name' => $model->project_title ?? $model->project->project_title ?? null]
+            strtolower(class_basename($model)) . '.deleted', $model, ['name' => $model->project_title ?? $model->company_name ?? null]
         ));
 
 

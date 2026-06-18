@@ -1,4 +1,4 @@
-<div x-show="showEditBidModal" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div x-show="showEditBidModal" x-cloak class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3">
     <div class="bg-white rounded-2xl p-6 w-full max-w-5xl">
         <h2 class="text-3xl font-semibold text-primary">Edit Bid</h2>
         <p class="text-md text-primary/70">Review and update bid information.</p>
@@ -7,7 +7,7 @@
             @csrf
             @method('PUT')
             <input type="hidden" name="edit-id" :value="editId">
-            <div class="w-full flex gap-7 mb-20">
+            <div class="w-full flex gap-7 mb-20 flex flex-col md:flex-row">
                 <div class="flex-1 space-y-3">
                     <div>
                         <label class=" font-semibold">Company Name</label>

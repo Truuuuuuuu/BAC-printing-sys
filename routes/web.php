@@ -132,8 +132,8 @@ Route::prefix('{project}')
         Route::get('/audit-logs',[AdminController::class,'auditLogs'])->name('audit-logs');
         Route::get('/all-users',[AdminController::class,'users'])->name('users');
         Route::post('/users/{user}/reset-password', [AdminController::class, 'resetPassword'])
-            ->name('users.reset-password');
-        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+            ->name('user.reset-password');
+        Route::delete('/users/{user}/delete', [AdminController::class, 'deleteUser'])->name('users.delete');
     });
 
 

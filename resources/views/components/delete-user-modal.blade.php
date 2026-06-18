@@ -1,11 +1,11 @@
-<div x-data="{ show: false, userId: null }" @open-delete.window="show = true; userId = $event.detail.id"
+<div x-data="{ show: false, deleteUrl: null }" @open-delete.window="show = true; deleteUrl = $event.detail.url"
     x-show="show" x-cloak
     class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40" @click.self="show = false">
-    <div class="bg-white rounded-2xl p-6 w-sm shadow-xl" @click.stop>
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl" @click.stop>
 
-        <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-lg">🗑</div>
-            <h3 class="font-medium text-gray-900">Delete Account</h3>
+        <div class="flex items-start gap-3 mb-4">
+            
+            <h3 class="font-semibold text-primary text-3xl">Delete Account</h3>
         </div>
 
         <p class="text-sm text-gray-500 mb-4 leading-relaxed">
@@ -13,7 +13,7 @@
                 class="text-gray-700">cannot be undone</strong>.
         </p>
 
-        <form x-bind:action="'{{ route('admin.users.delete', '_id_') }}'.replace('_id_', userId)" method="POST">
+        <form x-bind:action="deleteUrl" method="POST">
             @csrf
             @method('DELETE')
 

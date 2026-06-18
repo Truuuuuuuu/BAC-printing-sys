@@ -17,7 +17,7 @@
 
                             <form method="GET">
                                 <input type="text" name="search" x-model="search" placeholder="Search User..."
-                                    class="w-full border px-3 py-2 pr-20 rounded-3xl border border-gray-300">
+                                    class="w-full border px-3 py-2 pr-20 rounded-2xl border border-gray-300">
 
                                 {{-- Clear Input Search --}}
                                 <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -76,12 +76,12 @@
                                             <div x-show="open" x-transition
                                                 class="fixed z-[9999] w-44 bg-white border border-gray-100 rounded-xl shadow-lg"
                                                 :style="`top:${$refs.btn.getBoundingClientRect().bottom+8}px;left:${$refs.btn.getBoundingClientRect().right - 176}px`">
-                                                <button @click="$dispatch('open-reset', { id: {{ $user->id }} })"
+                                                <button @click="$dispatch('open-reset', { url: '{{ route('admin.user.reset-password', $user->id) }}' })"
                                                     class="w-full px-4 py-2.5 flex justify-start gap-2 text-sm text-left text-gray-700 hover:bg-gray-50 rounded-t-xl">
                                                     <x-heroicon-s-key class="w-4 h-4" /> <span>Reset Password</span>
                                                 </button>
                                                 <hr class="border-gray-100">
-                                                <button @click="$dispatch('open-delete', { id: {{ $user->id }} })"
+                                                <button @click="$dispatch('open-delete', { url: '{{ route('admin.users.delete', $user->id) }}' })"
                                                     class="w-full px-4 py-2.5 flex justify-start gap-2 text-sm text-left text-red-600 hover:bg-red-50 rounded-b-xl">
                                                     <x-heroicon-s-trash class="w-4 h-4" /> <span>Delete User</span>
                                                 </button>

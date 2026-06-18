@@ -1,8 +1,8 @@
 <x-app-layout>
 
-    <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5 py-12">
+    <div class="max-w-[1440px] w-full mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-5 px-3 py-5">
         <div class="table-responsive w-full rounded-3xl border-2 border-white bg-foreground">
-            <div class="flex justify-between items-center mt-5 px-5">
+            <div class="flex flex-col md:flex-row md:justify-between items-center mt-5 px-5">
                 <div class=" w-full">
                     <p class="text-2xl font-semibold tracking-wide text-primary">AUDIT LOGS</p>
                 </div>
@@ -17,7 +17,7 @@
 
                             <form method="GET">
                                 <input type="text" name="search" x-model="search" placeholder="Search Audit Logs..."
-                                    class="w-full border px-3 py-2 pr-20 rounded-3xl border border-gray-300">
+                                    class="w-full border px-3 py-2 pr-20 rounded-2xl border border-gray-300">
 
                                 {{-- Clear Input Search --}}
                                 <button x-show="search.length > 0" x-cloak type="button" @click="
@@ -44,16 +44,16 @@
                 <table class="w-full ">
                     <thead>
                         <tr>
-                            <th class="px-5 text-left py-1 font-medium text-sm opacity-60 max-w-xs">Date</th>
+                            <th class="px-5 text-left py-1 font-medium text-sm opacity-60 whitespace-nowrap">Date</th>
                             <th class="px-5 text-left py-1 font-medium text-sm opacity-60">User</th>
-                            <th class="px-5 text-left py-1 font-medium text-sm opacity-60 whitespace-nowrap">Activity
+                            <th class="px-5 text-left py-1 font-medium text-sm opacity-60 ">Activity
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($auditLogs as $auditLog)
                             <tr class="border-t hover:bg-gray-200 odd:bg-foreground even:bg-gray-100">
-                                <td class="px-5 py-1 max-w-xs">
+                                <td class="px-5 py-1 whitespace-nowrap">
                                     <div class="flex items-center gap-2">
                                         {{ $auditLog?->created_at?->format('M d, Y h:i A') }}
                                         <div class="w-1 h-1 bg-black rounded-full opacity-50"></div>
