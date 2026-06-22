@@ -12,6 +12,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::middleware(['auth', 'verified'])
     ->prefix('project')
     ->name('project.')

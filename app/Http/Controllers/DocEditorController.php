@@ -108,7 +108,6 @@ class DocEditorController extends Controller
 
     public function preview(Request $request, Project $project, string $template = 'bac-resolution')
     {
-        
         $def       = $this->resolveTemplate($template);
         $args      = $request->input('args', []);
         $tableRows = $request->input('table_rows', []);
@@ -117,16 +116,25 @@ class DocEditorController extends Controller
 
         [$ok, $errorMsg] = $this->runPythonFill($def['template'], $args, $tableRows, $filledDocx, true);
 
+        \Log::info('Fill result', [
+            'ok'          => $ok,
+            'errorMsg'    => $errorMsg,
+            'filledDocx'  => $filledDocx,
+            'exists'      => file_exists($filledDocx),
+            'size'        => file_exists($filledDocx) ? filesize($filledDocx) : 'N/A',
+        ]);
+
         if (!$ok) {
             return response()->json(['error' => 'Fill failed', 'stderr' => $errorMsg], 500);
         }
 
-        $tmpDir = storage_path('app/tmp/');
-        $pdf    = $this->convertToPdf($filledDocx, $tmpDir);
+        $err    = '';
+        $tmpDir = storage_path('app/tmp');
+        $pdf    = $this->convertToPdf($filledDocx, $tmpDir, $err);
         @unlink($filledDocx);
 
         if (!$pdf) {
-            return response()->json(['error' => 'PDF conversion failed'], 500);
+            return response()->json(['error' => 'PDF conversion failed', 'detail' => $err], 500);
         }
 
         return response()->file($pdf, [
@@ -134,7 +142,6 @@ class DocEditorController extends Controller
             'Content-Disposition' => 'inline',
         ])->deleteFileAfterSend(true);
     }
-
     // ── Private helpers ───────────────────────────────────────────────────────
 
     private function resolveTemplate(string $slug): array
@@ -243,33 +250,10 @@ class DocEditorController extends Controller
         return $errors;
     }
 
-    // private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath): array
-    // {
-    //     if (!file_exists($templatePath)) {
-    //         return [false, "Template not found: {$templatePath}"];
-    //     }
-
-    //     @mkdir(dirname($outPath), 0755, true);
-        
-    //     $process = new Process([
-    //         'python3',
-    //         resource_path('scripts/fill_docx.py'),
-    //         $templatePath,
-    //         json_encode($args),
-    //         json_encode($tableRows),
-    //         $outPath,
-    //     ]);
-    //     $process->run();
-
-    //     if (!$process->isSuccessful() || !file_exists($outPath)) {
-    //         return [false, $process->getErrorOutput()];
-    //     }
-
-    //     return [true, ''];
-    // }
 
     private function runPythonFill(string $templatePath, array $args, array $tableRows, string $outPath, bool $isPreview = false): array
     {
+
         if (!file_exists($templatePath)) {
             return [false, "Template not found: {$templatePath}"];
         }
@@ -277,7 +261,7 @@ class DocEditorController extends Controller
         @mkdir(dirname($outPath), 0755, true);
 
         $cmd = [
-            'python',
+            $this->resolvePythonPath(),
             resource_path('scripts/fill_docx.py'),
             $templatePath,
             json_encode($args),
@@ -290,6 +274,7 @@ class DocEditorController extends Controller
         }
 
         $process = new Process($cmd);
+        $process->setEnv($this->pythonProcessEnv());
         $process->run();
 
         if (!$process->isSuccessful() || !file_exists($outPath)) {
@@ -299,25 +284,133 @@ class DocEditorController extends Controller
         return [true, ''];
     }
 
-    private function convertToPdf(string $docxPath, string $outDir): ?string
+    private function pythonProcessEnv(): array
     {
-        $process = new Process([
-            '/opt/libreoffice26.2/program/soffice',
-            '--headless', '--convert-to', 'pdf',
-            $docxPath, '--outdir', $outDir,
+        // Start with the full current environment
+        $env = array_merge($_ENV, $_SERVER);
+
+        // Remove internal PHP/server keys that aren't valid env vars
+        foreach ($env as $key => $value) {
+            if (!is_string($value) && !is_numeric($value)) {
+                unset($env[$key]);
+            }
+        }
+
+        // Add user site-packages so Python finds installed modules
+        $env['PYTHONPATH'] = 'C:\\Users\\jethr\\AppData\\Roaming\\Python\\Python314\\site-packages';
+
+        return $env;
+    }
+
+    private function convertToPdf(string $docxPath, string $outDir, string &$err = ''): ?string
+    {
+        $docxPath = str_replace('/', DIRECTORY_SEPARATOR, $docxPath);
+        $outDir   = str_replace('/', DIRECTORY_SEPARATOR, rtrim($outDir, '\\/'));
+
+        if (!is_dir($outDir)) {
+            mkdir($outDir, 0755, true);
+        }
+
+        $pdfPath    = $outDir . DIRECTORY_SEPARATOR . pathinfo($docxPath, PATHINFO_FILENAME) . '.pdf';
+        $profileDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'lo_prof_' . uniqid();
+        mkdir($profileDir, 0755, true);
+
+        $userInstall = 'file:///' . str_replace('\\', '/', $profileDir);
+
+        $candidates = [
+            getenv('LIBREOFFICE_PATH'),
+            'C:\\PROGRA~1\\LibreOffice\\program\\soffice.exe',
+            'C:\\PROGRA~2\\LibreOffice\\program\\soffice.exe',
+        ];
+
+        $soffice = null;
+        foreach ($candidates as $candidate) {
+            if ($candidate && file_exists($candidate)) {
+                $soffice = $candidate;
+                break;
+            }
+        }
+
+        if (!$soffice) {
+            $err = 'LibreOffice not found. Please install LibreOffice.';
+            return null;
+        }
+
+        $command = "\"{$soffice}\" \"-env:UserInstallation={$userInstall}\" --headless --nologo --nofirststartwizard --convert-to pdf --outdir \"{$outDir}\" \"{$docxPath}\"";
+
+        $process = Process::fromShellCommandline($command);
+        $process->setTimeout(120);
+        $process->setEnv([
+            'USERPROFILE'  => getenv('USERPROFILE'),
+            'APPDATA'      => getenv('APPDATA'),
+            'LOCALAPPDATA' => getenv('LOCALAPPDATA'),
+            'TEMP'         => getenv('TEMP'),
+            'TMP'          => getenv('TMP'),
+            'SystemRoot'   => getenv('SystemRoot'),
+            'SystemDrive'  => getenv('SystemDrive'),
         ]);
-        $process->setTimeout(30);
         $process->run();
 
-        $pdf = $outDir . pathinfo($docxPath, PATHINFO_FILENAME) . '.pdf';
+        \Log::info('PDF convert result', [
+            'exit'   => $process->getExitCode(),
+            'stdout' => $process->getOutput(),
+            'stderr' => $process->getErrorOutput(),
+            'exists' => file_exists($pdfPath),
+        ]);
 
-        return file_exists($pdf) ? $pdf : null;
+        if (is_dir($profileDir)) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($profileDir, \RecursiveDirectoryIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($files as $f) {
+                $f->isDir() ? rmdir($f->getRealPath()) : unlink($f->getRealPath());
+            }
+            rmdir($profileDir);
+        }
+
+        if (!file_exists($pdfPath)) {
+            $err = "exit: {$process->getExitCode()} | stdout: {$process->getOutput()} | stderr: {$process->getErrorOutput()}";
+            return null;
+        }
+
+        return $pdfPath;
+    }
+
+    private function deleteDir(string $dir): void
+    {
+        if (!is_dir($dir)) return;
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            $path = $dir . DIRECTORY_SEPARATOR . $file;
+            is_dir($path) ? $this->deleteDir($path) : unlink($path);
+        }
+        rmdir($dir);
     }
 
     private function tempPath(string $prefix, string $ext): string
     {
-        $dir = storage_path('app/tmp/');
+        $dir = storage_path('app' . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR);
         @mkdir($dir, 0755, true);
         return $dir . uniqid($prefix) . $ext;
+    }
+    private function resolvePythonPath(): string
+    {
+        $fromEnv = getenv('PYTHON_PATH');
+        if ($fromEnv && file_exists($fromEnv)) {
+            return $fromEnv;
+        }
+
+        $which = shell_exec('where python');
+        if ($which) {
+            $lines = array_filter(array_map('trim', explode("\n", $which)));
+            foreach ($lines as $line) {
+                if (file_exists($line) && stripos($line, 'WindowsApps') === false) {
+                    return $line;
+                }
+            }
+        }
+
+        throw new \RuntimeException('Python not found. Please install Python or set PYTHON_PATH in .env.');
     }
 }
