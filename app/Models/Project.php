@@ -18,6 +18,13 @@ class Project extends Model
         'bidding_date',
         'status',
     ];
+    
+    protected $appends = [
+        'contract_amount_in_words',
+        'variance_percentage',
+        'total_responsive_bidders',
+        'bidding_companies',
+    ];
 
     protected $casts = [
         'bidding_date' => 'date',
