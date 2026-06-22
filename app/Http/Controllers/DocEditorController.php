@@ -277,7 +277,7 @@ class DocEditorController extends Controller
         @mkdir(dirname($outPath), 0755, true);
 
         $cmd = [
-            'python3',
+            'python',
             resource_path('scripts/fill_docx.py'),
             $templatePath,
             json_encode($args),
