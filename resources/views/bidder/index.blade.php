@@ -153,7 +153,7 @@
         </button>
     </div>
 
-    {{-- Clear localstorage in browser when bid info edited --}}
+    {{-- Clear localstorage in browser when there is changes --}}
     @if(session('clear_storage'))
         <script>
             localStorage.clear();
