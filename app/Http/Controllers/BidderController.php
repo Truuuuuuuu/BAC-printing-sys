@@ -145,6 +145,6 @@ class BidderController extends Controller
     public function destroy(Bid $bid)
     {
         $bid->delete();
-        return back()->with('success', 'Bid deleted successfully.');
+        return back()->with('clear_storage', true)->with('success', 'Bid deleted successfully.');
     }
 }
