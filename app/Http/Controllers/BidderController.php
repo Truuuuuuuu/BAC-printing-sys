@@ -79,7 +79,7 @@ class BidderController extends Controller
             'municipality_city' => $municipality_city, 
         ]);
 
-        return back()->with('success','Bid created successfully.');
+        return back()->with('clear_storage', true)->with('success','Bid created successfully.');
     }
 
 
