@@ -8,6 +8,7 @@
 This project was originally developed as a web application. By integrating the Tauri framework, it has been transformed into a self-contained desktop application that runs natively on Windows without requiring a separate web server installation.
 </p>
 
+<p>You can download the installer in the release section</p>
 <h3>Technology Stack</h3>
 <p align="center">
   <img src="https://cdn.simpleicons.org/laravel/FF2D20" width="55" alt="Laravel"/>
